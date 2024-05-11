@@ -1,0 +1,10 @@
+{
+	"users": [
+		{
+			"id": "1",
+			"email": "saheeelpatel@gmail.com",
+			"name": "Sahil Patel",
+			"role": "Admin"
+		}
+	]
+}
