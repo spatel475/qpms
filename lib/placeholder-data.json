@@ -6,5 +6,152 @@
 			"name": "Sahil Patel",
 			"role": "Admin"
 		}
+	],
+	"property": [
+		{
+			"propCode": "QINNS",
+			"name": "Q Inns"
+		}
+	],
+	// room types:
+	// F=Full, Q=Queen, K=King, Number=BedCount, S=Smoking, NS=NonSmoking
+	// 	['F1S',
+	//  'F1NS',
+	//  'F2S',
+	//  'F2NS',
+	//  'Q1S',
+	//  'Q1NS',
+	//  'Q2S',
+	//  'Q2NS',
+	//  'K1S',
+	//  'K1NS']
+	"rooms": [
+		{
+			"id": "103",
+			"roomType": "Q1NS",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "104",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "105",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "106",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "107",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "108",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "109",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "110",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "111",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "112",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "114",
+			"roomType": "F1S",
+			"roomRate": 50,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "115",
+			"roomType": "F2S",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "116",
+			"roomType": "K1NS",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "117",
+			"roomType": "Q2NS",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "118",
+			"roomType": "Q2NS",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "119",
+			"roomType": "Q2S",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "120",
+			"roomType": "Q2S",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		},
+		{
+			"id": "121",
+			"roomType": "Q2S",
+			"roomRate": 70,
+			"propCode": "QINNS"
+		}
+	],
+	"guests": [
+		{
+			"id": "",
+			"firstName": "",
+			"lastName": "",
+			"address": "",
+			"phoneNumber": "",
+			"dlNumber": "",
+			"comments": ""
+		}
+	],
+	"stays": [
+		{
+			"guestId": "",
+			"roomId": "",
+			"startDate": "2024-05-10",
+			"endDate": "2024-05-11"
+		}
 	]
 }
