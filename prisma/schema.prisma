@@ -21,12 +21,14 @@ model Property {
 }
 
 model Room {
-    id       String   @id @default(uuid())
-    roomType String
-    propCode String
-    roomRate Int
-    property Property @relation(fields: [propCode], references: [propCode])
-    stays    Stay[]
+    id                  String   @id @default(uuid())
+    roomType            String
+    propCode            String
+    roomRate            Int
+    roomAvailable       Boolean
+    unavailablityReason String?
+    property            Property @relation(fields: [propCode], references: [propCode])
+    stays               Stay[]
 }
 
 model Guest {
