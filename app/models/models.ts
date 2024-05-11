@@ -15,10 +15,10 @@ export type Property = {
 
 export type Room = {
 	id: string;
-	roomType: RoomType;
+	roomType: string; // @todo: change to RoomType enum
 	roomRate: number;
 	propCode: string;
-	roomAvailable?: boolean;
+	roomAvailable: boolean;
 	unavailablityReason?: string;
 }
 
