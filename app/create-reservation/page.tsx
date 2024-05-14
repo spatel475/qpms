@@ -78,6 +78,7 @@ export default function CreateReservation() {
 								</Card>
 							</div>
 							<div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+								<RoomSelector allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
 								<Card x-chunk="dashboard-07-chunk-5">
 									<CardHeader>
 										<CardTitle>Stay summary</CardTitle>
@@ -90,7 +91,6 @@ export default function CreateReservation() {
 										</CardTitle>
 									</CardContent>
 								</Card>
-								<RoomSelector allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
 							</div>
 						</div>
 						<div className="flex items-center justify-center gap-2 md:hidden">

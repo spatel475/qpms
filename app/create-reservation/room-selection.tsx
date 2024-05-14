@@ -78,14 +78,20 @@ export default function RoomSelector({ allRooms, onValueChange }: Props) {
 							</Button>
 						))}
 					</ScrollArea>
-					<Label htmlFor="unavailable-rooms">Unavailable Rooms</Label>
 					<ScrollArea>
-						{unavailableRooms.map((room) => (
-							<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant="outline" key={room.id} disabled>
-								<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
-								<CardTitle className="text-sm">{room.roomType}</CardTitle>
-							</Button>
-						))}
+						{unavailableRooms.length > 0 && (
+							<>
+								<Label htmlFor="unavailable-rooms">Unavailable Rooms</Label>
+								<ScrollArea>
+									{unavailableRooms.map((room) => (
+										<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant="outline" key={room.id} disabled>
+											<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
+											<CardTitle className="text-sm">{room.roomType}</CardTitle>
+										</Button>
+									))}
+								</ScrollArea>
+							</>
+						)}
 					</ScrollArea>
 				</div>
 			</CardContent>
