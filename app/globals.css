@@ -48,3 +48,13 @@
 		--ring: 224.3 76.3% 48%;
 	}
 }
+
+.success {
+	background-color: rgb(50, 209, 50);
+}
+.blue {
+	background-color: rgb(61, 147, 212);
+}
+.warn {
+	background-color: rgb(209, 161, 50);
+}

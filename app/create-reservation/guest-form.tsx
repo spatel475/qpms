@@ -93,7 +93,7 @@ export function ProfileForm() {
 						<FormItem>
 							<FormLabel>Phone Number</FormLabel>
 							<FormControl>
-								<Input {...field} />
+								<Input {...field} type="tel" />
 							</FormControl>
 							<FormMessage />
 						</FormItem>

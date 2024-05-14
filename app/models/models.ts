@@ -23,13 +23,16 @@ export type Room = {
 }
 
 export type Stay = {
+	id?: string;
 	guestId: string;
 	roomId: string;
-	startDate: Date;
-	endDate: Date;
-	checkoutTime: Date;
+	startDate: string;
+	endDate: string;
+	checkoutTime: string;
 	dailyRate: number,
-	stayStatus: StayStatus
+	stayStatus: string,// @todo: change to StayStatus enum
+	guest?: Guest
+	room?: Room
 }
 
 export type User = {

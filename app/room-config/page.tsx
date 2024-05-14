@@ -1,5 +1,5 @@
+import { DataTable } from "@/components/data-table/data-table";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { DataTable } from "@/components/ui/data-table";
 
 import data from "@/lib/placeholder-data.json";
 import { Room } from "../models/models";
