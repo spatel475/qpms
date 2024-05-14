@@ -27,6 +27,9 @@ export type Stay = {
 	roomId: string;
 	startDate: Date;
 	endDate: Date;
+	checkoutTime: Date;
+	dailyRate: number,
+	stayStatus: StayStatus
 }
 
 export type User = {
@@ -49,4 +52,10 @@ export enum RoomType {
 	Q2NS = 'Q2NS',
 	K1S = 'K1S',
 	K1NS = 'K1NS'
+}
+
+export enum StayStatus {
+	BOOKED = 'BOOKED',
+	INHOUSE = 'INHOUSE',
+	CHECKEDOUT = 'CHECKEDOUT'
 }
