@@ -27,7 +27,6 @@ export default function CurrencyInput(props: TextInputProps) {
 	useEffect(() => {
 		const formValue = props.form.getValues()[props.name];
 		setValue(moneyFormatter.format(formValue));
-		console.log(formValue);
 	}, [formChange]);
 
 	function handleChange(realChangeFn: Function, formattedValue: string) {

@@ -30,7 +30,6 @@ export function DatePickerForm(props: Props) {
 	const [date, setDate] = useState<DateRange | undefined>({ from: new Date(), to: addDays(new Date(), 1) });
 
 	const handleDateChange = (value: DateRange | undefined) => {
-		console.warn(value)
 		setDate(value);
 		props.onValueChange(value);
 	};

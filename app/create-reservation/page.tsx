@@ -2,13 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { formatCurrency } from "@/lib/currency-utils";
 import data from "@/lib/placeholder-data.json";
 import { intervalToDuration } from "date-fns";
-import { Cigarette, CigaretteOff } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
@@ -16,6 +12,7 @@ import { DatePickerForm } from "../../components/ui/date-picker";
 import { Room } from "../models/models";
 import { ProfileForm } from "./guest-form";
 import RateOverrideForm from "./rate-override";
+import RoomSelector from "./room-selection";
 
 export default function CreateReservation() {
 	const [dailyRate, setDailyRate] = useState(0);
@@ -93,53 +90,7 @@ export default function CreateReservation() {
 										</CardTitle>
 									</CardContent>
 								</Card>
-								<Card>
-									<CardHeader>
-										<CardTitle>Room Selection</CardTitle>
-									</CardHeader>
-									<CardContent>
-										<Label htmlFor="filters">Quick Filters</Label>
-										<div className="grid gap-2">
-											<ToggleGroup variant="outline" type="single">
-												<ToggleGroupItem value="S" aria-label="Toggle smoking">
-													<Cigarette className="m-1" />
-													Smoking
-												</ToggleGroupItem>
-												<ToggleGroupItem value="NS" aria-label="Toggle nonsmoking">
-													<CigaretteOff className="m-1" />
-													Non-Smoking
-												</ToggleGroupItem>
-											</ToggleGroup>
-											<ToggleGroup variant="outline" type="single">
-												<ToggleGroupItem value="F1" aria-label="Toggle single">
-													Single
-												</ToggleGroupItem>
-												<ToggleGroupItem value="F2" aria-label="Toggle double full">
-													Double-Full
-												</ToggleGroupItem>
-												<ToggleGroupItem value="Q2" aria-label="Toggle double queen">
-													Double-Queen
-												</ToggleGroupItem>
-												<ToggleGroupItem value="K1" aria-label="Toggle king">
-													King
-												</ToggleGroupItem>
-											</ToggleGroup>
-										</div>
-										<div className="grid gap-2 mt-8">
-											<Label htmlFor="available-rooms">Available Rooms</Label>
-											<ScrollArea>
-												{data.rooms.map((room) => {
-													return (
-														<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id == selectedRoom?.id ? "default" : "outline"} key={room.id} onClick={() => handleRoomChange(room)}>
-															<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
-															<CardTitle className="text-sm ">{room.roomType}</CardTitle>
-														</Button>
-													);
-												})}
-											</ScrollArea>
-										</div>
-									</CardContent>
-								</Card>
+								<RoomSelector allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
 							</div>
 						</div>
 						<div className="flex items-center justify-center gap-2 md:hidden">
