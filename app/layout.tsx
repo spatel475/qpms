@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import SideNav from "@/components/sidenav";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const fontSans = Inter({
 	subsets: ["latin"],
@@ -22,7 +23,7 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<head />
 			<body className={cn("bg-background font-sans antialiased", fontSans.variable)}>
-				<div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+				<div className="flex h-screen flex-col md:flex-row">
 					<div className="w-full flex-none">
 						<SideNav />
 						<div className="p-6">{children}</div>
