@@ -6,10 +6,10 @@ import { Badge } from "@/components/ui/badge";
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DataTableRowActions } from "@/components/data-table/data-table-row-actions";
+import { StayResponse } from "../api/stays/route";
 import { StayStatus } from "../models/models";
-import { Stay } from "./page";
 
-export const columns: ColumnDef<Stay>[] = [
+export const columns: ColumnDef<StayResponse>[] = [
 	// {
 	// 	id: "select",
 	// 	header: ({ table }) => <Checkbox checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")} onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)} aria-label="Select all" className="translate-y-[2px]" />,
@@ -18,7 +18,7 @@ export const columns: ColumnDef<Stay>[] = [
 	// 	enableHiding: false,
 	// },
 	{
-		header: "Name",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Guest" />,
 		accessorKey: "guest",
 		cell: ({ row }) => `${row.original.guest.firstName} ${row.original.guest.lastName}`,
 	},
@@ -30,12 +30,12 @@ export const columns: ColumnDef<Stay>[] = [
 			let classBg = "";
 			let statusSpaced = status;
 			if (status == StayStatus.BOOKED) {
-				classBg = "blue";
+				classBg = "status-booked";
 			} else if (status == StayStatus.INHOUSE) {
-				classBg = "warn";
+				classBg = "status-in-house";
 				statusSpaced = "IN HOUSE";
 			} else {
-				classBg = "success";
+				classBg = "status-checked-out";
 				statusSpaced = "CHECKED OUT";
 			}
 
@@ -50,20 +50,20 @@ export const columns: ColumnDef<Stay>[] = [
 		},
 	},
 	{
-		header: "Room Type",
-		accessorKey: "room.roomType",
-		cell: ({ row }) => row.original.room.roomType,
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Room Type" />,
+		accessorKey: "room.id",
+		cell: ({ row }) => row.original.room.id,
 		enableSorting: true,
 	},
 	{
-		header: "Start Date",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Start Date" />,
 		accessorKey: "startDate",
-		cell: ({ row }) => new Date(row.getValue("startDate")).toLocaleString(),
+		cell: ({ row }) => new Date(row.getValue("startDate")).toLocaleDateString(),
 	},
 	{
-		header: "End Date",
+		header: ({ column }) => <DataTableColumnHeader column={column} title="End Date" />,
 		accessorKey: "endDate",
-		cell: ({ row }) => new Date(row.getValue("endDate")).toLocaleString(),
+		cell: ({ row }) => new Date(row.getValue("endDate")).toLocaleDateString(),
 	},
 	{
 		id: "actions",

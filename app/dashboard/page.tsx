@@ -8,25 +8,11 @@ import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { StayResponse } from "../api/stays/route";
 import { columns } from "./column";
 
-export interface Stay {
-	id: string;
-	guest: {
-		firstName: string;
-		lastName: string;
-	};
-	stayStatus: string;
-	dailyRate: number;
-	room: {
-		roomType: string;
-	};
-	startDate: string;
-	endDate: string;
-}
-
 export default function Dashboard() {
-	const [data, setData] = useState<Stay[]>([]);
+	const [data, setData] = useState<StayResponse[]>([]);
 	const [pagination, setPagination] = useState({
 		totalCount: 0,
 		totalPages: 0,
@@ -49,7 +35,7 @@ export default function Dashboard() {
 			}));
 		} else {
 			try {
-				const response = await get<Stay[]>("/stays", {
+				const response = await get<StayResponse[]>("/stays", {
 					queryParams: {
 						page: pagination.currentPage.toString(),
 						limit: pagination.pageSize.toString(),

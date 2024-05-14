@@ -1,3 +1,4 @@
+import { Guest, Room } from '@/app/models/models';
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -91,4 +92,17 @@ export async function GET(request: NextRequest) {
 	headers.append('x-current-page', pageInt.toString());
 	headers.append('x-page-size', limitInt.toString());
 	return NextResponse.json(data, { headers });
+}
+
+export type StayResponse = {
+	id: string
+	guestId: string
+	roomId: string
+	startDate: string
+	endDate: string
+	checkoutTime: string
+	dailyRate: number
+	stayStatus: string
+	guest: Guest
+	room: Room
 }

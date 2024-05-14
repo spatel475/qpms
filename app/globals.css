@@ -49,12 +49,12 @@
 	}
 }
 
-.success {
-	background-color: rgb(50, 209, 50);
+.status-booked {
+	border: solid 2px rgb(45, 187, 45);
 }
-.blue {
-	background-color: rgb(61, 147, 212);
+.status-in-house {
+	border: solid 2px rgb(70, 175, 255);
 }
-.warn {
-	background-color: rgb(209, 161, 50);
+.status-checked-out {
+	border: solid 2px rgb(69, 69, 69);
 }
