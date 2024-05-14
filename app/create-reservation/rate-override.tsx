@@ -2,6 +2,7 @@
 import CurrencyInput from "@/components/ui/currency-input";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
@@ -17,14 +18,17 @@ export default function RateOverrideForm(props: Props) {
 
 	const form = useForm<z.infer<typeof schema>>({
 		resolver: zodResolver(schema),
-		defaultValues: {
-			dailyRate: props.defaultRate,
-		},
+		defaultValues: { dailyRate: props.defaultRate },
 		mode: "onTouched",
 	});
 
+	useEffect(() => {
+		form.reset({ dailyRate: props.defaultRate });
+	}, [props.defaultRate, form]);
+
 	const handleCurrencyChange = (value: number) => {
 		props.onValueChange(value);
+		form.setValue("dailyRate", value, { shouldValidate: true });
 	};
 
 	return (

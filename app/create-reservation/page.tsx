@@ -7,10 +7,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { formatCurrency } from "@/lib/currency-utils";
 import data from "@/lib/placeholder-data.json";
-import { addDays, intervalToDuration } from "date-fns";
+import { intervalToDuration } from "date-fns";
 import { Cigarette, CigaretteOff } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { DatePickerForm } from "../../components/ui/date-picker";
 import { Room } from "../models/models";
@@ -19,9 +19,10 @@ import RateOverrideForm from "./rate-override";
 
 export default function CreateReservation() {
 	const [dailyRate, setDailyRate] = useState(0);
-	const [dateRange, setDateRange] = useState<DateRange | undefined>({ from: new Date(), to: addDays(new Date(), 2) });
-	const [duration, setDuration] = useState(0);
+	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+	const [duration, setDuration] = useState(1);
 	const [selectedRoom, setSelectedRoom] = useState<Room | undefined>();
+	const [totalAmount, setTotalAmount] = useState(0);
 
 	const handleDateChange = (value: DateRange | undefined) => {
 		setDateRange(value);
@@ -41,6 +42,10 @@ export default function CreateReservation() {
 		setSelectedRoom(value);
 		setDailyRate(value.roomRate);
 	};
+
+	useEffect(() => {
+		setTotalAmount(dailyRate * duration);
+	}, [dailyRate, duration]);
 
 	return (
 		<div className="flex w-full flex-col">
@@ -84,11 +89,11 @@ export default function CreateReservation() {
 										<DatePickerForm onValueChange={handleDateChange}></DatePickerForm>
 										<RateOverrideForm defaultRate={dailyRate} onValueChange={handleCurrencyChange} />
 										<CardTitle className="mt-6">
-											Amount Due: {formatCurrency(dailyRate)} x {duration} nights = {formatCurrency(dailyRate * duration)}
+											Amount Due: {formatCurrency(dailyRate)} x {duration} nights = {formatCurrency(totalAmount)}
 										</CardTitle>
 									</CardContent>
 								</Card>
-								<Card x-chunk="dashboard-07-chunk-3">
+								<Card>
 									<CardHeader>
 										<CardTitle>Room Selection</CardTitle>
 									</CardHeader>
