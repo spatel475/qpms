@@ -2,7 +2,9 @@
 
 import { DataTable } from "@/components/data-table/data-table";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { get } from "@/lib/fetch";
+import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -25,14 +27,62 @@ export interface Stay {
 
 export default function Dashboard() {
 	const [data, setData] = useState<Stay[]>([]);
+	const [pagination, setPagination] = useState({
+		totalCount: 0,
+		totalPages: 0,
+		currentPage: 1,
+		pageSize: 20,
+	});
+
+	const fetchData = async (page: number, pageSize: number) => {
+		const cacheKey = `stays-page-${page}-size-${pageSize}`;
+		const cachedData = getCachedData(cacheKey);
+
+		if (cachedData) {
+			setData(cachedData.data);
+			setPagination((prev) => ({
+				...prev,
+				totalCount: cachedData.totalCount,
+				totalPages: cachedData.totalPages,
+				pageSize: cachedData.pageSize,
+				currentPage: page,
+			}));
+		} else {
+			try {
+				const response = await get<Stay[]>("/stays", {
+					queryParams: {
+						page: pagination.currentPage.toString(),
+						limit: pagination.pageSize.toString(),
+					},
+				});
+				const fetchedData = response.data;
+				const totalCount = parseInt(response.headers["x-total-count"], 10);
+				const totalPages = Math.ceil(totalCount / pageSize);
+
+				setData(fetchedData);
+				setPagination((prev) => ({
+					...prev,
+					totalCount,
+					totalPages,
+					pageSize,
+					currentPage: page,
+				}));
+
+				setCachedData(cacheKey, {
+					data: fetchedData,
+					totalCount,
+					totalPages,
+					pageSize,
+				});
+			} catch (error) {
+				console.error("Error fetching stays:", error);
+			}
+		}
+	};
 
 	useEffect(() => {
-		// Fetch data from API
-		fetch("/api/stays")
-			.then((response) => response.json())
-			.then((data) => setData(data))
-			.catch((error) => console.error("Error fetching stays:", error));
-	}, []);
+		fetchData(pagination.currentPage, pagination.pageSize);
+	}, [pagination.currentPage, pagination.pageSize]);
 
 	return (
 		<Card>
@@ -50,13 +100,8 @@ export default function Dashboard() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable columns={columns} data={data} />
+				<DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
 			</CardContent>
-			<CardFooter>
-				<div className="text-xs text-muted-foreground">
-					Showing <strong>{Math.min(data.length, 50)}</strong> of <strong>{data.length}</strong> reservations
-				</div>
-			</CardFooter>
 		</Card>
 	);
 }

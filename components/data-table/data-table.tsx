@@ -2,17 +2,23 @@
 
 import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import * as React from "react";
-
+import { useEffect } from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-
 import { DataTablePagination } from "./data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	pagination: {
+		totalCount: number;
+		totalPages: number;
+		currentPage: number;
+		pageSize: number;
+	};
+	setPagination: (pagination: any) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, pagination, setPagination }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -26,7 +32,13 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 			columnVisibility,
 			rowSelection,
 			columnFilters,
+			pagination: {
+				pageIndex: pagination.currentPage - 1,
+				pageSize: pagination.pageSize,
+			},
 		},
+		pageCount: pagination.totalPages,
+		manualPagination: true,
 		enableRowSelection: true,
 		onRowSelectionChange: setRowSelection,
 		onSortingChange: setSorting,
@@ -39,6 +51,10 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		getFacetedRowModel: getFacetedRowModel(),
 		getFacetedUniqueValues: getFacetedUniqueValues(),
 	});
+
+	useEffect(() => {
+		table.setPageCount(pagination.totalPages);
+	}, [pagination.totalPages]);
 
 	return (
 		<div className="space-y-4">
@@ -58,7 +74,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{table.getRowModel().rows.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
 									{row.getVisibleCells().map((cell) => (
@@ -76,7 +92,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 					</TableBody>
 				</Table>
 			</div>
-			<DataTablePagination table={table} />
+			<DataTablePagination table={table} pagination={pagination} setPagination={setPagination} />
 		</div>
 	);
 }

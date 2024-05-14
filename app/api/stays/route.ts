@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 		stayStatus,
 		guestName,
 		page = '1',
-		limit = '50',
+		limit = '20',
 	} = params;
 
 	const where: any = {};
@@ -69,6 +69,8 @@ export async function GET(request: NextRequest) {
 	const limitInt = parseInt(limit as string, 10);
 	const skip = (pageInt - 1) * limitInt;
 	const take = limitInt;
+	const totalRecords = await prisma.stay.count();
+	const totalPages = Math.ceil(totalRecords / limitInt);
 
 	const data = await prisma.stay.findMany({
 		where,
@@ -83,5 +85,10 @@ export async function GET(request: NextRequest) {
 		take,
 	});
 
-	return NextResponse.json(data);
+	const headers = new Headers();
+	headers.append('x-total-count', totalRecords.toString());
+	headers.append('x-total-pages', totalPages.toString());
+	headers.append('x-current-page', pageInt.toString());
+	headers.append('x-page-size', limitInt.toString());
+	return NextResponse.json(data, { headers });
 }
