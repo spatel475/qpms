@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { addDays, addYears, format } from "date-fns";
+import { addDays, format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -19,12 +19,12 @@ type Props = {
 };
 
 export function DatePickerForm(props: Props) {
-	const FormSchema = z.object({
-		dateRange: z.date().min(addYears(new Date(), 1)).max(addYears(new Date(), 2)),
+	const formSchema = z.object({
+		dateRange: z.date(),
 	});
 
-	const form = useForm<z.infer<typeof FormSchema>>({
-		resolver: zodResolver(FormSchema),
+	const form = useForm<z.infer<typeof formSchema>>({
+		resolver: zodResolver(formSchema),
 	});
 
 	const [date, setDate] = useState<DateRange | undefined>({ from: new Date(), to: addDays(new Date(), 1) });

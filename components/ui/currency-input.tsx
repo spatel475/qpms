@@ -1,9 +1,9 @@
 "use client";
-import { useReducer } from "react";
+import { CurrencyFormat } from "@/lib/currency-utils";
+import { useEffect, useReducer } from "react";
+import { UseFormReturn } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
-import { UseFormReturn } from "react-hook-form";
-import { CurrencyFormat } from "@/lib/currency-utils";
 
 type TextInputProps = {
 	form: UseFormReturn<any>;
@@ -22,6 +22,13 @@ export default function CurrencyInput(props: TextInputProps) {
 		const digits = next.replace(/\D/g, "");
 		return moneyFormatter.format(Number(digits) / 100);
 	}, initialValue);
+
+	const formChange = props.form.watch(props.name);
+	useEffect(() => {
+		const formValue = props.form.getValues()[props.name];
+		setValue(moneyFormatter.format(formValue));
+		console.log(formValue);
+	}, [formChange]);
 
 	function handleChange(realChangeFn: Function, formattedValue: string) {
 		const digits = formattedValue.replace(/\D/g, "");
