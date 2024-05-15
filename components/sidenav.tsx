@@ -1,10 +1,9 @@
-import { CircleUser, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { CircleUser, Menu } from "lucide-react";
 import NavLinks from "./nav-links";
-import { useRouter } from 'next/router';
-
+import { ModeToggle } from "./theme-toggle";
 
 export default function SideNav() {
 	return (
@@ -45,6 +44,7 @@ export default function SideNav() {
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Settings</DropdownMenuItem>
 							<DropdownMenuItem>Support</DropdownMenuItem>
+							<ModeToggle></ModeToggle>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Logout</DropdownMenuItem>
 						</DropdownMenuContent>
