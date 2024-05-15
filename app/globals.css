@@ -48,3 +48,13 @@
 		--ring: 224.3 76.3% 48%;
 	}
 }
+
+.status-booked {
+	border: solid 2px rgb(45, 187, 45);
+}
+.status-in-house {
+	border: solid 2px rgb(70, 175, 255);
+}
+.status-checked-out {
+	border: solid 2px rgb(69, 69, 69);
+}
