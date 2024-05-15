@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -27,7 +27,7 @@ export function DatePickerForm(props: Props) {
 		resolver: zodResolver(formSchema),
 	});
 
-	const [date, setDate] = useState<DateRange | undefined>({ from: new Date(), to: addDays(new Date(), 1) });
+	const [date, setDate] = useState<DateRange | undefined>({ from: undefined, to: undefined });
 
 	const handleDateChange = (value: DateRange | undefined) => {
 		setDate(value);
@@ -64,7 +64,7 @@ export function DatePickerForm(props: Props) {
 									<Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={handleDateChange} numberOfMonths={2} />
 								</PopoverContent>
 							</Popover>
-							<FormMessage />
+							<FormMessage>{!!date?.from && !!date.to ? "" : "Date range required"}</FormMessage>
 						</FormItem>
 					)}
 				/>

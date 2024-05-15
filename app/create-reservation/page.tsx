@@ -51,7 +51,6 @@ export default function CreateReservation() {
 
 	const handleGuestChange = (value: GuestFormValues) => {
 		setGuestData(value);
-		console.log(JSON.stringify(value));
 	};
 
 	useEffect(() => {
@@ -67,6 +66,10 @@ export default function CreateReservation() {
 		setTotalAmount(dailyRate * duration);
 	}, [dailyRate, duration]);
 
+	const createReservation = () => {
+		console.log(dateRange, dailyRate, selectedRoom, guestData);
+	};
+
 	return (
 		<div className="flex w-full flex-col">
 			<div>
@@ -75,7 +78,7 @@ export default function CreateReservation() {
 						<div className="flex items-center gap-4">
 							<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Create Reservation</h1>
 							<div className="hidden items-center gap-2 md:ml-auto md:flex">
-								<SaveToolbar onClick={() => console.log(dateRange, dailyRate, selectedRoom, guestData)} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
+								<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
 							</div>
 						</div>
 						<div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-4 lg:gap-8">
@@ -106,7 +109,7 @@ export default function CreateReservation() {
 							</div>
 						</div>
 						<div className="flex items-center justify-center gap-2 md:hidden">
-							<SaveToolbar onClick={() => console.log(dateRange, dailyRate, selectedRoom, guestData)} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
+							<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
 						</div>
 					</div>
 				</main>

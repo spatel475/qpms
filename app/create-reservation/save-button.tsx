@@ -3,10 +3,10 @@ import Link from "next/link";
 
 interface Props {
 	buttonDisabled: boolean;
-	onClick: () => void;
+	onSave: () => void;
 }
 
-export default function SaveToolbar({ buttonDisabled, onClick }: Props) {
+export default function SaveToolbar(props: Props) {
 	return (
 		<>
 			<Link href="/dashboard">
@@ -14,7 +14,7 @@ export default function SaveToolbar({ buttonDisabled, onClick }: Props) {
 					<span>Discard</span>
 				</Button>
 			</Link>
-			<Button disabled={buttonDisabled} onClick={() => onClick}>
+			<Button disabled={props.buttonDisabled} onClick={props.onSave}>
 				Save Reservation
 			</Button>
 		</>
