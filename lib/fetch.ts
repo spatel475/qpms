@@ -32,7 +32,7 @@ const makeRequest = async <ResponseType>(
 		? '?' + new URLSearchParams(queryParams).toString()
 		: '';
 
-	const response = await fetch(`${baseURL}${url}${queryString}`, {
+	const response = await fetch(`/api${url}${queryString}`, {
 		method,
 		headers: {
 			'Content-Type': 'application/json',
