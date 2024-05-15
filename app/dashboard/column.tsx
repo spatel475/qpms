@@ -21,6 +21,9 @@ export const columns: ColumnDef<StayResponse>[] = [
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Guest" />,
 		accessorKey: "guest",
 		cell: ({ row }) => `${row.original.guest.firstName} ${row.original.guest.lastName}`,
+		filterFn: (row, id, value) => {
+			return row.original.guest.firstName.toLowerCase().includes(value.toLowerCase()) || row.original.guest.lastName.toLowerCase().includes(value.toLowerCase());
+		},
 	},
 	{
 		accessorKey: "stayStatus",
@@ -45,15 +48,13 @@ export const columns: ColumnDef<StayResponse>[] = [
 				</Badge>
 			);
 		},
-		filterFn: (row, id, value) => {
-			return value.includes(row.getValue(id));
-		},
+		enableSorting: false,
 	},
 	{
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Room Type" />,
 		accessorKey: "room.id",
 		cell: ({ row }) => row.original.room.id,
-		enableSorting: true,
+		enableSorting: false,
 	},
 	{
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Start Date" />,
