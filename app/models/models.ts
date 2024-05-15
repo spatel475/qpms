@@ -23,10 +23,16 @@ export type Room = {
 }
 
 export type Stay = {
+	id?: string;
 	guestId: string;
 	roomId: string;
-	startDate: Date;
-	endDate: Date;
+	startDate: string;
+	endDate: string;
+	checkoutTime: string;
+	dailyRate: number,
+	stayStatus: string,// @todo: change to StayStatus enum
+	guest?: Guest
+	room?: Room
 }
 
 export type User = {
@@ -49,4 +55,10 @@ export enum RoomType {
 	Q2NS = 'Q2NS',
 	K1S = 'K1S',
 	K1NS = 'K1NS'
+}
+
+export enum StayStatus {
+	BOOKED = 'BOOKED',
+	INHOUSE = 'INHOUSE',
+	CHECKEDOUT = 'CHECKEDOUT'
 }

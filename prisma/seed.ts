@@ -1,5 +1,5 @@
-import { PrismaClient, Room } from '@prisma/client'
-import data from './seed.json'
+import { PrismaClient } from '@prisma/client';
+import data from './seed.json';
 
 const prisma = new PrismaClient()
 
@@ -28,12 +28,21 @@ async function seedRooms() {
 	await prisma.room.createMany({ data: seed, skipDuplicates: true })
 }
 
+async function seedGuests() {
+	const seed = data.guests;
+	await prisma.guest.createMany({ data: seed, skipDuplicates: true })
+}
+
+async function seedStays() {
+	const seed = data.stays;
+	await prisma.stay.createMany({ data: seed, skipDuplicates: true })
+}
 
 const userPromise = seedUser();
 const propertyPromise = seedProperty();
 const roomsPromise = seedRooms();
 
-Promise.allSettled([userPromise, propertyPromise, roomsPromise])
+Promise.allSettled([userPromise, propertyPromise, roomsPromise, seedGuests(), seedStays()])
 	.then(async () => {
 		await prisma.$disconnect()
 	})
