@@ -7,46 +7,41 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
-const formSchema = z.object<any>({
-	id: z.string().min(1),
+export const formSchema = z.object({
 	firstName: z.string().min(2, { message: "First name must be at least 2 characters." }),
 	lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
 	address: z.string().min(2, { message: "Address must be at least 2 characters." }),
-	phoneNumber: z.string().refine((value) => /^(?:[0-9-()/.]\s?){6,12}[0-9]{1}$/.test(value)),
+	phoneNumber: z.string().refine((value) => /^(?:[0-9-()/.]\s?){6,12}[0-9]{1}$/.test(value), { message: "Invalid phone number format." }),
 	dlNumber: z.string().optional(),
 	comments: z.string().max(500).optional(),
 });
 
-type ProfileFormValues = z.infer<typeof formSchema>;
+export type GuestFormValues = z.infer<typeof formSchema>;
 
-export function ProfileForm() {
-	const form = useForm<ProfileFormValues>({
+interface GuestFormProps {
+	guestData: GuestFormValues;
+	onChange: (data: GuestFormValues) => void;
+}
+
+export function GuestForm({ guestData, onChange }: GuestFormProps) {
+	const form = useForm<GuestFormValues>({
 		resolver: zodResolver(formSchema),
 		mode: "onChange",
+		defaultValues: guestData,
 	});
 
-	// const { fields, append } = useFieldArray({
-	// 	name: "urls",
-	// 	control: form.control,
-	// });
-
-	function onSubmit(data: ProfileFormValues) {
-		console.log(data);
-		toast({
-			title: "You submitted the following values:",
-			description: (
-				<pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-					<code className="text-white">{JSON.stringify(data, null, 2)}</code>
-				</pre>
-			),
+	useEffect(() => {
+		const subscription = form.watch((values) => {
+			onChange(values as GuestFormValues);
 		});
-	}
+		return () => subscription.unsubscribe();
+	}, [form, form.watch, onChange]);
 
 	return (
 		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+			<form className="space-y-8">
 				<FormField
 					control={form.control}
 					name="firstName"
@@ -56,7 +51,7 @@ export function ProfileForm() {
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage />
+							<FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
@@ -69,7 +64,7 @@ export function ProfileForm() {
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage />
+							<FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
@@ -82,7 +77,7 @@ export function ProfileForm() {
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage />
+							<FormMessage>{form.formState.errors.address?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
@@ -95,7 +90,7 @@ export function ProfileForm() {
 							<FormControl>
 								<Input {...field} type="tel" />
 							</FormControl>
-							<FormMessage />
+							<FormMessage>{form.formState.errors.phoneNumber?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
@@ -108,7 +103,7 @@ export function ProfileForm() {
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage />
+							<FormMessage>{form.formState.errors.dlNumber?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
@@ -119,37 +114,12 @@ export function ProfileForm() {
 						<FormItem>
 							<FormLabel>Comments</FormLabel>
 							<FormControl>
-								<Textarea placeholder="Notes about guest or stay" className="resize-y max-h-[10rem]" maxLength={500} {...field} />
+								<Textarea {...field} placeholder="Notes about guest or stay" className="resize-y max-h-[10rem]" maxLength={500} />
 							</FormControl>
-							<FormMessage />
+							<FormMessage>{form.formState.errors.comments?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
-				{/* <div>
-					{fields.map((field, index) => (
-						<FormField
-							control={form.control}
-							key={field.id}
-							name={`urls.${index}.value`}
-							render={({ field }) => (
-								<FormItem>
-									<FormLabel className={cn(index !== 0 && "sr-only")}>URLs</FormLabel>
-									<FormDescription className={cn(index !== 0 && "sr-only")}>Add links to your website, blog, or social media profiles.</FormDescription>
-									<FormControl>
-										<Input {...field} />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					))}
-					<Button type="button" variant="outline" size="sm" className="mt-2" onClick={() => append({ value: "" })}>
-						Add URL
-					</Button>
-				</div> */}
-				{/* <Button type="submit" onClick={() => form.handleSubmit(onSubmit)}>
-					Update profile
-				</Button> */}
 			</form>
 		</Form>
 	);

@@ -1,18 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/currency-utils";
 import data from "@/lib/placeholder-data.json";
 import { intervalToDuration } from "date-fns";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { DatePickerForm } from "../../components/ui/date-picker";
 import { Room } from "../models/models";
-import { ProfileForm } from "./guest-form";
+import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import RateOverrideForm from "./rate-override";
 import RoomSelector from "./room-selection";
+import SaveToolbar from "./save-button";
 
 export default function CreateReservation() {
 	const [dailyRate, setDailyRate] = useState(0);
@@ -20,6 +19,16 @@ export default function CreateReservation() {
 	const [duration, setDuration] = useState(1);
 	const [selectedRoom, setSelectedRoom] = useState<Room | undefined>();
 	const [totalAmount, setTotalAmount] = useState(0);
+	const [isGuestValid, setIsGuestValid] = useState(false);
+	const [guestData, setGuestData] = useState<GuestFormValues>({
+		// id: "",
+		firstName: "",
+		lastName: "",
+		address: "",
+		phoneNumber: "",
+		dlNumber: "",
+		comments: "",
+	});
 
 	const handleDateChange = (value: DateRange | undefined) => {
 		setDateRange(value);
@@ -40,6 +49,20 @@ export default function CreateReservation() {
 		setDailyRate(value.roomRate);
 	};
 
+	const handleGuestChange = (value: GuestFormValues) => {
+		setGuestData(value);
+		console.log(JSON.stringify(value));
+	};
+
+	useEffect(() => {
+		// Validate guestData whenever it changes
+		const validationResult = FormSchema.safeParse(guestData);
+		setIsGuestValid(validationResult.success);
+		// if (!validationResult.success) {
+		// 	console.error("Validation errors:", validationResult.error.errors);
+		// }
+	}, [guestData]);
+
 	useEffect(() => {
 		setTotalAmount(dailyRate * duration);
 	}, [dailyRate, duration]);
@@ -52,18 +75,7 @@ export default function CreateReservation() {
 						<div className="flex items-center gap-4">
 							<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Create Reservation</h1>
 							<div className="hidden items-center gap-2 md:ml-auto md:flex">
-								<Link href="/dashboard">
-									<Button variant="outline">
-										<span>Discard</span>
-									</Button>
-								</Link>
-								<Button
-									onClick={() => {
-										console.log(dateRange, dailyRate, selectedRoom);
-									}}
-								>
-									Save Product
-								</Button>
+								<SaveToolbar onClick={() => console.log(dateRange, dailyRate, selectedRoom, guestData)} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
 							</div>
 						</div>
 						<div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-4 lg:gap-8">
@@ -73,7 +85,7 @@ export default function CreateReservation() {
 										<CardTitle>Guest Information</CardTitle>
 									</CardHeader>
 									<CardContent>
-										<ProfileForm></ProfileForm>
+										<GuestForm onChange={handleGuestChange} guestData={guestData} />
 									</CardContent>
 								</Card>
 							</div>
@@ -94,8 +106,7 @@ export default function CreateReservation() {
 							</div>
 						</div>
 						<div className="flex items-center justify-center gap-2 md:hidden">
-							<Button variant="outline">Discard</Button>
-							<Button>Save Product</Button>
+							<SaveToolbar onClick={() => console.log(dateRange, dailyRate, selectedRoom, guestData)} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
 						</div>
 					</div>
 				</main>
