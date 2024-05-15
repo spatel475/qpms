@@ -1,4 +1,5 @@
 import { Guest, Room } from '@/app/models/models';
+import { getPaginationInfo, getPaginationResponseHeaders } from '@/lib/api-utils.ts/pagination';
 import { PrismaClient } from '@prisma/client';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -65,13 +66,9 @@ export async function GET(request: NextRequest) {
 		};
 	}
 
-	// Pagination
-	const pageInt = parseInt(page as string, 10);
-	const limitInt = parseInt(limit as string, 10);
-	const skip = (pageInt - 1) * limitInt;
-	const take = limitInt;
 	const totalRecords = await prisma.stay.count();
-	const totalPages = Math.ceil(totalRecords / limitInt);
+	const { pageInt, limitInt, skip, take, totalPages } = getPaginationInfo({ page, limit, totalRecords })
+	const headers = getPaginationResponseHeaders(totalRecords, totalPages, pageInt, limitInt)
 
 	const data = await prisma.stay.findMany({
 		where,
@@ -86,11 +83,6 @@ export async function GET(request: NextRequest) {
 		take,
 	});
 
-	const headers = new Headers();
-	headers.append('x-total-count', totalRecords.toString());
-	headers.append('x-total-pages', totalPages.toString());
-	headers.append('x-current-page', pageInt.toString());
-	headers.append('x-page-size', limitInt.toString());
 	return NextResponse.json(data, { headers });
 }
 
