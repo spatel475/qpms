@@ -1,17 +1,19 @@
 "use client";
 
 import { DataTable } from "@/components/data-table/data-table";
+import { Routes } from "@/components/nav-links";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
 import { columns } from "./column";
 
-export default function Dashboard() {
+export default function ReservationsPage() {
+	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState<StayResponse[]>([]);
 	const [pagination, setPagination] = useState({
 		totalCount: 0,
@@ -20,11 +22,13 @@ export default function Dashboard() {
 		pageSize: 20,
 	});
 
-	const fetchData = async (page: number, pageSize: number) => {
+	const fetchData = async (page: number, pageSize: number, fromCache = true) => {
+		setIsLoading(true);
+
 		const cacheKey = `stays-page-${page}-size-${pageSize}`;
 		const cachedData = getCachedData(cacheKey);
 
-		if (cachedData) {
+		if (cachedData && fromCache) {
 			setData(cachedData.data);
 			setPagination((prev) => ({
 				...prev,
@@ -33,6 +37,7 @@ export default function Dashboard() {
 				pageSize: cachedData.pageSize,
 				currentPage: page,
 			}));
+			setIsLoading(false);
 		} else {
 			try {
 				const response = await get<StayResponse[]>("/stays", {
@@ -60,10 +65,16 @@ export default function Dashboard() {
 					totalPages,
 					pageSize,
 				});
+				setIsLoading(false);
 			} catch (error) {
 				console.error("Error fetching stays:", error);
+				setIsLoading(false);
 			}
 		}
+	};
+
+	const refreshData = async () => {
+		await fetchData(pagination.currentPage, pagination.pageSize, false);
 	};
 
 	useEffect(() => {
@@ -76,7 +87,10 @@ export default function Dashboard() {
 				<div className="flex items-center gap-4">
 					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Reservations</h1>
 					<div className="items-center gap-2 md:ml-auto md:flex">
-						<Link href="create-reservation">
+						<Button className="gap-1" variant="outline" onClick={refreshData}>
+							<RefreshCw className="h-4 w-4" />
+						</Button>
+						<Link href={Routes.CreateReservation}>
 							<Button className="gap-1">
 								<PlusCircle className="h-4 w-4" />
 								Create Reservation
@@ -86,7 +100,7 @@ export default function Dashboard() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
+				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
 			</CardContent>
 		</Card>
 	);

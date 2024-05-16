@@ -1,11 +1,11 @@
 export type Guest = {
-	id: string;
+	id?: string;
 	firstName: string;
 	lastName: string;
 	address: string;
 	phoneNumber: string;
-	dlNumber: string;
-	comments: string;
+	dlNumber?: string;
+	comments?: string;
 }
 
 export type Property = {

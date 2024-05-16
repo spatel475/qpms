@@ -1,19 +1,27 @@
 "use client";
 
+import { Routes } from "@/components/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
+import { get, post } from "@/lib/fetch";
 import data from "@/lib/placeholder-data.json";
-import { intervalToDuration } from "date-fns";
+import { compareAsc, intervalToDuration } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { DatePickerForm } from "../../components/ui/date-picker";
-import { Room } from "../models/models";
+import { DatePickerForm } from "../../../components/ui/date-picker";
+import { CreateStayRequest, StayResponse } from "../../api/stays/route";
+import { Room, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import RateOverrideForm from "./rate-override";
 import RoomSelector from "./room-selection";
 import SaveToolbar from "./save-button";
 
 export default function CreateReservation() {
+	const { toast } = useToast();
+	const router = useRouter();
+
 	const [dailyRate, setDailyRate] = useState(0);
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 	const [duration, setDuration] = useState(1);
@@ -29,6 +37,9 @@ export default function CreateReservation() {
 		dlNumber: "",
 		comments: "",
 	});
+
+	const [isLoading, setIsLoading] = useState(true);
+	const [currentStays, setCurrentStays] = useState<StayResponse[]>([]);
 
 	const handleDateChange = (value: DateRange | undefined) => {
 		setDateRange(value);
@@ -67,14 +78,70 @@ export default function CreateReservation() {
 	}, [dailyRate, duration]);
 
 	const createReservation = () => {
-		console.log(dateRange, dailyRate, selectedRoom, guestData);
+		if (!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1) {
+			console.warn(dateRange, dailyRate, selectedRoom, guestData);
+			return;
+		}
+
+		const request: CreateStayRequest = {
+			startDate: dateRange.from!.toDateString(),
+			endDate: dateRange.to!.toDateString(),
+			dailyRate: dailyRate,
+			totalCharge: totalAmount,
+			amountDue: 0,
+			amountPaid: totalAmount,
+			stayStatus: compareAsc(new Date(), dateRange.from!) == -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
+			guest: guestData,
+			room: selectedRoom,
+		};
+		console.debug(request);
+
+		post("/stays", request)
+			.then((x) => {
+				toast({
+					variant: "success",
+					title: "Reservation created successfully",
+					description: `Reservation Status: ${request.stayStatus}`,
+				});
+				router.push(Routes.Reservations);
+			})
+			.catch((err) => {
+				console.warn(err);
+				toast({
+					variant: "destructive",
+					title: "Uh oh! Something went wrong.",
+					description: "There was a problem when creating reservation",
+				});
+			});
 	};
+
+	const fetchData = async () => {
+		setIsLoading(true);
+
+		try {
+			const response = await get<StayResponse[]>("/stays", {
+				queryParams: {
+					stayStatus: StayStatus.INHOUSE,
+				},
+			});
+			const fetchedData = response.data;
+			setCurrentStays(fetchedData);
+			setIsLoading(false);
+		} catch (error) {
+			console.warn("Error fetching stays:", error);
+			setIsLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
 
 	return (
 		<div className="flex w-full flex-col">
 			<div>
 				<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-					<div className="mx-auto grid max-w-[65rem] flex-1 auto-rows-max gap-4">
+					<div className="mx-auto grid max-w-[70rem] flex-1 auto-rows-max gap-4">
 						<div className="flex items-center gap-4">
 							<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Create Reservation</h1>
 							<div className="hidden items-center gap-2 md:ml-auto md:flex">
@@ -93,7 +160,7 @@ export default function CreateReservation() {
 								</Card>
 							</div>
 							<div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-								<RoomSelector allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
+								<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
 								<Card x-chunk="dashboard-07-chunk-5">
 									<CardHeader>
 										<CardTitle>Stay summary</CardTitle>

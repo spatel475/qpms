@@ -34,20 +34,20 @@ export function DataTableColumnHeader<TData, TValue>({ column, title, className 
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
-					{SortFunction()}
+					{FilterFunction()}
 				</div>
 			) : (
 				<div className="">
 					<Button variant="ghost" size="sm" className="-ml-3 h-8 data-[state=open]:bg-accent pointer-events-none">
 						<span>{title}</span>
 					</Button>
-					{SortFunction()}
+					{FilterFunction()}
 				</div>
 			)}
 		</div>
 	);
 
-	function SortFunction() {
-		return column.getCanFilter() && <Input value={(column.getFilterValue() as string) ?? ""} onChange={(e) => column.setFilterValue(e.target.value)} className="mt-1 p-1 border border-gray-300 rounded" />;
+	function FilterFunction() {
+		return column.getCanFilter() && <Input value={(column.getFilterValue() as string) ?? ""} onChange={(e) => column.setFilterValue(e.target.value)} />;
 	}
 }

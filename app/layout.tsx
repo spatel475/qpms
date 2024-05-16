@@ -1,5 +1,6 @@
 import SideNav from "@/components/sidenav";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -24,13 +25,14 @@ export default function RootLayout({
 			<head />
 			<body className={cn("bg-background font-sans antialiased", fontSans.variable)}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-					<div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+					<div className="flex h-screen flex-col md:flex-row">
 						<div className="w-full flex-none">
 							<SideNav />
 							<div className="p-6">{children}</div>
 						</div>
 					</div>
 				</ThemeProvider>
+				<Toaster />
 			</body>
 		</html>
 	);
