@@ -2,12 +2,14 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/currency-utils";
+import { get } from "@/lib/fetch";
 import data from "@/lib/placeholder-data.json";
 import { intervalToDuration } from "date-fns";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { DatePickerForm } from "../../components/ui/date-picker";
-import { Room } from "../models/models";
+import { StayResponse } from "../api/stays/route";
+import { Room, StayStatus } from "../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import RateOverrideForm from "./rate-override";
 import RoomSelector from "./room-selection";
@@ -29,6 +31,9 @@ export default function CreateReservation() {
 		dlNumber: "",
 		comments: "",
 	});
+
+	const [isLoading, setIsLoading] = useState(true);
+	const [currentStays, setCurrentStays] = useState<StayResponse[]>([]);
 
 	const handleDateChange = (value: DateRange | undefined) => {
 		setDateRange(value);
@@ -70,6 +75,28 @@ export default function CreateReservation() {
 		console.log(dateRange, dailyRate, selectedRoom, guestData);
 	};
 
+	const fetchData = async () => {
+		setIsLoading(true);
+
+		try {
+			const response = await get<StayResponse[]>("/stays", {
+				queryParams: {
+					stayStatus: StayStatus.INHOUSE,
+				},
+			});
+			const fetchedData = response.data;
+			setCurrentStays(fetchedData);
+			setIsLoading(false);
+		} catch (error) {
+			console.error("Error fetching stays:", error);
+			setIsLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchData();
+	}, []);
+
 	return (
 		<div className="flex w-full flex-col">
 			<div>
@@ -93,7 +120,7 @@ export default function CreateReservation() {
 								</Card>
 							</div>
 							<div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-								<RoomSelector allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
+								<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
 								<Card x-chunk="dashboard-07-chunk-5">
 									<CardHeader>
 										<CardTitle>Stay summary</CardTitle>

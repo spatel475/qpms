@@ -1,4 +1,5 @@
 "use client";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -10,10 +11,11 @@ import { Room } from "../models/models";
 
 type Props = {
 	allRooms: Array<Room>;
+	occupiedRooms: Array<Room>;
 	onValueChange: (value: Room) => void;
 };
 
-export default function RoomSelector({ allRooms, onValueChange }: Props) {
+export default function RoomSelector({ allRooms, occupiedRooms, onValueChange }: Props) {
 	const [smokingFilter, setSmokingFilter] = useState("");
 	const [roomTypeFilter, setRoomTypeFilter] = useState("");
 	const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
@@ -32,7 +34,8 @@ export default function RoomSelector({ allRooms, onValueChange }: Props) {
 		return matchesSmoking && matchesRoomType;
 	});
 
-	const availableRooms = filteredRooms.filter((room) => room.roomAvailable);
+	// available rooms = all rooms excluding unavailable rooms or occupied room
+	const availableRooms = filteredRooms.filter((room) => room.roomAvailable && occupiedRooms.findIndex((o) => o.id == room.id) == -1);
 	const unavailableRooms = filteredRooms.filter((room) => !room.roomAvailable);
 
 	return (
@@ -69,30 +72,52 @@ export default function RoomSelector({ allRooms, onValueChange }: Props) {
 					</ToggleGroup>
 				</div>
 				<div className="grid gap-2 mt-8">
-					<Label htmlFor="available-rooms">Available Rooms</Label>
-					<ScrollArea>
-						{availableRooms.map((room) => (
-							<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id === selectedRoom?.id ? "default" : "outline"} key={room.id} onClick={() => handleRoomSelectionChange(room)}>
-								<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
-								<CardTitle className="text-sm">{room.roomType}</CardTitle>
-							</Button>
-						))}
-					</ScrollArea>
-					<ScrollArea>
-						{unavailableRooms.length > 0 && (
-							<>
-								<Label htmlFor="unavailable-rooms">Unavailable Rooms</Label>
+					<Accordion type="single" defaultValue="available-rooms">
+						<AccordionItem value="available-rooms">
+							<AccordionTrigger>Available Rooms</AccordionTrigger>
+							<AccordionContent>
 								<ScrollArea>
-									{unavailableRooms.map((room) => (
-										<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant="outline" key={room.id} disabled>
+									{availableRooms.map((room) => (
+										<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id === selectedRoom?.id ? "default" : "outline"} key={room.id} onClick={() => handleRoomSelectionChange(room)}>
 											<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
 											<CardTitle className="text-sm">{room.roomType}</CardTitle>
 										</Button>
 									))}
 								</ScrollArea>
-							</>
+							</AccordionContent>
+						</AccordionItem>
+
+						{occupiedRooms.length > 0 && (
+							<AccordionItem value="occupied-rooms">
+								<AccordionTrigger>Occupied Rooms</AccordionTrigger>
+								<AccordionContent>
+									<ScrollArea>
+										{occupiedRooms.map((room) => (
+											<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant="outline" key={room.id + "_occupied"} disabled>
+												<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
+												<CardTitle className="text-sm">{room.roomType}</CardTitle>
+											</Button>
+										))}
+									</ScrollArea>
+								</AccordionContent>
+							</AccordionItem>
 						)}
-					</ScrollArea>
+						{unavailableRooms.length > 0 && (
+							<AccordionItem value="unavailable-rooms">
+								<AccordionTrigger>Unavailable Rooms</AccordionTrigger>
+								<AccordionContent>
+									<ScrollArea>
+										{unavailableRooms.map((room) => (
+											<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant="outline" key={room.id} disabled>
+												<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
+												<CardTitle className="text-sm">{room.roomType}</CardTitle>
+											</Button>
+										))}
+									</ScrollArea>
+								</AccordionContent>
+							</AccordionItem>
+						)}
+					</Accordion>
 				</div>
 			</CardContent>
 		</Card>
