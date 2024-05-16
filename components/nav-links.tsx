@@ -4,6 +4,13 @@ import { Hotel, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+export const enum Routes {
+	Reservations = "/reservations",
+	CreateReservation = "/reservations/create",
+	UpdateReservation = "/reservations/update",
+	RoomConfig = "/room-config",
+}
+
 const links = [
 	// { name: "Home", href: Routes.Home, icon: LayoutDashboard },
 	{ name: "Reservations", href: Routes.Reservations, icon: LayoutDashboard },
@@ -28,11 +35,4 @@ export default function NavLinks() {
 			})}
 		</>
 	);
-}
-
-export const enum Routes {
-	Reservations = "/reservations",
-	CreateReservation = "/reservations/create",
-	UpdateReservation = "/reservations/update",
-	RoomConfig = "/room-config",
 }
