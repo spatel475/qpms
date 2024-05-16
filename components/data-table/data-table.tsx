@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { DataTablePagination } from "./data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
+	isLoading: boolean;
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
 	pagination: {
@@ -18,7 +19,7 @@ interface DataTableProps<TData, TValue> {
 	setPagination: (pagination: any) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data, pagination, setPagination }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ isLoading, columns, data, pagination, setPagination }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = React.useState({});
 	const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
@@ -82,6 +83,12 @@ export function DataTable<TData, TValue>({ columns, data, pagination, setPaginat
 									))}
 								</TableRow>
 							))
+						) : isLoading ? (
+							<TableRow>
+								<TableCell colSpan={columns.length} className="h-24 text-center">
+									Loading...
+								</TableCell>
+							</TableRow>
 						) : (
 							<TableRow>
 								<TableCell colSpan={columns.length} className="h-24 text-center">

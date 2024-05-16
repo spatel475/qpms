@@ -24,7 +24,7 @@ export default function RootLayout({
 			<head />
 			<body className={cn("bg-background font-sans antialiased", fontSans.variable)}>
 				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-					<div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+					<div className="flex h-screen flex-col md:flex-row">
 						<div className="w-full flex-none">
 							<SideNav />
 							<div className="p-6">{children}</div>

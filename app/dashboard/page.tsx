@@ -12,6 +12,7 @@ import { StayResponse } from "../api/stays/route";
 import { columns } from "./column";
 
 export default function Dashboard() {
+	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState<StayResponse[]>([]);
 	const [pagination, setPagination] = useState({
 		totalCount: 0,
@@ -21,6 +22,8 @@ export default function Dashboard() {
 	});
 
 	const fetchData = async (page: number, pageSize: number) => {
+		setIsLoading(true);
+
 		const cacheKey = `stays-page-${page}-size-${pageSize}`;
 		const cachedData = getCachedData(cacheKey);
 
@@ -33,6 +36,7 @@ export default function Dashboard() {
 				pageSize: cachedData.pageSize,
 				currentPage: page,
 			}));
+			setIsLoading(false);
 		} else {
 			try {
 				const response = await get<StayResponse[]>("/stays", {
@@ -60,8 +64,10 @@ export default function Dashboard() {
 					totalPages,
 					pageSize,
 				});
+				setIsLoading(false);
 			} catch (error) {
 				console.error("Error fetching stays:", error);
+				setIsLoading(false);
 			}
 		}
 	};
@@ -86,7 +92,7 @@ export default function Dashboard() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
+				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
 			</CardContent>
 		</Card>
 	);

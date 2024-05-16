@@ -43,25 +43,25 @@ export default function RoomSelector({ allRooms, onValueChange }: Props) {
 			<CardContent>
 				<Label htmlFor="filters">Quick Filters</Label>
 				<div className="grid gap-2">
-					<ToggleGroup variant="outline" type="single" onValueChange={setSmokingFilter}>
-						<ToggleGroupItem value="S" aria-label="Toggle smoking">
-							<Cigarette className="m-1" />
-							Smoking
+					<ToggleGroup type="single" onValueChange={setSmokingFilter}>
+						<ToggleGroupItem value="S" className="border-2 border-red-500" aria-label="Toggle smoking">
+							<Cigarette className="m-1 " />
+							{/* Smoking */}
 						</ToggleGroupItem>
-						<ToggleGroupItem value="NS" aria-label="Toggle nonsmoking">
+						<ToggleGroupItem value="NS" className="border-2 border-blue-500" aria-label="Toggle nonsmoking">
 							<CigaretteOff className="m-1" />
-							Non-Smoking
+							{/* Non-Smoking */}
 						</ToggleGroupItem>
 					</ToggleGroup>
-					<ToggleGroup variant="outline" type="single" onValueChange={setRoomTypeFilter}>
+					<ToggleGroup className="flex-wrap" variant="outline" type="single" onValueChange={setRoomTypeFilter}>
 						<ToggleGroupItem value="F1" aria-label="Toggle single">
-							Single
+							Single Bed
 						</ToggleGroupItem>
 						<ToggleGroupItem value="F2" aria-label="Toggle double full">
-							Double-Full
+							Double Bed Full
 						</ToggleGroupItem>
 						<ToggleGroupItem value="Q2" aria-label="Toggle double queen">
-							Double-Queen
+							Double Bed Queen
 						</ToggleGroupItem>
 						<ToggleGroupItem value="K1" aria-label="Toggle king">
 							King
