@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Cigarette, CigaretteOff } from "lucide-react";
 import { useState } from "react";
-import { Room } from "../models/models";
+import { Room } from "../../models/models";
 
 type Props = {
 	allRooms: Array<Room>;

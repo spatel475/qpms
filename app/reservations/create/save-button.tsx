@@ -1,3 +1,4 @@
+import { Routes } from "@/components/nav-links";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -21,7 +22,7 @@ export default function SaveToolbar(props: Props) {
 					</AlertDialogHeader>
 					<AlertDialogFooter>
 						<AlertDialogCancel>Cancel</AlertDialogCancel>
-						<Link href="/dashboard">
+						<Link href={Routes.Reservations}>
 							<AlertDialogAction>Discard Reservation</AlertDialogAction>
 						</Link>
 					</AlertDialogFooter>

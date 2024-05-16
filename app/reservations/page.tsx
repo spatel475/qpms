@@ -1,17 +1,20 @@
 "use client";
 
 import { DataTable } from "@/components/data-table/data-table";
+import { Routes } from "@/components/nav-links";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
 import { columns } from "./column";
 
-export default function Dashboard() {
+export default function ReservationsPage() {
+	const router = usePathname();
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState<StayResponse[]>([]);
 	const [pagination, setPagination] = useState({
@@ -82,7 +85,7 @@ export default function Dashboard() {
 				<div className="flex items-center gap-4">
 					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Reservations</h1>
 					<div className="items-center gap-2 md:ml-auto md:flex">
-						<Link href="create-reservation">
+						<Link href={Routes.CreateReservation}>
 							<Button className="gap-1">
 								<PlusCircle className="h-4 w-4" />
 								Create Reservation

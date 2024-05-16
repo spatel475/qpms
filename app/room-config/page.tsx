@@ -1,7 +1,7 @@
 "use client";
 
 import { DataTable } from "@/components/data-table/data-table";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 
 import { Button } from "@/components/ui/button";
 import { get } from "@/lib/fetch";
@@ -79,7 +79,7 @@ export default function RoomConfig() {
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle>Room Configuration</CardTitle>
+				<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Room Configuration</h1>
 				<CardDescription>Manage room types, rates, and availabilty</CardDescription>
 			</CardHeader>
 			<CardContent>
