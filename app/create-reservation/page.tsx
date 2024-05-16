@@ -4,11 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get } from "@/lib/fetch";
 import data from "@/lib/placeholder-data.json";
-import { intervalToDuration } from "date-fns";
+import { compareAsc, intervalToDuration } from "date-fns";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { DatePickerForm } from "../../components/ui/date-picker";
-import { StayResponse } from "../api/stays/route";
+import { CreateStayRequest, StayResponse } from "../api/stays/route";
 import { Room, StayStatus } from "../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import RateOverrideForm from "./rate-override";
@@ -72,7 +72,23 @@ export default function CreateReservation() {
 	}, [dailyRate, duration]);
 
 	const createReservation = () => {
-		console.log(dateRange, dailyRate, selectedRoom, guestData);
+		if (!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1) {
+			console.warn(dateRange, dailyRate, selectedRoom, guestData);
+			return;
+		}
+
+		const request: CreateStayRequest = {
+			startDate: dateRange.from!.toDateString(),
+			endDate: dateRange.to!.toDateString(),
+			dailyRate: dailyRate,
+			totalAmount: totalAmount,
+			amountDue: 0,
+			amountPaid: totalAmount,
+			stayStatus: compareAsc(new Date(), dateRange.from!) == -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
+			guest: guestData,
+			room: selectedRoom,
+		};
+		console.log(request);
 	};
 
 	const fetchData = async () => {
@@ -101,7 +117,7 @@ export default function CreateReservation() {
 		<div className="flex w-full flex-col">
 			<div>
 				<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-					<div className="mx-auto grid max-w-[65rem] flex-1 auto-rows-max gap-4">
+					<div className="mx-auto grid max-w-[70rem] flex-1 auto-rows-max gap-4">
 						<div className="flex items-center gap-4">
 							<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Create Reservation</h1>
 							<div className="hidden items-center gap-2 md:ml-auto md:flex">

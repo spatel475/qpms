@@ -98,3 +98,15 @@ export type StayResponse = {
 	guest: Guest
 	room: Room
 }
+
+export type CreateStayRequest = {
+	startDate: string
+	endDate: string
+	dailyRate: number
+	totalAmount: number
+	amountPaid: number
+	amountDue: number
+	stayStatus: string
+	guest: Guest
+	room: Room
+}
