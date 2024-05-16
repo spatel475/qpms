@@ -6,15 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
 import { columns } from "./column";
 
 export default function ReservationsPage() {
-	const router = usePathname();
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState<StayResponse[]>([]);
 	const [pagination, setPagination] = useState({
@@ -24,13 +22,13 @@ export default function ReservationsPage() {
 		pageSize: 20,
 	});
 
-	const fetchData = async (page: number, pageSize: number) => {
+	const fetchData = async (page: number, pageSize: number, fromCache = true) => {
 		setIsLoading(true);
 
 		const cacheKey = `stays-page-${page}-size-${pageSize}`;
 		const cachedData = getCachedData(cacheKey);
 
-		if (cachedData) {
+		if (cachedData && fromCache) {
 			setData(cachedData.data);
 			setPagination((prev) => ({
 				...prev,
@@ -75,6 +73,10 @@ export default function ReservationsPage() {
 		}
 	};
 
+	const refreshData = async () => {
+		await fetchData(pagination.currentPage, pagination.pageSize, false);
+	};
+
 	useEffect(() => {
 		fetchData(pagination.currentPage, pagination.pageSize);
 	}, [pagination.currentPage, pagination.pageSize]);
@@ -85,6 +87,9 @@ export default function ReservationsPage() {
 				<div className="flex items-center gap-4">
 					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Reservations</h1>
 					<div className="items-center gap-2 md:ml-auto md:flex">
+						<Button className="gap-1" variant="outline" onClick={refreshData}>
+							<RefreshCw className="h-4 w-4" />
+						</Button>
 						<Link href={Routes.CreateReservation}>
 							<Button className="gap-1">
 								<PlusCircle className="h-4 w-4" />
