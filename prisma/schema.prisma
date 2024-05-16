@@ -24,7 +24,7 @@ model Room {
     id                  String   @id @default(uuid())
     roomType            String
     propCode            String
-    roomRate            Decimal
+    roomRate            Decimal  @db.Decimal(18, 2)
     roomAvailable       Boolean
     unavailablityReason String?
     property            Property @relation(fields: [propCode], references: [propCode])
@@ -40,6 +40,8 @@ model Guest {
     dlNumber    String?
     comments    String?
     stays       Stay[]
+
+    @@unique([firstName, lastName, phoneNumber])
 }
 
 enum StayStatus {
@@ -49,14 +51,19 @@ enum StayStatus {
 }
 
 model Stay {
-    id           String   @id @default(uuid())
-    guestId      String
-    roomId       String
-    startDate    DateTime
-    endDate      DateTime
-    checkoutTime DateTime
-    dailyRate    Decimal
-    stayStatus   String
-    guest        Guest    @relation(fields: [guestId], references: [id])
-    room         Room     @relation(fields: [roomId], references: [id])
+    id            String    @id @default(uuid())
+    guestId       String
+    roomId        String
+    startDate     DateTime
+    endDate       DateTime
+    checkoutTime  DateTime?
+    dailyRate     Decimal   @db.Decimal(18, 2)
+    amountDue     Decimal?  @db.Decimal(18, 2)
+    amountPaid    Decimal?  @db.Decimal(18, 2)
+    totalCharge   Decimal?  @db.Decimal(18, 2)
+    numOfAdults   Int?
+    numOfChildren Int?
+    stayStatus    String
+    guest         Guest     @relation(fields: [guestId], references: [id])
+    room          Room      @relation(fields: [roomId], references: [id])
 }

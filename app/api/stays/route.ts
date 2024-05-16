@@ -89,14 +89,80 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
 	try {
 		const data: CreateStayRequest = await request.json();
+		const guest = await upsertGuest(data.guest);
 
-		// const stayRequest = await prisma.stay.create({ });
+		const stayRequest = await prisma.stay.create({
+			data: {
+				guest: {
+					connect: {
+						id: guest.id,
+					},
+				},
+				room: {
+					connect: {
+						id: data.room.id,
+					},
+				},
+				startDate: new Date(data.startDate),
+				endDate: new Date(data.endDate),
+				checkoutTime: new Date(data.endDate),
+				stayStatus: data.stayStatus,
+				dailyRate: data.dailyRate,
+				amountPaid: data.amountPaid,
+				amountDue: data.amountDue,
+				totalCharge: data.totalCharge,
+				numOfAdults: data.numOfAdults,
+				numOfChildren: data.numOfChildren,
+			},
+		});
 
-		return NextResponse.json({ status: 201 });
+		return NextResponse.json({ status: 201, stay: stayRequest });
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json({ error: 'Error creating stay request' }, { status: 500 });
 	}
+}
+
+async function upsertGuest(data: Guest) {
+	// Check if guest exists using unique identifier 
+	let guest = await prisma.guest.findFirst({
+		where: {
+			firstName: data.firstName,
+			lastName: data.lastName,
+			phoneNumber: data.phoneNumber,
+		},
+	});
+
+	// If guest does not exist, create a new guest
+	if (!guest) {
+		guest = await prisma.guest.create({
+			data: {
+				firstName: data.firstName,
+				lastName: data.lastName,
+				address: data.address,
+				phoneNumber: data.phoneNumber,
+				dlNumber: data.dlNumber,
+				comments: data.comments,
+			},
+		});
+	} else {
+		// If guest exists, update the guest's information
+		guest = await prisma.guest.update({
+			where: {
+				id: guest.id,
+			},
+			data: {
+				firstName: data.firstName,
+				lastName: data.lastName,
+				address: data.address,
+				phoneNumber: data.phoneNumber,
+				dlNumber: data.dlNumber,
+				comments: data.comments,
+			},
+		});
+	}
+
+	return guest
 }
 
 export type StayResponse = {
@@ -113,13 +179,15 @@ export type StayResponse = {
 }
 
 export type CreateStayRequest = {
-	startDate: string
-	endDate: string
-	dailyRate: number
-	totalAmount: number
-	amountPaid: number
-	amountDue: number
-	stayStatus: string
 	guest: Guest
 	room: Room
+	startDate: string
+	endDate: string
+	stayStatus: string
+	dailyRate: number
+	amountDue?: number
+	amountPaid?: number
+	totalCharge?: number
+	numOfAdults?: number
+	numOfChildren?: number
 }

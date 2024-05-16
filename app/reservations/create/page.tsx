@@ -1,11 +1,13 @@
 "use client";
 
+import { Routes } from "@/components/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get, post } from "@/lib/fetch";
 import data from "@/lib/placeholder-data.json";
 import { compareAsc, intervalToDuration } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { DatePickerForm } from "../../../components/ui/date-picker";
@@ -18,6 +20,8 @@ import SaveToolbar from "./save-button";
 
 export default function CreateReservation() {
 	const { toast } = useToast();
+	const router = useRouter();
+
 	const [dailyRate, setDailyRate] = useState(0);
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 	const [duration, setDuration] = useState(1);
@@ -83,14 +87,14 @@ export default function CreateReservation() {
 			startDate: dateRange.from!.toDateString(),
 			endDate: dateRange.to!.toDateString(),
 			dailyRate: dailyRate,
-			totalAmount: totalAmount,
+			totalCharge: totalAmount,
 			amountDue: 0,
 			amountPaid: totalAmount,
 			stayStatus: compareAsc(new Date(), dateRange.from!) == -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
 			guest: guestData,
 			room: selectedRoom,
 		};
-		console.log(request);
+		console.debug(request);
 
 		post("/stays", request)
 			.then((x) => {
@@ -99,8 +103,10 @@ export default function CreateReservation() {
 					title: "Reservation created successfully",
 					description: `Reservation Status: ${request.stayStatus}`,
 				});
+				router.push(Routes.Reservations);
 			})
 			.catch((err) => {
+				console.warn(err);
 				toast({
 					variant: "destructive",
 					title: "Uh oh! Something went wrong.",
