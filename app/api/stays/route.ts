@@ -86,6 +86,19 @@ export async function GET(request: NextRequest) {
 	return NextResponse.json(data, { headers });
 }
 
+export async function POST(request: NextRequest) {
+	try {
+		const data: CreateStayRequest = await request.json();
+
+		// const stayRequest = await prisma.stay.create({ });
+
+		return NextResponse.json({ status: 201 });
+	} catch (error) {
+		console.error(error);
+		return NextResponse.json({ error: 'Error creating stay request' }, { status: 500 });
+	}
+}
+
 export type StayResponse = {
 	id: string
 	guestId: string

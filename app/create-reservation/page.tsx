@@ -1,8 +1,9 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
-import { get } from "@/lib/fetch";
+import { get, post } from "@/lib/fetch";
 import data from "@/lib/placeholder-data.json";
 import { compareAsc, intervalToDuration } from "date-fns";
 import { useEffect, useState } from "react";
@@ -16,6 +17,7 @@ import RoomSelector from "./room-selection";
 import SaveToolbar from "./save-button";
 
 export default function CreateReservation() {
+	const { toast } = useToast();
 	const [dailyRate, setDailyRate] = useState(0);
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 	const [duration, setDuration] = useState(1);
@@ -89,6 +91,22 @@ export default function CreateReservation() {
 			room: selectedRoom,
 		};
 		console.log(request);
+
+		post("/stays", request)
+			.then((x) => {
+				toast({
+					variant: "success",
+					title: "Reservation created successfully",
+					description: `Reservation Status: ${request.stayStatus}`,
+				});
+			})
+			.catch((err) => {
+				toast({
+					variant: "destructive",
+					title: "Uh oh! Something went wrong.",
+					description: "There was a problem when creating reservation",
+				});
+			});
 	};
 
 	const fetchData = async () => {
@@ -104,7 +122,7 @@ export default function CreateReservation() {
 			setCurrentStays(fetchedData);
 			setIsLoading(false);
 		} catch (error) {
-			console.error("Error fetching stays:", error);
+			console.warn("Error fetching stays:", error);
 			setIsLoading(false);
 		}
 	};
