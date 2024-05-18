@@ -17,6 +17,7 @@ export type Room = {
 	id: string;
 	roomType: string; // @todo: change to RoomType enum
 	roomRate: number;
+	weeklyRoomRate: number;
 	propCode: string;
 	roomAvailable: boolean;
 	unavailablityReason?: string;

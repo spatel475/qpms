@@ -10,13 +10,6 @@ import { StayResponse } from "../api/stays/route";
 import { StayStatus } from "../models/models";
 
 export const columns: ColumnDef<StayResponse>[] = [
-	// {
-	// 	id: "select",
-	// 	header: ({ table }) => <Checkbox checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")} onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)} aria-label="Select all" className="translate-y-[2px]" />,
-	// 	cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row" className="translate-y-[2px]" />,
-	// 	enableSorting: false,
-	// 	enableHiding: false,
-	// },
 	{
 		header: ({ column }) => <DataTableColumnHeader column={column} title="Guest" />,
 		accessorKey: "guest",
@@ -51,7 +44,7 @@ export const columns: ColumnDef<StayResponse>[] = [
 		enableSorting: false,
 	},
 	{
-		header: ({ column }) => <DataTableColumnHeader column={column} title="Room Type" />,
+		header: ({ column }) => <DataTableColumnHeader column={column} title="Room" />,
 		accessorKey: "room.id",
 		cell: ({ row }) => row.original.room.id,
 		enableSorting: false,

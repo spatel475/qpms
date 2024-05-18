@@ -63,7 +63,7 @@ export default function CreateReservation() {
 
 	const handleRoomChange = (value: Room) => {
 		setSelectedRoom(value);
-		setUnitRate(value.roomRate);
+		isRateTypeWeekly ? setUnitRate(value.weeklyRoomRate) : setUnitRate(value.roomRate);
 	};
 
 	const handleGuestChange = (value: GuestFormValues) => {

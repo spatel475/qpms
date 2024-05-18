@@ -37,6 +37,24 @@ export const roomConfigColumns = (isEditModeOn: boolean) => {
 			},
 		},
 		{
+			accessorKey: "weeklyRoomRate",
+			header: "Weekly Room Rate",
+			cell: ({ row }) => {
+				const amount = parseFloat(row.getValue("weeklyRoomRate"));
+				const formatted = formatCurrency(amount);
+				return flexRender(Input, {
+					defaultValue: amount,
+					readOnly: !isEditModeOn,
+					type: "number",
+					step: 0.01,
+					min: 1,
+					max: 1000,
+					size: 1,
+					onChange: (c) => editedRows(CACHE_KEY, { id: row.original.id, weeklyRoomRate: parseFloat(c.target.value) }),
+				});
+			},
+		},
+		{
 			accessorFn: (x) => x.roomAvailable,
 			header: "Room Available",
 			cell: ({ row }) =>

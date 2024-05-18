@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Room" ADD COLUMN     "weeklyRoomRate" DECIMAL(18,2) NOT NULL DEFAULT 300;

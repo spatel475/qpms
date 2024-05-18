@@ -33,6 +33,7 @@ export async function PUT(request: NextRequest) {
 				where: { id: room.id },
 				data: {
 					roomRate: room.roomRate,
+					weeklyRoomRate: room.weeklyRoomRate,
 					roomAvailable: room.roomAvailable,
 					unavailablityReason: room.unavailablityReason,
 				},
