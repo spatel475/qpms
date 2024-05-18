@@ -1,7 +1,8 @@
 "use client";
 
 import { Routes } from "@/components/nav-links";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get, post } from "@/lib/fetch";
@@ -203,7 +204,7 @@ export default function CreateReservation() {
 	function onRateTypeToggle(rateType: string): void {
 		const isWeekly = rateType === "weeklyRate";
 		setisRateTypeWeekly(isWeekly);
-
+		isWeekly ? setUnitRate(selectedRoom?.weeklyRoomRate ?? 0) : setUnitRate(selectedRoom?.roomRate ?? 0);
 		if (dateRange?.from && dateRange?.to) {
 			const days = Math.abs(differenceInDays(dateRange.from, dateRange.to));
 			const weeks = Math.ceil(days! / 7);
@@ -224,9 +225,19 @@ export default function CreateReservation() {
 								<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 							</div>
 						</div>
-						<div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-4 lg:gap-8">
-							<div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-								<Card x-chunk="dashboard-07-chunk-0">
+						<Tabs defaultValue="account" className="min-w-[50vw] max-w-[80vw]">
+							<TabsList className="w-[80vw]">
+								<TabsTrigger value="account">Guest Information</TabsTrigger>
+								<TabsTrigger value="password">Reservation Details</TabsTrigger>
+							</TabsList>
+							<TabsContent value="account" className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+								<Card>
+									<CardHeader>
+										<CardTitle>Guest Search</CardTitle>
+									</CardHeader>
+									<CardContent>Feature In Progress. Coming Soon...</CardContent>
+								</Card>
+								<Card>
 									<CardHeader>
 										<CardTitle>Guest Information</CardTitle>
 									</CardHeader>
@@ -234,10 +245,10 @@ export default function CreateReservation() {
 										<GuestForm onChange={handleGuestChange} guestData={guestData} />
 									</CardContent>
 								</Card>
-							</div>
-							<div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+							</TabsContent>
+							<TabsContent value="password" className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
 								<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={allRooms} onValueChange={handleRoomChange} isLoading={isLoading}></RoomSelector>
-								<Card x-chunk="dashboard-07-chunk-5">
+								<Card>
 									<CardHeader>
 										<CardTitle>Stay summary</CardTitle>
 									</CardHeader>
@@ -245,13 +256,15 @@ export default function CreateReservation() {
 										<DatePickerForm onValueChange={handleDateChange}></DatePickerForm>
 										<RateToggle onToggle={onRateTypeToggle} />
 										<RateOverrideForm defaultRate={unitRate} onValueChange={handleRateChange} />
+									</CardContent>
+									<CardFooter>
 										<CardTitle className="mt-6">
 											Amount Due: {formatCurrency(unitRate)} x {duration} {isRateTypeWeekly ? "week(s)" : "night(s)"} = {formatCurrency(totalAmount)}
 										</CardTitle>
-									</CardContent>
+									</CardFooter>
 								</Card>
-							</div>
-						</div>
+							</TabsContent>
+						</Tabs>
 						<div className="flex items-center justify-center gap-2 md:hidden">
 							<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 						</div>

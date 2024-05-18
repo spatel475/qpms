@@ -8,8 +8,3 @@
 		- Extend weekly stays without checkout. And track each week extension. Week 1. Week2. etc 
 			
 		copy reservation - link to copied from reservation
-
-- Store Payment mode for stay
-
-- Unique guest identifier
-	- first name, last name, DL/ID # (mandatory) 
