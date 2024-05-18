@@ -9,12 +9,23 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect } from "react";
 
+const phoneNumberSchema = z
+	.string()
+	.optional()
+	.refine(
+		(value) => {
+			if (!value) return true; // Allow empty values (optional)
+			return /^(?:[0-9-()/.]\s?){6,12}[0-9]{1}$/.test(value); // Validate format if value is present
+		},
+		{ message: "Invalid phone number format." }
+	);
+
 export const formSchema = z.object({
 	firstName: z.string().min(2, { message: "First name must be at least 2 characters." }),
 	lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
+	dlNumber: z.string().min(2, { message: "ID must be at least 2 characters." }),
+	phoneNumber: phoneNumberSchema,
 	address: z.string().min(2, { message: "Address must be at least 2 characters." }),
-	phoneNumber: z.string().refine((value) => /^(?:[0-9-()/.]\s?){6,12}[0-9]{1}$/.test(value), { message: "Invalid phone number format." }),
-	dlNumber: z.string().optional(),
 	comments: z.string().max(500).optional(),
 });
 
@@ -70,14 +81,14 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 				/>
 				<FormField
 					control={form.control}
-					name="address"
+					name="dlNumber"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Address</FormLabel>
+							<FormLabel>Driver License / ID Number</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage>{form.formState.errors.address?.message}</FormMessage>
+							<FormMessage>{form.formState.errors.dlNumber?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>
@@ -96,14 +107,14 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 				/>
 				<FormField
 					control={form.control}
-					name="dlNumber"
+					name="address"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Driver License / ID Number</FormLabel>
+							<FormLabel>Address</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
-							<FormMessage>{form.formState.errors.dlNumber?.message}</FormMessage>
+							<FormMessage>{form.formState.errors.address?.message}</FormMessage>
 						</FormItem>
 					)}
 				/>

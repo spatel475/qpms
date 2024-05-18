@@ -2,9 +2,9 @@ export type Guest = {
 	id?: string;
 	firstName: string;
 	lastName: string;
-	address: string;
-	phoneNumber: string;
-	dlNumber?: string;
+	dlNumber: string;
+	address?: string;
+	phoneNumber?: string;
 	comments?: string;
 }
 

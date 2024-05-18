@@ -130,7 +130,7 @@ async function upsertGuest(data: Guest) {
 		where: {
 			firstName: data.firstName,
 			lastName: data.lastName,
-			phoneNumber: data.phoneNumber,
+			dlNumber: data.dlNumber,
 		},
 	});
 
