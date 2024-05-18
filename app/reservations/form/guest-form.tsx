@@ -21,11 +21,12 @@ const phoneNumberSchema = z
 	);
 
 export const formSchema = z.object({
+	id: z.string().optional(),
 	firstName: z.string().min(2, { message: "First name must be at least 2 characters." }),
 	lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
 	dlNumber: z.string().min(2, { message: "ID must be at least 2 characters." }),
 	phoneNumber: phoneNumberSchema,
-	address: z.string().min(2, { message: "Address must be at least 2 characters." }),
+	address: z.string().optional(),
 	comments: z.string().max(500).optional(),
 });
 
@@ -39,7 +40,7 @@ interface GuestFormProps {
 export function GuestForm({ guestData, onChange }: GuestFormProps) {
 	const form = useForm<GuestFormValues>({
 		resolver: zodResolver(formSchema),
-		mode: "onChange",
+		mode: "onTouched",
 		defaultValues: guestData,
 	});
 

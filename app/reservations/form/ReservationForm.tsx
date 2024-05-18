@@ -37,6 +37,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 	const [totalAmount, setTotalAmount] = useState(0);
 	const [isGuestValid, setIsGuestValid] = useState(false);
 	const [guestData, setGuestData] = useState<GuestFormValues>({
+		id: "",
 		firstName: "",
 		lastName: "",
 		address: "",
@@ -50,13 +51,13 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			setUnitRate(existingData.dailyRate || existingData.weeklyRate || 0);
 			setIsRateTypeWeekly(!!existingData.weeklyRate);
 			setDateRange(existingData.startDate && existingData.endDate ? { from: new Date(existingData.startDate), to: new Date(existingData.endDate) } : undefined);
-			
 			const isWeekly = !!existingData.weeklyRate;
 			const diffInDays = Math.abs(differenceInDays(existingData.startDate, existingData.endDate));
 			setDuration(isWeekly ? Math.ceil(diffInDays / 7) : diffInDays);
 			setSelectedRoom(existingData.room);
 			setTotalAmount(existingData.totalCharge || 0);
 			setGuestData({
+				id: existingData.guest?.id || "",
 				firstName: existingData.guest?.firstName || "",
 				lastName: existingData.guest?.lastName || "",
 				address: existingData.guest?.address || "",
@@ -128,6 +129,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 
 		try {
 			if (existingData) {
+				console.log(request);
 				// Editing an existing reservation
 				await put(`/stays/${existingData.id}`, request);
 				toast({
@@ -150,7 +152,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			toast({
 				variant: "destructive",
 				title: "Uh oh! Something went wrong.",
-				description: "There was a problem when creating reservation",
+				description: "There was a problem when saving reservation",
 			});
 		}
 	};

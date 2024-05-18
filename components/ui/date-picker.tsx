@@ -32,7 +32,6 @@ export function DatePickerForm(props: Props) {
 
 	useEffect(() => {
 		setDateRange(props.defaultDates);
-		console.log(props.defaultDates);
 	}, [props.defaultDates]);
 
 	const handleDateChange = (value: DateRange | undefined) => {
