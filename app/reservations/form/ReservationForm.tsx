@@ -29,24 +29,43 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 	const { toast } = useToast();
 	const router = useRouter();
 
-	const [unitRate, setUnitRate] = useState(existingData?.dailyRate || existingData?.weeklyRate || 0);
-	const [isRateTypeWeekly, setIsRateTypeWeekly] = useState(!!existingData?.weeklyRate);
-	const [dateRange, setDateRange] = useState<DateRange | undefined>(existingData?.startDate && existingData?.endDate ? { from: new Date(existingData.startDate), to: new Date(existingData.endDate) } : undefined);
-	const [duration, setDuration] = useState(existingData?.extensions || 0);
-	const [selectedRoom, setSelectedRoom] = useState<Room | undefined>(existingData?.room);
-	const [totalAmount, setTotalAmount] = useState(existingData?.totalCharge || 0);
+	const [unitRate, setUnitRate] = useState(0);
+	const [isRateTypeWeekly, setIsRateTypeWeekly] = useState(false);
+	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
+	const [duration, setDuration] = useState(0);
+	const [selectedRoom, setSelectedRoom] = useState<Room | undefined>(undefined);
+	const [totalAmount, setTotalAmount] = useState(0);
 	const [isGuestValid, setIsGuestValid] = useState(false);
-	const [guestData, setGuestData] = useState<GuestFormValues>(
-		// {...existingData?.guest} ||
-		{
-			firstName: "",
-			lastName: "",
-			address: "",
-			phoneNumber: "",
-			dlNumber: "",
-			comments: "",
+	const [guestData, setGuestData] = useState<GuestFormValues>({
+		firstName: "",
+		lastName: "",
+		address: "",
+		phoneNumber: "",
+		dlNumber: "",
+		comments: "",
+	});
+
+	useEffect(() => {
+		if (existingData) {
+			setUnitRate(existingData.dailyRate || existingData.weeklyRate || 0);
+			setIsRateTypeWeekly(!!existingData.weeklyRate);
+			setDateRange(existingData.startDate && existingData.endDate ? { from: new Date(existingData.startDate), to: new Date(existingData.endDate) } : undefined);
+			
+			const isWeekly = !!existingData.weeklyRate;
+			const diffInDays = Math.abs(differenceInDays(existingData.startDate, existingData.endDate));
+			setDuration(isWeekly ? Math.ceil(diffInDays / 7) : diffInDays);
+			setSelectedRoom(existingData.room);
+			setTotalAmount(existingData.totalCharge || 0);
+			setGuestData({
+				firstName: existingData.guest?.firstName || "",
+				lastName: existingData.guest?.lastName || "",
+				address: existingData.guest?.address || "",
+				phoneNumber: existingData.guest?.phoneNumber || "",
+				dlNumber: existingData.guest?.dlNumber || "",
+				comments: existingData.guest?.comments || "",
+			});
 		}
-	);
+	}, [existingData]);
 
 	const [isLoading, setIsLoading] = useState(true);
 	const [currentStays, setCurrentStays] = useState<StayResponse[]>([]);
@@ -262,14 +281,14 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 							</Card>
 						</TabsContent>
 						<TabsContent value="password" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
-							<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={allRooms} onValueChange={handleRoomChange} isLoading={isLoading} />
+							<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={allRooms} defaultSelectedRoom={selectedRoom} onValueChange={handleRoomChange} isLoading={isLoading} />
 							<Card>
 								<CardHeader>
 									<CardTitle>Stay summary</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<DatePickerForm onValueChange={handleDateChange} />
-									<RateToggle onToggle={onRateTypeToggle} />
+									<DatePickerForm onValueChange={handleDateChange} defaultDates={dateRange} />
+									<RateToggle onToggle={onRateTypeToggle} defaultRateType={isRateTypeWeekly ? "weeklyRate" : "dailyRate"} />
 									<RateOverrideForm defaultRate={unitRate} onValueChange={handleRateChange} />
 								</CardContent>
 								<CardFooter>

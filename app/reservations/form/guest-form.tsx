@@ -44,11 +44,15 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 	});
 
 	useEffect(() => {
+		form.reset(guestData);
+	}, [guestData, form]);
+
+	useEffect(() => {
 		const subscription = form.watch((values) => {
 			onChange(values as GuestFormValues);
 		});
 		return () => subscription.unsubscribe();
-	}, [form, form.watch, onChange]);
+	}, [form, onChange]);
 
 	return (
 		<Form {...form}>
