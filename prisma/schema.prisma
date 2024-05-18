@@ -57,13 +57,16 @@ model Stay {
     startDate     DateTime
     endDate       DateTime
     checkoutTime  DateTime?
-    dailyRate     Decimal   @db.Decimal(18, 2)
+    dailyRate     Decimal?  @db.Decimal(18, 2)
+    weeklyRate    Decimal?  @db.Decimal(18, 2)
     amountDue     Decimal?  @db.Decimal(18, 2)
     amountPaid    Decimal?  @db.Decimal(18, 2)
     totalCharge   Decimal?  @db.Decimal(18, 2)
+    paymentMode   String    @default("cash")
     numOfAdults   Int?
     numOfChildren Int?
     stayStatus    String
+    extensions    Int       @default(1)
     guest         Guest     @relation(fields: [guestId], references: [id])
     room          Room      @relation(fields: [roomId], references: [id])
 }

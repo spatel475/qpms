@@ -106,11 +106,14 @@ export async function POST(request: NextRequest) {
 				checkoutTime: new Date(data.endDate),
 				stayStatus: data.stayStatus,
 				dailyRate: data.dailyRate,
+				weeklyRate: data.weeklyRate,
+				extensions: data.extensions,
 				amountPaid: data.amountPaid,
 				amountDue: data.amountDue,
 				totalCharge: data.totalCharge,
 				numOfAdults: data.numOfAdults,
 				numOfChildren: data.numOfChildren,
+				paymentMode: data.paymentMode,
 			},
 		});
 
@@ -182,7 +185,10 @@ export type CreateStayRequest = {
 	startDate: string
 	endDate: string
 	stayStatus: string
-	dailyRate: number
+	dailyRate?: number
+	weeklyRate?: number
+	extensions?: number
+	paymentMode: string
 	amountDue?: number
 	amountPaid?: number
 	totalCharge?: number

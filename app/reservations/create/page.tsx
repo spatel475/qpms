@@ -6,7 +6,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get, post } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
-import { compareAsc, intervalToDuration } from "date-fns";
+import { compareAsc, differenceInDays } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
@@ -15,6 +15,7 @@ import { CreateStayRequest, StayResponse } from "../../api/stays/route";
 import { Room, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import RateOverrideForm from "./rate-override";
+import RateToggle from "./rate-toggle";
 import RoomSelector from "./room-selection";
 import SaveToolbar from "./save-button";
 
@@ -22,14 +23,14 @@ export default function CreateReservation() {
 	const { toast } = useToast();
 	const router = useRouter();
 
-	const [dailyRate, setDailyRate] = useState(0);
+	const [unitRate, setUnitRate] = useState(0);
+	const [isRateTypeWeekly, setisRateTypeWeekly] = useState(false);
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
-	const [duration, setDuration] = useState(1);
+	const [duration, setDuration] = useState(0);
 	const [selectedRoom, setSelectedRoom] = useState<Room | undefined>();
 	const [totalAmount, setTotalAmount] = useState(0);
 	const [isGuestValid, setIsGuestValid] = useState(false);
 	const [guestData, setGuestData] = useState<GuestFormValues>({
-		// id: "",
 		firstName: "",
 		lastName: "",
 		address: "",
@@ -44,20 +45,25 @@ export default function CreateReservation() {
 	const handleDateChange = (value: DateRange | undefined) => {
 		setDateRange(value);
 		if (value?.from && value?.to) {
-			const intervalDuration = intervalToDuration({ start: value.from, end: value.to });
-			setDuration(intervalDuration.days ?? 0); // Update duration state
+			if (value?.from && value?.to) {
+				const days = Math.abs(differenceInDays(value.from, value.to));
+				const weeks = Math.ceil(days! / 7);
+				isRateTypeWeekly ? setDuration(weeks ?? 0) : setDuration(days ?? 0);
+			} else {
+				setDuration(0); // Reset duration if date range is incomplete
+			}
 		} else {
 			setDuration(0); // Reset duration if date range is incomplete
 		}
 	};
 
-	const handleCurrencyChange = (value: number) => {
-		setDailyRate(value);
+	const handleRateChange = (value: number) => {
+		setUnitRate(value);
 	};
 
 	const handleRoomChange = (value: Room) => {
 		setSelectedRoom(value);
-		setDailyRate(value.roomRate);
+		setUnitRate(value.roomRate);
 	};
 
 	const handleGuestChange = (value: GuestFormValues) => {
@@ -65,36 +71,37 @@ export default function CreateReservation() {
 	};
 
 	useEffect(() => {
-		// Validate guestData whenever it changes
 		const validationResult = FormSchema.safeParse(guestData);
 		setIsGuestValid(validationResult.success);
-		// if (!validationResult.success) {
-		// 	console.error("Validation errors:", validationResult.error.errors);
-		// }
 	}, [guestData]);
 
 	useEffect(() => {
-		setTotalAmount(dailyRate * duration);
-	}, [dailyRate, duration]);
+		setTotalAmount(unitRate * duration);
+	}, [unitRate, duration, isRateTypeWeekly]);
 
 	const createReservation = () => {
-		if (!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1) {
-			console.warn(dateRange, dailyRate, selectedRoom, guestData);
+		if (!dateRange || !isGuestValid || !selectedRoom || unitRate < 1) {
+			console.warn(dateRange, unitRate, selectedRoom, guestData);
 			return;
 		}
 
 		const request: CreateStayRequest = {
 			startDate: dateRange.from!.toDateString(),
 			endDate: dateRange.to!.toDateString(),
-			dailyRate: dailyRate,
+			dailyRate: isRateTypeWeekly ? undefined : unitRate,
+			weeklyRate: isRateTypeWeekly ? unitRate : undefined,
 			totalCharge: totalAmount,
 			amountDue: 0,
 			amountPaid: totalAmount,
-			stayStatus: compareAsc(new Date(), dateRange.from!) == -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
+			paymentMode: "credit",
+			numOfAdults: 2,
+			numOfChildren: 0,
+			stayStatus: compareAsc(new Date(), dateRange.from!) === -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
 			guest: guestData,
 			room: selectedRoom,
+			extensions: isRateTypeWeekly ? duration : 0,
 		};
-		console.debug(request);
+		console.log(request);
 
 		post("/stays", request)
 			.then((x) => {
@@ -134,12 +141,7 @@ export default function CreateReservation() {
 	};
 
 	const [allRooms, setAllRooms] = useState<Room[]>([]);
-	const [pagination, setPagination] = useState({
-		totalCount: 0,
-		totalPages: 0,
-		currentPage: 1,
-		pageSize: 50,
-	});
+	const [pagination, setPagination] = useState({ totalCount: 0, totalPages: 0, currentPage: 1, pageSize: 50 });
 
 	const fetchAllRooms = async (page: number, pageSize: number) => {
 		setIsLoading(true);
@@ -192,10 +194,24 @@ export default function CreateReservation() {
 			}
 		}
 	};
+
 	useEffect(() => {
 		fetchAllRooms(pagination.currentPage, pagination.pageSize);
 		fetchInHouseStays();
 	}, []);
+
+	function onRateTypeToggle(rateType: string): void {
+		const isWeekly = rateType === "weeklyRate";
+		setisRateTypeWeekly(isWeekly);
+
+		if (dateRange?.from && dateRange?.to) {
+			const days = Math.abs(differenceInDays(dateRange.from, dateRange.to));
+			const weeks = Math.ceil(days! / 7);
+			isWeekly ? setDuration(weeks ?? 0) : setDuration(days ?? 0);
+		} else {
+			setDuration(0); // Reset duration if date range is incomplete
+		}
+	}
 
 	return (
 		<div className="flex w-full flex-col">
@@ -205,7 +221,7 @@ export default function CreateReservation() {
 						<div className="flex items-center gap-4">
 							<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Create Reservation</h1>
 							<div className="hidden items-center gap-2 md:ml-auto md:flex">
-								<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
+								<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 							</div>
 						</div>
 						<div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-4 lg:gap-8">
@@ -227,16 +243,17 @@ export default function CreateReservation() {
 									</CardHeader>
 									<CardContent>
 										<DatePickerForm onValueChange={handleDateChange}></DatePickerForm>
-										<RateOverrideForm defaultRate={dailyRate} onValueChange={handleCurrencyChange} />
+										<RateToggle onToggle={onRateTypeToggle} />
+										<RateOverrideForm defaultRate={unitRate} onValueChange={handleRateChange} />
 										<CardTitle className="mt-6">
-											Amount Due: {formatCurrency(dailyRate)} x {duration} nights = {formatCurrency(totalAmount)}
+											Amount Due: {formatCurrency(unitRate)} x {duration} {isRateTypeWeekly ? "week(s)" : "night(s)"} = {formatCurrency(totalAmount)}
 										</CardTitle>
 									</CardContent>
 								</Card>
 							</div>
 						</div>
 						<div className="flex items-center justify-center gap-2 md:hidden">
-							<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || dailyRate < 1} />
+							<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 						</div>
 					</div>
 				</main>
