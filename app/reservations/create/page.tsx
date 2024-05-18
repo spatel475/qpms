@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get, post } from "@/lib/fetch";
-import data from "@/lib/placeholder-data.json";
+import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { compareAsc, intervalToDuration } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -115,7 +115,7 @@ export default function CreateReservation() {
 			});
 	};
 
-	const fetchData = async () => {
+	const fetchInHouseStays = async () => {
 		setIsLoading(true);
 
 		try {
@@ -133,8 +133,68 @@ export default function CreateReservation() {
 		}
 	};
 
+	const [allRooms, setAllRooms] = useState<Room[]>([]);
+	const [pagination, setPagination] = useState({
+		totalCount: 0,
+		totalPages: 0,
+		currentPage: 1,
+		pageSize: 50,
+	});
+
+	const fetchAllRooms = async (page: number, pageSize: number) => {
+		setIsLoading(true);
+
+		const cacheKey = `rooms-page-${page}-size-${pageSize}`;
+		const cachedData = getCachedData(cacheKey);
+
+		if (cachedData) {
+			setAllRooms(cachedData.data);
+			setPagination((prev) => ({
+				...prev,
+				totalCount: cachedData.totalCount,
+				totalPages: cachedData.totalPages,
+				pageSize: cachedData.pageSize,
+				currentPage: page,
+			}));
+			setIsLoading(false);
+		} else {
+			try {
+				const response = await get<Room[]>("/rooms", {
+					queryParams: {
+						page: pagination.currentPage.toString(),
+						limit: pagination.pageSize.toString(),
+					},
+				});
+				const fetchedData = response.data;
+				const totalCount = parseInt(response.headers["x-total-count"], 10);
+				const totalPages = Math.ceil(totalCount / pageSize);
+
+				setAllRooms(fetchedData);
+				setPagination((prev) => ({
+					...prev,
+					totalCount,
+					totalPages,
+					pageSize,
+					currentPage: page,
+				}));
+
+				setCachedData(cacheKey, {
+					data: fetchedData,
+					totalCount,
+					totalPages,
+					pageSize,
+				});
+
+				setIsLoading(false);
+			} catch (error) {
+				console.error("Error fetching rooms:", error);
+				setIsLoading(false);
+			}
+		}
+	};
 	useEffect(() => {
-		fetchData();
+		fetchAllRooms(pagination.currentPage, pagination.pageSize);
+		fetchInHouseStays();
 	}, []);
 
 	return (
@@ -160,7 +220,7 @@ export default function CreateReservation() {
 								</Card>
 							</div>
 							<div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
-								<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={data.rooms} onValueChange={handleRoomChange}></RoomSelector>
+								<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={allRooms} onValueChange={handleRoomChange} isLoading={isLoading}></RoomSelector>
 								<Card x-chunk="dashboard-07-chunk-5">
 									<CardHeader>
 										<CardTitle>Stay summary</CardTitle>
