@@ -1,9 +1,7 @@
 import { Guest, Room } from '@/app/models/models';
 import { getPaginationInfo, getPaginationResponseHeaders } from '@/lib/api-utils.ts/pagination';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
-
-const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
 	const url = new URL(request.url);
@@ -108,11 +106,14 @@ export async function POST(request: NextRequest) {
 				checkoutTime: new Date(data.endDate),
 				stayStatus: data.stayStatus,
 				dailyRate: data.dailyRate,
+				weeklyRate: data.weeklyRate,
+				extensions: data.extensions,
 				amountPaid: data.amountPaid,
 				amountDue: data.amountDue,
 				totalCharge: data.totalCharge,
 				numOfAdults: data.numOfAdults,
 				numOfChildren: data.numOfChildren,
+				paymentMode: data.paymentMode,
 			},
 		});
 
@@ -129,7 +130,7 @@ async function upsertGuest(data: Guest) {
 		where: {
 			firstName: data.firstName,
 			lastName: data.lastName,
-			phoneNumber: data.phoneNumber,
+			dlNumber: data.dlNumber,
 		},
 	});
 
@@ -184,7 +185,10 @@ export type CreateStayRequest = {
 	startDate: string
 	endDate: string
 	stayStatus: string
-	dailyRate: number
+	dailyRate?: number
+	weeklyRate?: number
+	extensions?: number
+	paymentMode: string
 	amountDue?: number
 	amountPaid?: number
 	totalCharge?: number

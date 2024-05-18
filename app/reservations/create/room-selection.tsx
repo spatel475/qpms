@@ -12,10 +12,11 @@ import { Room } from "../../models/models";
 type Props = {
 	allRooms: Array<Room>;
 	occupiedRooms: Array<Room>;
+	isLoading: boolean;
 	onValueChange: (value: Room) => void;
 };
 
-export default function RoomSelector({ allRooms, occupiedRooms, onValueChange }: Props) {
+export default function RoomSelector({ allRooms, occupiedRooms, isLoading, onValueChange }: Props) {
 	const [smokingFilter, setSmokingFilter] = useState("");
 	const [roomTypeFilter, setRoomTypeFilter] = useState("");
 	const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
@@ -77,6 +78,7 @@ export default function RoomSelector({ allRooms, occupiedRooms, onValueChange }:
 							<AccordionTrigger>Available Rooms</AccordionTrigger>
 							<AccordionContent>
 								<ScrollArea>
+									{isLoading ? "Loading..." : ""}
 									{availableRooms.map((room) => (
 										<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id === selectedRoom?.id ? "default" : "outline"} key={room.id} onClick={() => handleRoomSelectionChange(room)}>
 											<CardTitle className="text-lg font-bold">{room.id}</CardTitle>

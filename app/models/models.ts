@@ -2,9 +2,9 @@ export type Guest = {
 	id?: string;
 	firstName: string;
 	lastName: string;
-	address: string;
-	phoneNumber: string;
-	dlNumber?: string;
+	dlNumber: string;
+	address?: string;
+	phoneNumber?: string;
 	comments?: string;
 }
 
@@ -17,6 +17,7 @@ export type Room = {
 	id: string;
 	roomType: string; // @todo: change to RoomType enum
 	roomRate: number;
+	weeklyRoomRate: number;
 	propCode: string;
 	roomAvailable: boolean;
 	unavailablityReason?: string;

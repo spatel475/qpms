@@ -34,7 +34,7 @@ export default function RateOverrideForm(props: Props) {
 	return (
 		<Form {...form}>
 			<form className="flex flex-col gap-8">
-				<CurrencyInput form={form} label="Daily Rate" name="dailyRate" onValueChange={handleCurrencyChange} />
+				<CurrencyInput form={form} label="" name="dailyRate" onValueChange={handleCurrencyChange} />
 			</form>
 		</Form>
 	);
