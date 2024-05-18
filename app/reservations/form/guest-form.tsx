@@ -58,7 +58,7 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 					name="firstName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>First Name</FormLabel>
+							<FormLabel>First Name *</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
@@ -71,7 +71,7 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 					name="lastName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Last Name</FormLabel>
+							<FormLabel>Last Name *</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
@@ -84,7 +84,7 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 					name="dlNumber"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Driver License / ID Number</FormLabel>
+							<FormLabel>Driver License / ID Number *</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>

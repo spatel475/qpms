@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 
 export const enum Routes {
 	Reservations = "/reservations",
-	CreateReservation = "/reservations/create",
-	UpdateReservation = "/reservations/update",
+	CreateReservation = "/reservations/form",
+	// UpdateReservation = "/reservations/update",
 	RoomConfig = "/room-config",
 }
 

@@ -29,9 +29,17 @@ export type Stay = {
 	roomId: string;
 	startDate: string;
 	endDate: string;
-	checkoutTime: string;
-	dailyRate: number,
+	checkoutTime?: string;
+	dailyRate?: number,
+	weeklyRate?: number,
+	amountDue?: number,
+	amountPaid?: number,
+	totalCharge?: number,
+	paymentMode: string;
+	numOfAdults?: number,
+	numOfChildren?: number,
 	stayStatus: string,// @todo: change to StayStatus enum
+	extensions?: number,
 	guest?: Guest
 	room?: Room
 }
