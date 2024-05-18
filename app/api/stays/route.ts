@@ -1,9 +1,7 @@
 import { Guest, Room } from '@/app/models/models';
 import { getPaginationInfo, getPaginationResponseHeaders } from '@/lib/api-utils.ts/pagination';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
-
-const prisma = new PrismaClient();
 
 export async function GET(request: NextRequest) {
 	const url = new URL(request.url);
