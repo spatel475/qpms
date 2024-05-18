@@ -218,19 +218,19 @@ export default function CreateReservation() {
 		<div className="flex w-full flex-col">
 			<div>
 				<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-					<div className="mx-auto grid max-w-[70rem] flex-1 auto-rows-max gap-4">
+					<div className="mx-auto grid max-w-[100%] flex-1 auto-rows-max gap-4">
 						<div className="flex items-center gap-4">
 							<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Create Reservation</h1>
 							<div className="hidden items-center gap-2 md:ml-auto md:flex">
 								<SaveToolbar onSave={createReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 							</div>
 						</div>
-						<Tabs defaultValue="account" className="min-w-[50vw] max-w-[80vw]">
-							<TabsList className="w-[80vw]">
+						<Tabs defaultValue="account" className="lg:min-w-[60vw] lg:max-w-min">
+							<TabsList className="">
 								<TabsTrigger value="account">Guest Information</TabsTrigger>
 								<TabsTrigger value="password">Reservation Details</TabsTrigger>
 							</TabsList>
-							<TabsContent value="account" className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+							<TabsContent value="account" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
 								<Card>
 									<CardHeader>
 										<CardTitle>Guest Search</CardTitle>
@@ -246,7 +246,7 @@ export default function CreateReservation() {
 									</CardContent>
 								</Card>
 							</TabsContent>
-							<TabsContent value="password" className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+							<TabsContent value="password" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
 								<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={allRooms} onValueChange={handleRoomChange} isLoading={isLoading}></RoomSelector>
 								<Card>
 									<CardHeader>
