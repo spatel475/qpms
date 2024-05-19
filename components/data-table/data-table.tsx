@@ -64,15 +64,19 @@ export function DataTable<TData, TValue>({ isLoading, columns, data, pagination,
 	}, [pagination.totalPages]);
 
 	const toggleExpandRow = (rowId: string) => {
-		setExpandedRows((prev) => {
-			const newExpandedRows = new Set(prev);
-			if (newExpandedRows.has(rowId)) {
-				newExpandedRows.delete(rowId);
-			} else {
-				newExpandedRows.add(rowId);
-			}
-			return newExpandedRows;
-		});
+		// multi expand allowed
+		// setExpandedRows((prev) => {
+		// 	const newExpandedRows = new Set(prev);
+		// 	if (newExpandedRows.has(rowId)) {
+		// 		newExpandedRows.delete(rowId);
+		// 	} else {
+		// 		newExpandedRows.add(rowId);
+		// 	}
+		// 	return newExpandedRows;
+		// });
+
+		// single
+		setExpandedRows(new Set([rowId]));
 	};
 
 	return (

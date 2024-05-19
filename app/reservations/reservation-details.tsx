@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
@@ -87,25 +87,6 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 							<strong>Children:</strong> {row.numOfChildren}
 						</p>
 					</CardContent>
-					<CardFooter className="flex justify-evenly">
-						<DropdownMenu>
-							<DropdownMenuTrigger asChild>
-								<Button variant="outline">
-									Update Stay Status
-									<ChevronDown />
-								</Button>
-							</DropdownMenuTrigger>
-							<DropdownMenuContent>
-								<DropdownMenuLabel>Guest has ...</DropdownMenuLabel>
-								<DropdownMenuRadioGroup value={newStayStatus} onValueChange={setNewStayStatus}>
-									<DropdownMenuRadioItem value={StayStatus.BOOKED}>Canceled Reservation</DropdownMenuRadioItem>
-									<DropdownMenuRadioItem value={StayStatus.INHOUSE}>Checked In</DropdownMenuRadioItem>
-									<DropdownMenuRadioItem value={StayStatus.CHECKEDOUT}>Checked Out</DropdownMenuRadioItem>
-								</DropdownMenuRadioGroup>
-							</DropdownMenuContent>
-						</DropdownMenu>
-						<Button onClick={save}>Save</Button>
-					</CardFooter>
 				</Card>
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -125,6 +106,27 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 						</p>
 					</CardContent>
 				</Card>
+			</div>
+			<div className="flex justify-center gap-4 mt-4">
+				<DropdownMenu>
+					<DropdownMenuTrigger asChild>
+						<Button variant="outline">
+							Update Stay Status
+							<ChevronDown />
+						</Button>
+					</DropdownMenuTrigger>
+					<DropdownMenuContent>
+						<DropdownMenuLabel>Guest has ...</DropdownMenuLabel>
+						<DropdownMenuRadioGroup value={newStayStatus} onValueChange={setNewStayStatus}>
+							<DropdownMenuRadioItem value={StayStatus.BOOKED}>Booked Reservation</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value={StayStatus.INHOUSE}>Checked In</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value={StayStatus.CHECKEDOUT}>Checked Out</DropdownMenuRadioItem>
+						</DropdownMenuRadioGroup>
+					</DropdownMenuContent>
+				</DropdownMenu>
+				<Button onClick={save} disabled={row.stayStatus === newStayStatus}>
+					Save
+				</Button>
 			</div>
 		</div>
 	);
