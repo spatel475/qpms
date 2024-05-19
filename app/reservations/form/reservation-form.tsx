@@ -111,7 +111,6 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 	};
 
 	const handlePaymentDetailChanges = (details: { amountDue: number; amountPaid: number; paymentMode: string; numOfAdults: number; numOfChildren: number }) => {
-		console.log(details);
 		setPaymentDetails(details);
 	};
 
@@ -148,8 +147,8 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		};
 
 		try {
+			console.log(request);
 			if (existingData && !isCopy) {
-				console.log(request);
 				// Editing an existing reservation
 				await put(`/stays/${existingData.id}`, request);
 				toast({

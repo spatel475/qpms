@@ -9,7 +9,6 @@ type Props = {
 export default function RateToggle({ onToggle, defaultRateType }: Props) {
 	const [rateType, setRateType] = useState("dailyRate");
 	useEffect(() => {
-		console.log(defaultRateType)
 		setRateType(defaultRateType);
 	}, [defaultRateType]);
 
