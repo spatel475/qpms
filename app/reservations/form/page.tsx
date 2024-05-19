@@ -3,7 +3,7 @@ import { Stay } from "@/app/models/models";
 import { get } from "@/lib/fetch";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import ReservationForm from "./ReservationForm";
+import ReservationForm from "./reservation-form";
 
 const ReservationFormPage = () => {
 	const searchParams = useSearchParams();
