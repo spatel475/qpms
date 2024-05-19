@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
 const fontSans = Inter({
@@ -28,7 +29,9 @@ export default function RootLayout({
 					<div className="flex h-screen flex-col md:flex-row">
 						<div className="w-full flex-none">
 							<SideNav />
-							<div className="p-6">{children}</div>
+							<Suspense>
+								<div className="p-6">{children}</div>
+							</Suspense>
 						</div>
 					</div>
 				</ThemeProvider>
