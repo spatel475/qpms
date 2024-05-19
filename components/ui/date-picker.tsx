@@ -46,7 +46,7 @@ export function DatePickerForm(props: Props) {
 					control={form.control}
 					name="dateRange"
 					render={({ field }) => (
-						<FormItem className="flex flex-col mb-6">
+						<FormItem className="flex flex-col">
 							<FormLabel>Select stay duration</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
