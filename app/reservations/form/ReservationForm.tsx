@@ -128,7 +128,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		};
 
 		try {
-			if (existingData) {
+			if (existingData && !isCopy) {
 				console.log(request);
 				// Editing an existing reservation
 				await put(`/stays/${existingData.id}`, request);
@@ -256,7 +256,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			<main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
 				<div className="mx-auto grid max-w-[100%] flex-1 auto-rows-max gap-4">
 					<div className="flex items-center gap-4">
-						<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">{existingData ? "Edit Reservation" : "Create Reservation"}</h1>
+						<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">{existingData && !isCopy ? "Edit Reservation" : "Create Reservation"}</h1>
 						<div className="hidden items-center gap-2 md:ml-auto md:flex">
 							<SaveToolbar onSave={handleSaveReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 						</div>

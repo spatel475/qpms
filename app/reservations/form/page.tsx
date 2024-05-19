@@ -8,6 +8,7 @@ import ReservationForm from "./ReservationForm";
 const ReservationFormPage = () => {
 	const searchParams = useSearchParams();
 	const reservationId = searchParams.get("id");
+	const isCopy = searchParams.get("copy") === "1" ?? false;
 	const [existingData, setExistingData] = useState<Stay | undefined>();
 
 	useEffect(() => {
@@ -25,7 +26,7 @@ const ReservationFormPage = () => {
 
 	return (
 		<div>
-			<ReservationForm existingData={existingData} isCopy={false} />
+			<ReservationForm existingData={existingData} isCopy={isCopy} />
 		</div>
 	);
 };

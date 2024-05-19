@@ -72,8 +72,13 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 						menuItems={[
 							{
 								id: "edit",
-								label: "Edit",
+								label: "Edit reservation",
 								action: () => router.push(`${Routes.ReservationForm}?id=${row.original.id}`),
+							},
+							{
+								id: "copy",
+								label: "Make new copy",
+								action: () => router.push(`${Routes.ReservationForm}?id=${row.original.id}&copy=1`),
 							},
 						]}
 					/>
