@@ -1,7 +1,7 @@
 "use client";
 
 import { Routes } from "@/components/nav-links";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DatePickerForm } from "@/components/ui/date-picker";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
@@ -15,6 +15,7 @@ import { DateRange } from "react-day-picker";
 import { CreateStayRequest, StayResponse } from "../../api/stays/route";
 import { Room, Stay, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
+import { PaymentDetails } from "./payement-details-form";
 import RateOverrideForm from "./rate-override";
 import RateToggle from "./rate-toggle";
 import RoomSelector from "./room-selection";
@@ -45,6 +46,13 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		dlNumber: "",
 		comments: "",
 	});
+	const [paymentDetails, setPaymentDetails] = useState<{
+		amountDue?: number;
+		amountPaid?: number;
+		paymentMode?: string;
+		numOfAdults?: number;
+		numOfChildren?: number;
+	}>();
 
 	useEffect(() => {
 		if (existingData) {
@@ -64,6 +72,13 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 				phoneNumber: existingData.guest?.phoneNumber || "",
 				dlNumber: existingData.guest?.dlNumber || "",
 				comments: existingData.guest?.comments || "",
+			});
+			setPaymentDetails({
+				amountDue: existingData?.amountDue,
+				amountPaid: existingData?.amountPaid,
+				paymentMode: existingData?.paymentMode,
+				numOfAdults: existingData.numOfAdults,
+				numOfChildren: existingData.numOfChildren,
 			});
 		}
 	}, [existingData]);
@@ -95,6 +110,10 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		setGuestData(value);
 	};
 
+	const handlePaymentDetailChanges = (details: { amountDue: number; amountPaid: number; paymentMode: string; numOfAdults: number; numOfChildren: number }) => {
+		setPaymentDetails(details);
+	};
+
 	useEffect(() => {
 		const validationResult = FormSchema.safeParse(guestData);
 		setIsGuestValid(validationResult.success);
@@ -116,11 +135,11 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			dailyRate: isRateTypeWeekly ? undefined : unitRate,
 			weeklyRate: isRateTypeWeekly ? unitRate : undefined,
 			totalCharge: totalAmount,
-			amountDue: 0,
-			amountPaid: totalAmount,
-			paymentMode: "credit",
-			numOfAdults: 2,
-			numOfChildren: 0,
+			amountDue: paymentDetails?.amountDue,
+			amountPaid: paymentDetails?.amountPaid,
+			paymentMode: paymentDetails?.paymentMode ?? "cash",
+			numOfAdults: paymentDetails?.numOfAdults,
+			numOfChildren: paymentDetails?.numOfChildren,
 			stayStatus: compareAsc(new Date(), dateRange.from!) === -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
 			guest: guestData,
 			room: selectedRoom,
@@ -128,8 +147,8 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		};
 
 		try {
+			console.log(request);
 			if (existingData && !isCopy) {
-				console.log(request);
 				// Editing an existing reservation
 				await put(`/stays/${existingData.id}`, request);
 				toast({
@@ -261,12 +280,12 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 							<SaveToolbar onSave={handleSaveReservation} buttonDisabled={!dateRange || !isGuestValid || !selectedRoom || unitRate < 1} />
 						</div>
 					</div>
-					<Tabs defaultValue="account" className="lg:min-w-[60vw] lg:max-w-min">
+					<Tabs defaultValue="guest" className="lg:min-w-[60vw] lg:max-w-min">
 						<TabsList>
-							<TabsTrigger value="account">Guest Information</TabsTrigger>
-							<TabsTrigger value="password">Reservation Details</TabsTrigger>
+							<TabsTrigger value="guest">Guest Information</TabsTrigger>
+							<TabsTrigger value="stay">Reservation Details</TabsTrigger>
 						</TabsList>
-						<TabsContent value="account" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
+						<TabsContent value="guest" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
 							<Card>
 								<CardHeader>
 									<CardTitle>Guest Search</CardTitle>
@@ -282,8 +301,9 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 								</CardContent>
 							</Card>
 						</TabsContent>
-						<TabsContent value="password" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
+						<TabsContent value="stay" className="grid gap-4 lg:gap-8 lg:grid-cols-2 xl:grid-cols-2">
 							<RoomSelector occupiedRooms={currentStays.map((s) => s.room)} allRooms={allRooms} defaultSelectedRoom={selectedRoom} onValueChange={handleRoomChange} isLoading={isLoading} />
+
 							<Card>
 								<CardHeader>
 									<CardTitle>Stay summary</CardTitle>
@@ -292,12 +312,13 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 									<DatePickerForm onValueChange={handleDateChange} defaultDates={dateRange} />
 									<RateToggle onToggle={onRateTypeToggle} defaultRateType={isRateTypeWeekly ? "weeklyRate" : "dailyRate"} />
 									<RateOverrideForm defaultRate={unitRate} onValueChange={handleRateChange} />
-								</CardContent>
-								<CardFooter>
-									<CardTitle className="mt-6">
-										Amount Due: {formatCurrency(unitRate)} x {duration} {isRateTypeWeekly ? "week(s)" : "night(s)"} = {formatCurrency(totalAmount)}
+									<CardTitle className="mt-4 text-md">
+										{formatCurrency(unitRate)} x {duration} {isRateTypeWeekly ? "week(s)" : "night(s)"}:
 									</CardTitle>
-								</CardFooter>
+									<CardTitle className="mt-0 text-lg">Amount Due: {formatCurrency(totalAmount)}</CardTitle>
+
+									<PaymentDetails amountDue={existingData?.amountDue} amountPaid={existingData?.amountPaid} numOfAdults={existingData?.numOfAdults} numOfChildren={existingData?.numOfChildren} paymentMode={existingData?.paymentMode} onChange={handlePaymentDetailChanges} />
+								</CardContent>
 							</Card>
 						</TabsContent>
 					</Tabs>

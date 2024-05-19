@@ -1,15 +1,40 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
+import { put } from "@/lib/fetch";
 import { differenceInDays } from "date-fns";
-import { Calendar, CreditCard, User2 } from "lucide-react";
-import React from "react";
+import { Calendar, ChevronDown, CreditCard, User2 } from "lucide-react";
+import React, { useState } from "react";
 import { StayResponse } from "../api/stays/route";
+import { StayStatus } from "../models/models";
 
 interface ReservationDetailProps {
 	row: StayResponse;
 }
 
 const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
+	const [newStayStatus, setNewStayStatus] = useState(row.stayStatus);
+
+	const save = async () => {
+		try {
+			const response = await put<StayResponse>(`/stays/${row.id}/update-status`, { newStayStatus: newStayStatus });
+			toast({
+				variant: "success",
+				title: "Reservation updated successfully",
+				description: `Reservation Status: ${JSON.stringify(response.data.stayStatus)}`,
+			});
+		} catch (err) {
+			console.warn(err);
+			toast({
+				variant: "destructive",
+				title: "Uh oh! Something went wrong.",
+				description: "There was a problem when updating stay status",
+			});
+		}
+	};
+
 	return (
 		<div className="p-4">
 			<div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
@@ -36,13 +61,13 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 				</Card>
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Stay Duration</CardTitle>
+						<CardTitle className="text-sm font-medium">Stay Details</CardTitle>
 						<Calendar className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
 						<div className="text-lg font-bold">{new Date(row.startDate).toDateString() + " to " + new Date(row.endDate).toDateString()}</div>
 						<p className="text-sm text-muted-foreground">
-							<strong>Duration: </strong> 
+							<strong>Duration: </strong>
 							{Math.abs(differenceInDays(row.startDate, row.endDate)) + " days"}
 							{" / "}
 							{Math.ceil(Math.abs(differenceInDays(row.startDate, row.endDate)) / 7) + " weeks"}
@@ -51,7 +76,7 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 							<strong>Stay Type:</strong> {!!row.weeklyRate ? "Weekly" : "Daily"}
 						</p>
 						<p className="text-sm text-muted-foreground">
-							<strong>Unit Rate:</strong> {formatCurrency(row.weeklyRate ?? row.dailyRate ?? 0)}
+							<strong>Unit Rate Charged:</strong> {formatCurrency(row.weeklyRate ?? row.dailyRate ?? 0)}
 						</p>
 						<p className="text-sm text-muted-foreground">
 							<strong>Stay Status:</strong> {row.stayStatus}
@@ -62,6 +87,25 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 							<strong>Children:</strong> {row.numOfChildren}
 						</p>
 					</CardContent>
+					<CardFooter className="flex justify-evenly">
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button variant="outline">
+									Update Stay Status
+									<ChevronDown />
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<DropdownMenuLabel>Guest has ...</DropdownMenuLabel>
+								<DropdownMenuRadioGroup value={newStayStatus} onValueChange={setNewStayStatus}>
+									<DropdownMenuRadioItem value={StayStatus.BOOKED}>Canceled Reservation</DropdownMenuRadioItem>
+									<DropdownMenuRadioItem value={StayStatus.INHOUSE}>Checked In</DropdownMenuRadioItem>
+									<DropdownMenuRadioItem value={StayStatus.CHECKEDOUT}>Checked Out</DropdownMenuRadioItem>
+								</DropdownMenuRadioGroup>
+							</DropdownMenuContent>
+						</DropdownMenu>
+						<Button onClick={save}>Save</Button>
+					</CardFooter>
 				</Card>
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
