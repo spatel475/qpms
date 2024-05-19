@@ -83,7 +83,7 @@ export default function RoomSelector({ allRooms, occupiedRooms, isLoading, defau
 							<AccordionTrigger>Available Rooms</AccordionTrigger>
 							<AccordionContent>
 								<ScrollArea>
-									{isLoading ? "Loading..." : ""}{" "}
+									{isLoading ? <p>Loading...</p> : ""}
 									{availableRooms.map((room) => (
 										<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id === selectedRoom?.id ? "default" : "outline"} key={room.id} onClick={() => handleRoomSelectionChange(room)}>
 											<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
