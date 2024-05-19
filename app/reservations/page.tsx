@@ -11,6 +11,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
 import { useStayColumns } from "./column";
+import ReservationDetail from "./reservation-details";
 
 export default function ReservationsPage() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +102,7 @@ export default function ReservationsPage() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
+				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} enableExpand={true} ExpandComponent={ReservationDetail} />
 			</CardContent>
 		</Card>
 	);

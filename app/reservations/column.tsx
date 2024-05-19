@@ -66,23 +66,25 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 			},
 			{
 				id: "actions",
-				cell: ({ row }) => (
-					<DataTableRowActions
-						row={row}
-						menuItems={[
-							{
-								id: "edit",
-								label: "Edit reservation",
-								action: () => router.push(`${Routes.ReservationForm}?id=${row.original.id}`),
-							},
-							{
-								id: "copy",
-								label: "Make new copy",
-								action: () => router.push(`${Routes.ReservationForm}?id=${row.original.id}&copy=1`),
-							},
-						]}
-					/>
-				),
+				cell: ({ row }) => {
+					return (
+						<DataTableRowActions
+							row={row}
+							menuItems={[
+								{
+									id: "edit",
+									label: "Edit reservation",
+									action: () => router.push(`${Routes.ReservationForm}?id=${row.original.id}`),
+								},
+								{
+									id: "copy",
+									label: "Make new copy",
+									action: () => router.push(`${Routes.ReservationForm}?id=${row.original.id}&copy=1`),
+								},
+							]}
+						/>
+					);
+				},
 			},
 		],
 		[router]

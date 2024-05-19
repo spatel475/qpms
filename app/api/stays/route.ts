@@ -170,11 +170,19 @@ export type StayResponse = {
 	id: string
 	guestId: string
 	roomId: string
-	startDate: string
-	endDate: string
-	checkoutTime: string
-	dailyRate: number
+	startDate: Date
+	endDate: Date
+	checkoutTime?: Date
+	dailyRate?: number
+	weeklyRate?: number
+	amountDue?: number
+	amountPaid?: number
+	totalCharge?: number
+	paymentMode: string
+	numOfAdults: number
+	numOfChildren: number
 	stayStatus: string
+	extensions: number
 	guest: Guest
 	room: Room
 }
