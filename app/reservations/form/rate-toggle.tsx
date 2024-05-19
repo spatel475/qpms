@@ -1,8 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function RateToggle({ onToggle }: { onToggle: (rateType: string) => void }) {
+type Props = {
+	defaultRateType: string;
+	onToggle: (rateType: string) => void;
+};
+export default function RateToggle({ onToggle, defaultRateType }: Props) {
 	const [rateType, setRateType] = useState("dailyRate");
+	useEffect(() => {
+		setRateType(defaultRateType);
+	}, [defaultRateType]);
 
 	const handleToggle = (type: string) => {
 		setRateType(type);

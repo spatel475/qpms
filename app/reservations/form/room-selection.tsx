@@ -6,20 +6,25 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Cigarette, CigaretteOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Room } from "../../models/models";
 
 type Props = {
 	allRooms: Array<Room>;
 	occupiedRooms: Array<Room>;
+	defaultSelectedRoom?: Room;
 	isLoading: boolean;
 	onValueChange: (value: Room) => void;
 };
 
-export default function RoomSelector({ allRooms, occupiedRooms, isLoading, onValueChange }: Props) {
+export default function RoomSelector({ allRooms, occupiedRooms, isLoading, defaultSelectedRoom, onValueChange }: Props) {
 	const [smokingFilter, setSmokingFilter] = useState("");
 	const [roomTypeFilter, setRoomTypeFilter] = useState("");
 	const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+
+	useEffect(() => {
+		setSelectedRoom(defaultSelectedRoom ?? null);
+	}, [defaultSelectedRoom]);
 
 	const handleRoomSelectionChange = (room: Room) => {
 		setSelectedRoom(room);
@@ -78,7 +83,7 @@ export default function RoomSelector({ allRooms, occupiedRooms, isLoading, onVal
 							<AccordionTrigger>Available Rooms</AccordionTrigger>
 							<AccordionContent>
 								<ScrollArea>
-									{isLoading ? "Loading..." : ""}
+									{isLoading ? "Loading..." : ""}{" "}
 									{availableRooms.map((room) => (
 										<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id === selectedRoom?.id ? "default" : "outline"} key={room.id} onClick={() => handleRoomSelectionChange(room)}>
 											<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
@@ -95,7 +100,7 @@ export default function RoomSelector({ allRooms, occupiedRooms, isLoading, onVal
 								<AccordionContent>
 									<ScrollArea>
 										{occupiedRooms.map((room) => (
-											<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant="outline" key={room.id + "_occupied"} disabled>
+											<Button className="h-16 w-16 mr-2 mb-2 flex-col justify-center items-center p-2 text-center" variant={room.id === selectedRoom?.id ? "default" : "outline"} key={room.id + "_occupied"} onClick={() => handleRoomSelectionChange(room)}>
 												<CardTitle className="text-lg font-bold">{room.id}</CardTitle>
 												<CardTitle className="text-sm">{room.roomType}</CardTitle>
 											</Button>

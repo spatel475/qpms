@@ -11,10 +11,11 @@ import { Calendar } from "@/components/ui/calendar";
 import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 
 type Props = {
+	defaultDates: DateRange | undefined;
 	onValueChange: (value: DateRange | undefined) => void;
 };
 
@@ -27,10 +28,14 @@ export function DatePickerForm(props: Props) {
 		resolver: zodResolver(formSchema),
 	});
 
-	const [date, setDate] = useState<DateRange | undefined>({ from: undefined, to: undefined });
+	const [dateRange, setDateRange] = useState<DateRange | undefined>({ from: undefined, to: undefined });
+
+	useEffect(() => {
+		setDateRange(props.defaultDates);
+	}, [props.defaultDates]);
 
 	const handleDateChange = (value: DateRange | undefined) => {
-		setDate(value);
+		setDateRange(value);
 		props.onValueChange(value);
 	};
 
@@ -45,15 +50,15 @@ export function DatePickerForm(props: Props) {
 							<FormLabel>Select stay duration</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
-									<Button id="date" variant={"outline"} className={cn("w-[300px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
+									<Button id="date" variant={"outline"} className={cn("w-[300px] justify-start text-left font-normal", !dateRange && "text-muted-foreground")}>
 										<CalendarIcon className="mr-2 h-4 w-4" />
-										{date?.from ? (
-											date.to ? (
+										{dateRange?.from ? (
+											dateRange.to ? (
 												<>
-													{format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
+													{format(dateRange.from, "LLL dd, y")} - {format(dateRange.to, "LLL dd, y")}
 												</>
 											) : (
-												format(date.from, "LLL dd, y")
+												format(dateRange.from, "LLL dd, y")
 											)
 										) : (
 											<span>Pick a date</span>
@@ -61,10 +66,10 @@ export function DatePickerForm(props: Props) {
 									</Button>
 								</PopoverTrigger>
 								<PopoverContent className="w-auto p-0" align="start">
-									<Calendar initialFocus mode="range" defaultMonth={date?.from} selected={date} onSelect={handleDateChange} numberOfMonths={2} />
+									<Calendar initialFocus mode="range" defaultMonth={dateRange?.from} selected={dateRange} onSelect={handleDateChange} numberOfMonths={2} />
 								</PopoverContent>
 							</Popover>
-							<FormMessage>{!!date?.from && !!date.to ? "" : "Date range required"}</FormMessage>
+							<FormMessage>{!!dateRange?.from && !!dateRange.to ? "" : "Date range required"}</FormMessage>
 						</FormItem>
 					)}
 				/>

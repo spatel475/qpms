@@ -10,7 +10,8 @@ import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
-import { columns } from "./column";
+import { useStayColumns } from "./column";
+import ReservationDetail from "./reservation-details";
 
 export default function ReservationsPage() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +82,7 @@ export default function ReservationsPage() {
 		fetchData(pagination.currentPage, pagination.pageSize);
 	}, [pagination.currentPage, pagination.pageSize]);
 
+	const columns = useStayColumns();
 	return (
 		<Card>
 			<CardHeader>
@@ -90,7 +92,7 @@ export default function ReservationsPage() {
 						<Button className="gap-1" variant="outline" onClick={refreshData}>
 							<RefreshCw className="h-4 w-4" />
 						</Button>
-						<Link href={Routes.CreateReservation}>
+						<Link href={Routes.ReservationForm}>
 							<Button className="gap-1">
 								<PlusCircle className="h-4 w-4" />
 								Create Reservation
@@ -100,7 +102,7 @@ export default function ReservationsPage() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} />
+				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} enableExpand={true} ExpandComponent={ReservationDetail} />
 			</CardContent>
 		</Card>
 	);

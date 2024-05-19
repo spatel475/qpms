@@ -21,11 +21,12 @@ const phoneNumberSchema = z
 	);
 
 export const formSchema = z.object({
+	id: z.string().optional(),
 	firstName: z.string().min(2, { message: "First name must be at least 2 characters." }),
 	lastName: z.string().min(2, { message: "Last name must be at least 2 characters." }),
 	dlNumber: z.string().min(2, { message: "ID must be at least 2 characters." }),
 	phoneNumber: phoneNumberSchema,
-	address: z.string().min(2, { message: "Address must be at least 2 characters." }),
+	address: z.string().optional(),
 	comments: z.string().max(500).optional(),
 });
 
@@ -39,16 +40,20 @@ interface GuestFormProps {
 export function GuestForm({ guestData, onChange }: GuestFormProps) {
 	const form = useForm<GuestFormValues>({
 		resolver: zodResolver(formSchema),
-		mode: "onChange",
+		mode: "onTouched",
 		defaultValues: guestData,
 	});
+
+	useEffect(() => {
+		form.reset(guestData);
+	}, [guestData, form]);
 
 	useEffect(() => {
 		const subscription = form.watch((values) => {
 			onChange(values as GuestFormValues);
 		});
 		return () => subscription.unsubscribe();
-	}, [form, form.watch, onChange]);
+	}, [form, onChange]);
 
 	return (
 		<Form {...form}>
@@ -58,7 +63,7 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 					name="firstName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>First Name</FormLabel>
+							<FormLabel>First Name *</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
@@ -71,7 +76,7 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 					name="lastName"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Last Name</FormLabel>
+							<FormLabel>Last Name *</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>
@@ -84,7 +89,7 @@ export function GuestForm({ guestData, onChange }: GuestFormProps) {
 					name="dlNumber"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Driver License / ID Number</FormLabel>
+							<FormLabel>Driver License / ID Number *</FormLabel>
 							<FormControl>
 								<Input {...field} />
 							</FormControl>

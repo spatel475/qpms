@@ -3,14 +3,21 @@
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Row } from "@tanstack/react-table";
 
+import { DropdownMenuSeparator } from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 interface DataTableRowActionsProps<TData> {
 	row: Row<TData>;
+	menuItems: {
+		id: string;
+		label: any;
+		action: any;
+		class?: string;
+	}[];
 }
 
-export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
+export function DataTableRowActions<TData>({ row, menuItems }: DataTableRowActionsProps<TData>) {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -20,8 +27,12 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end" className="w-[160px]">
-				<DropdownMenuItem>Edit</DropdownMenuItem>
-				<DropdownMenuItem>Make a copy</DropdownMenuItem>
+				{menuItems.map((item) => (
+					<DropdownMenuItem key={item.id} onClick={item.action} className={item.class}>
+						{item.label}
+					</DropdownMenuItem>
+				))}
+				<DropdownMenuSeparator />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
