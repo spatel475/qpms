@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
 			room: true,
 		},
 		orderBy: {
-			startDate: 'desc', // or endDate: 'desc' 
+			endDate: 'desc', // or endDate: 'desc' 
 		},
 		distinct: ['roomId'],
 		skip,

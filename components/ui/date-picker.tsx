@@ -17,6 +17,7 @@ import { DateRange } from "react-day-picker";
 type Props = {
 	defaultDates: DateRange | undefined;
 	onValueChange: (value: DateRange | undefined) => void;
+	label?: string;
 };
 
 export function DatePickerForm(props: Props) {
@@ -47,7 +48,7 @@ export function DatePickerForm(props: Props) {
 					name="dateRange"
 					render={({ field }) => (
 						<FormItem className="flex flex-col">
-							<FormLabel>Select stay duration</FormLabel>
+							<FormLabel>{props.label || "Select stay duration"}</FormLabel>
 							<Popover>
 								<PopoverTrigger asChild>
 									<Button id="date" variant={"outline"} className={cn("w-[300px] justify-start text-left font-normal", !dateRange && "text-muted-foreground")}>
