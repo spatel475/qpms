@@ -10,6 +10,7 @@ import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
+import { StayStatus } from "../models/models";
 import { useStayColumns } from "./column";
 import ReservationDetail from "./reservation-details";
 
@@ -18,9 +19,9 @@ export default function ReservationsPage() {
 	const [data, setData] = useState<StayResponse[]>([]);
 	const [pagination, setPagination] = useState({
 		totalCount: 0,
-		totalPages: 0,
+		totalPages: 1,
 		currentPage: 1,
-		pageSize: 20,
+		pageSize: 25,
 	});
 
 	const fetchData = async (page: number, pageSize: number, fromCache = true) => {
@@ -43,6 +44,7 @@ export default function ReservationsPage() {
 			try {
 				const response = await get<StayResponse[]>("/stays", {
 					queryParams: {
+						stayStatus: StayStatus.INHOUSE,
 						page: pagination.currentPage.toString(),
 						limit: pagination.pageSize.toString(),
 					},

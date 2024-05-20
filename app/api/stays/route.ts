@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
 		stayStatus,
 		guestName,
 		page = '1',
-		limit = '20',
+		limit = '25',
 	} = params;
 
 	const where: any = {};
