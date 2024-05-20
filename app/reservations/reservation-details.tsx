@@ -23,7 +23,7 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 			toast({
 				variant: "success",
 				title: "Reservation updated successfully",
-				description: `Reservation Status: ${JSON.stringify(response.data.stayStatus)}`,
+				description: `Reservation Status: ${response.data.stayStatus.replace("_", " ")}`,
 			});
 		} catch (err) {
 			console.warn(err);

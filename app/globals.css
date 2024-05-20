@@ -52,7 +52,7 @@
 .status-reserved {
 	border: solid 2px rgb(45, 187, 45);
 }
-.status-in-house {
+.status-occupied {
 	border: solid 2px rgb(70, 175, 255);
 }
 .status-checked-out {

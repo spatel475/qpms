@@ -8,7 +8,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { StayResponse } from "../api/stays/route";
-import { StayStatus } from "../models/models";
 
 export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 	const router = useRouter();
@@ -28,17 +27,8 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 				header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
 				cell: ({ row }) => {
 					const status: string = row.getValue("stayStatus");
-					let classBg = "";
-					let statusSpaced = status;
-					if (status === StayStatus.RESERVED) {
-						classBg = "status-reserved";
-					} else if (status === StayStatus.OCCUPIED) {
-						classBg = "status-in-house";
-						statusSpaced = "OCCUPIED";
-					} else {
-						classBg = "status-checked-out";
-						statusSpaced = "CHECKED OUT";
-					}
+					let classBg = `status-${status.toLowerCase().replace("_", "-")}`;
+					let statusSpaced = status.replace("_", " ");
 
 					return (
 						<Badge variant="outline" className={classBg}>

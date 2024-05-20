@@ -42,9 +42,10 @@ export default function ReservationsPage() {
 			setIsLoading(false);
 		} else {
 			try {
+				const stayStatuses = `${StayStatus.OCCUPIED},${StayStatus.RESERVED}`;
 				const response = await get<StayResponse[]>("/stays", {
 					queryParams: {
-						stayStatus: StayStatus.OCCUPIED,
+						stayStatus: stayStatuses,
 						page: pagination.currentPage.toString(),
 						limit: pagination.pageSize.toString(),
 					},
