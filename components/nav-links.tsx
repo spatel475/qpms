@@ -7,14 +7,15 @@ import { usePathname } from "next/navigation";
 export const enum Routes {
 	Reservations = "/reservations",
 	ReservationForm = "/reservations/form",
-	// UpdateReservation = "/reservations/update",
 	RoomConfig = "/room-config",
+	Reports = "/reports",
 }
 
 const links = [
 	// { name: "Home", href: Routes.Home, icon: LayoutDashboard },
 	{ name: "Reservations", href: Routes.Reservations, icon: LayoutDashboard },
 	{ name: "Room Configuration", href: Routes.RoomConfig, icon: Hotel },
+	{ name: "Daily Report", href: Routes.Reports },
 ];
 
 export default function NavLinks() {

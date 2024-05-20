@@ -58,3 +58,15 @@
 .status-checked-out {
 	border: solid 2px rgb(69, 69, 69);
 }
+
+@media print {
+	body {
+		visibility: hidden;
+	}
+	#report-to-print {
+		visibility: visible;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+}
