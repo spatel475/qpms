@@ -44,7 +44,7 @@ export default function ReservationsPage() {
 			try {
 				const response = await get<StayResponse[]>("/stays", {
 					queryParams: {
-						stayStatus: StayStatus.INHOUSE,
+						stayStatus: StayStatus.OCCUPIED,
 						page: pagination.currentPage.toString(),
 						limit: pagination.pageSize.toString(),
 					},

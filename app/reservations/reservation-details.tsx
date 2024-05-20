@@ -118,9 +118,9 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 					<DropdownMenuContent>
 						<DropdownMenuLabel>Guest has ...</DropdownMenuLabel>
 						<DropdownMenuRadioGroup value={newStayStatus} onValueChange={setNewStayStatus}>
-							<DropdownMenuRadioItem value={StayStatus.BOOKED}>Booked Reservation</DropdownMenuRadioItem>
-							<DropdownMenuRadioItem value={StayStatus.INHOUSE}>Checked In</DropdownMenuRadioItem>
-							<DropdownMenuRadioItem value={StayStatus.CHECKEDOUT}>Checked Out</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value={StayStatus.RESERVED}>Made Reservation</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value={StayStatus.OCCUPIED}>Checked In</DropdownMenuRadioItem>
+							<DropdownMenuRadioItem value={StayStatus.CHECKED_OUT}>Checked Out</DropdownMenuRadioItem>
 						</DropdownMenuRadioGroup>
 					</DropdownMenuContent>
 				</DropdownMenu>

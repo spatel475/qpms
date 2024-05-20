@@ -30,11 +30,11 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 					const status: string = row.getValue("stayStatus");
 					let classBg = "";
 					let statusSpaced = status;
-					if (status === StayStatus.BOOKED) {
-						classBg = "status-booked";
-					} else if (status === StayStatus.INHOUSE) {
+					if (status === StayStatus.RESERVED) {
+						classBg = "status-reserved";
+					} else if (status === StayStatus.OCCUPIED) {
 						classBg = "status-in-house";
-						statusSpaced = "IN HOUSE";
+						statusSpaced = "OCCUPIED";
 					} else {
 						classBg = "status-checked-out";
 						statusSpaced = "CHECKED OUT";

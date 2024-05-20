@@ -568,7 +568,7 @@
 			"startDate": "2020-01-22T04:12:11.131Z",
 			"endDate": "2020-01-29T04:12:11.131Z",
 			"checkoutTime": "2020-01-29T00:33:18.003Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -577,7 +577,7 @@
 			"startDate": "2020-01-23T15:39:56.950Z",
 			"endDate": "2020-02-04T15:39:56.950Z",
 			"checkoutTime": "2020-02-04T09:13:08.254Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -586,7 +586,7 @@
 			"startDate": "2020-01-31T18:43:14.432Z",
 			"endDate": "2020-02-08T18:43:14.432Z",
 			"checkoutTime": "2020-02-07T20:16:47.042Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -595,7 +595,7 @@
 			"startDate": "2020-03-31T02:39:16.109Z",
 			"endDate": "2020-04-01T02:39:16.109Z",
 			"checkoutTime": "2020-03-31T04:04:06.395Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -604,7 +604,7 @@
 			"startDate": "2020-04-14T11:36:31.809Z",
 			"endDate": "2020-04-19T11:36:31.809Z",
 			"checkoutTime": "2020-04-18T15:45:59.717Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -613,7 +613,7 @@
 			"startDate": "2020-04-19T06:09:12.527Z",
 			"endDate": "2020-04-24T06:09:12.527Z",
 			"checkoutTime": "2020-04-23T13:01:42.228Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -622,7 +622,7 @@
 			"startDate": "2020-04-25T22:35:57.986Z",
 			"endDate": "2020-05-01T22:35:57.986Z",
 			"checkoutTime": "2020-05-01T22:19:19.812Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -631,7 +631,7 @@
 			"startDate": "2020-05-04T03:54:20.027Z",
 			"endDate": "2020-05-14T03:54:20.027Z",
 			"checkoutTime": "2020-05-13T07:09:37.314Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -640,7 +640,7 @@
 			"startDate": "2020-05-19T17:55:46.006Z",
 			"endDate": "2020-05-29T17:55:46.006Z",
 			"checkoutTime": "2020-05-29T03:26:26.910Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -649,7 +649,7 @@
 			"startDate": "2020-06-05T19:53:41.596Z",
 			"endDate": "2020-06-20T19:53:41.596Z",
 			"checkoutTime": "2020-06-20T03:17:43.089Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -658,7 +658,7 @@
 			"startDate": "2020-06-26T19:45:26.149Z",
 			"endDate": "2020-07-05T19:45:26.149Z",
 			"checkoutTime": "2020-07-05T12:30:25.149Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -667,7 +667,7 @@
 			"startDate": "2020-06-27T20:43:20.627Z",
 			"endDate": "2020-07-05T20:43:20.627Z",
 			"checkoutTime": "2020-07-05T00:17:51.710Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -676,7 +676,7 @@
 			"startDate": "2020-07-04T04:46:02.449Z",
 			"endDate": "2020-07-09T04:46:02.449Z",
 			"checkoutTime": "2020-07-08T17:43:51.549Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -685,7 +685,7 @@
 			"startDate": "2020-08-13T07:26:00.770Z",
 			"endDate": "2020-08-16T07:26:00.770Z",
 			"checkoutTime": "2020-08-15T14:37:59.539Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -694,7 +694,7 @@
 			"startDate": "2020-08-28T06:33:35.085Z",
 			"endDate": "2020-08-31T06:33:35.085Z",
 			"checkoutTime": "2020-08-31T00:20:15.598Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -703,7 +703,7 @@
 			"startDate": "2020-09-17T08:31:13.143Z",
 			"endDate": "2020-09-23T08:31:13.143Z",
 			"checkoutTime": "2020-09-22T13:43:37.588Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -712,7 +712,7 @@
 			"startDate": "2020-10-05T22:18:50.147Z",
 			"endDate": "2020-10-17T22:18:50.147Z",
 			"checkoutTime": "2020-10-17T12:15:56.590Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -721,7 +721,7 @@
 			"startDate": "2020-10-06T21:01:20.365Z",
 			"endDate": "2020-10-20T21:01:20.365Z",
 			"checkoutTime": "2020-10-20T15:48:37.007Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -730,7 +730,7 @@
 			"startDate": "2021-01-09T22:55:20.531Z",
 			"endDate": "2021-01-17T22:55:20.531Z",
 			"checkoutTime": "2021-01-17T16:53:01.882Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -739,7 +739,7 @@
 			"startDate": "2021-01-19T08:46:54.652Z",
 			"endDate": "2021-02-01T08:46:54.652Z",
 			"checkoutTime": "2021-01-31T13:15:49.427Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -748,7 +748,7 @@
 			"startDate": "2021-01-19T19:00:18.650Z",
 			"endDate": "2021-02-02T19:00:18.650Z",
 			"checkoutTime": "2021-02-02T07:40:07.888Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -757,7 +757,7 @@
 			"startDate": "2021-01-30T08:48:34.860Z",
 			"endDate": "2021-02-04T08:48:34.860Z",
 			"checkoutTime": "2021-02-04T08:43:51.042Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -766,7 +766,7 @@
 			"startDate": "2021-02-07T02:57:35.932Z",
 			"endDate": "2021-02-17T02:57:35.932Z",
 			"checkoutTime": "2021-02-16T11:40:35.310Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -775,7 +775,7 @@
 			"startDate": "2021-02-24T21:54:25.774Z",
 			"endDate": "2021-03-03T21:54:25.774Z",
 			"checkoutTime": "2021-03-03T00:58:20.345Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -784,7 +784,7 @@
 			"startDate": "2021-03-14T08:49:15.973Z",
 			"endDate": "2021-03-27T08:49:15.973Z",
 			"checkoutTime": "2021-03-27T01:35:56.314Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -793,7 +793,7 @@
 			"startDate": "2021-06-07T19:00:08.091Z",
 			"endDate": "2021-06-08T19:00:08.091Z",
 			"checkoutTime": "2021-06-08T18:17:59.442Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -802,7 +802,7 @@
 			"startDate": "2021-06-27T12:32:58.979Z",
 			"endDate": "2021-07-04T12:32:58.979Z",
 			"checkoutTime": "2021-07-04T03:20:48.233Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -811,7 +811,7 @@
 			"startDate": "2021-06-28T17:53:05.249Z",
 			"endDate": "2021-06-29T17:53:05.249Z",
 			"checkoutTime": "2021-06-28T20:12:09.345Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -820,7 +820,7 @@
 			"startDate": "2021-06-28T18:45:36.660Z",
 			"endDate": "2021-06-30T18:45:36.660Z",
 			"checkoutTime": "2021-06-30T18:03:41.619Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -829,7 +829,7 @@
 			"startDate": "2021-07-12T15:49:04.824Z",
 			"endDate": "2021-07-15T15:49:04.824Z",
 			"checkoutTime": "2021-07-15T05:07:22.887Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -838,7 +838,7 @@
 			"startDate": "2021-07-26T16:17:59.701Z",
 			"endDate": "2021-07-27T16:17:59.701Z",
 			"checkoutTime": "2021-07-27T12:12:33.795Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -847,7 +847,7 @@
 			"startDate": "2021-08-07T16:18:36.832Z",
 			"endDate": "2021-08-11T16:18:36.832Z",
 			"checkoutTime": "2021-08-11T00:21:22.065Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -856,7 +856,7 @@
 			"startDate": "2021-08-20T07:57:52.555Z",
 			"endDate": "2021-09-03T07:57:52.555Z",
 			"checkoutTime": "2021-09-03T05:22:03.529Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -865,7 +865,7 @@
 			"startDate": "2021-12-05T18:37:49.265Z",
 			"endDate": "2021-12-10T18:37:49.265Z",
 			"checkoutTime": "2021-12-10T09:45:58.102Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -874,7 +874,7 @@
 			"startDate": "2021-12-26T06:44:47.700Z",
 			"endDate": "2021-12-31T06:44:47.700Z",
 			"checkoutTime": "2021-12-30T11:03:02.369Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -883,7 +883,7 @@
 			"startDate": "2021-12-29T07:24:44.695Z",
 			"endDate": "2022-01-05T07:24:44.695Z",
 			"checkoutTime": "2022-01-04T10:45:33.410Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -892,7 +892,7 @@
 			"startDate": "2022-01-02T02:41:18.246Z",
 			"endDate": "2022-01-17T02:41:18.246Z",
 			"checkoutTime": "2022-01-16T19:38:38.952Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -901,7 +901,7 @@
 			"startDate": "2022-03-13T07:07:48.633Z",
 			"endDate": "2022-03-16T07:07:48.633Z",
 			"checkoutTime": "2022-03-15T16:52:01.318Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -910,7 +910,7 @@
 			"startDate": "2022-04-10T03:11:01.038Z",
 			"endDate": "2022-04-17T03:11:01.038Z",
 			"checkoutTime": "2022-04-16T17:39:47.873Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -919,7 +919,7 @@
 			"startDate": "2022-04-19T01:23:43.478Z",
 			"endDate": "2022-04-26T01:23:43.478Z",
 			"checkoutTime": "2022-04-25T20:45:36.196Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -928,7 +928,7 @@
 			"startDate": "2022-05-21T06:56:40.673Z",
 			"endDate": "2022-05-25T06:56:40.673Z",
 			"checkoutTime": "2022-05-25T02:33:05.003Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -937,7 +937,7 @@
 			"startDate": "2022-05-29T12:59:58.040Z",
 			"endDate": "2022-06-11T12:59:58.040Z",
 			"checkoutTime": "2022-06-11T12:51:45.589Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -946,7 +946,7 @@
 			"startDate": "2022-06-09T03:58:25.258Z",
 			"endDate": "2022-06-22T03:58:25.258Z",
 			"checkoutTime": "2022-06-22T03:27:13.420Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -955,7 +955,7 @@
 			"startDate": "2022-06-12T03:07:32.981Z",
 			"endDate": "2022-06-25T03:07:32.981Z",
 			"checkoutTime": "2022-06-24T04:59:42.598Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -964,7 +964,7 @@
 			"startDate": "2022-08-02T18:33:53.294Z",
 			"endDate": "2022-08-14T18:33:53.294Z",
 			"checkoutTime": "2022-08-14T17:39:14.778Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -973,7 +973,7 @@
 			"startDate": "2022-09-11T13:50:34.194Z",
 			"endDate": "2022-09-20T13:50:34.194Z",
 			"checkoutTime": "2022-09-20T01:30:10.953Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -982,7 +982,7 @@
 			"startDate": "2022-09-22T05:21:13.291Z",
 			"endDate": "2022-10-04T05:21:13.291Z",
 			"checkoutTime": "2022-10-03T22:51:08.900Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -991,7 +991,7 @@
 			"startDate": "2022-10-30T04:58:02.625Z",
 			"endDate": "2022-11-11T04:58:02.625Z",
 			"checkoutTime": "2022-11-10T12:22:13.862Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -1000,7 +1000,7 @@
 			"startDate": "2022-11-07T01:30:51.446Z",
 			"endDate": "2022-11-17T01:30:51.446Z",
 			"checkoutTime": "2022-11-16T08:08:48.084Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -1009,7 +1009,7 @@
 			"startDate": "2022-11-30T20:32:18.051Z",
 			"endDate": "2022-12-04T20:32:18.051Z",
 			"checkoutTime": "2022-12-03T23:11:56.678Z",
-			"stayStatus": "CHECKEDOUT",
+			"stayStatus": "CHECKED_OUT",
 			"dailyRate": 50.0
 		},
 		{
@@ -1018,7 +1018,7 @@
 			"startDate": "2024-05-09T12:54:57.146Z",
 			"endDate": "2024-05-24T12:54:57.146Z",
 			"checkoutTime": "2024-05-23T14:07:26.105Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1027,7 +1027,7 @@
 			"startDate": "2024-05-09T22:15:20.781Z",
 			"endDate": "2024-05-15T22:15:20.781Z",
 			"checkoutTime": "2024-05-15T10:07:41.128Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1036,7 +1036,7 @@
 			"startDate": "2024-05-10T04:44:51.182Z",
 			"endDate": "2024-05-14T04:44:51.182Z",
 			"checkoutTime": "2024-05-13T20:53:15.823Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1045,7 +1045,7 @@
 			"startDate": "2024-05-11T10:16:08.015Z",
 			"endDate": "2024-05-20T10:16:08.015Z",
 			"checkoutTime": "2024-05-19T13:13:38.643Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1054,7 +1054,7 @@
 			"startDate": "2024-05-11T18:54:13.251Z",
 			"endDate": "2024-05-13T18:54:13.251Z",
 			"checkoutTime": "2024-05-13T04:24:21.644Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1063,7 +1063,7 @@
 			"startDate": "2024-05-11T20:19:16.709Z",
 			"endDate": "2024-05-14T20:19:16.709Z",
 			"checkoutTime": "2024-05-14T00:40:08.911Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1072,7 +1072,7 @@
 			"startDate": "2024-05-11T21:45:33.227Z",
 			"endDate": "2024-05-15T21:45:33.227Z",
 			"checkoutTime": "2024-05-15T19:28:25.726Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1081,7 +1081,7 @@
 			"startDate": "2024-05-12T03:34:32.940Z",
 			"endDate": "2024-05-25T03:34:32.940Z",
 			"checkoutTime": "2024-05-24T03:39:59.260Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1090,7 +1090,7 @@
 			"startDate": "2024-05-12T05:25:06.043Z",
 			"endDate": "2024-05-22T05:25:06.043Z",
 			"checkoutTime": "2024-05-21T07:22:22.492Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1099,7 +1099,7 @@
 			"startDate": "2024-05-13T21:34:23.657Z",
 			"endDate": "2024-05-26T21:34:23.657Z",
 			"checkoutTime": "2024-05-26T00:14:51.185Z",
-			"stayStatus": "INHOUSE",
+			"stayStatus": "OCCUPIED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1108,7 +1108,7 @@
 			"startDate": "2024-05-24T10:53:05.409Z",
 			"endDate": "2024-06-04T10:53:05.409Z",
 			"checkoutTime": "2024-06-03T21:31:30.115Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1117,7 +1117,7 @@
 			"startDate": "2024-08-16T09:27:30.031Z",
 			"endDate": "2024-08-29T09:27:30.031Z",
 			"checkoutTime": "2024-08-28T13:18:03.155Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1126,7 +1126,7 @@
 			"startDate": "2024-09-15T15:55:36.428Z",
 			"endDate": "2024-09-27T15:55:36.428Z",
 			"checkoutTime": "2024-09-26T21:24:24.298Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1135,7 +1135,7 @@
 			"startDate": "2024-09-17T00:25:34.730Z",
 			"endDate": "2024-09-20T00:25:34.730Z",
 			"checkoutTime": "2024-09-19T19:41:15.387Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1144,7 +1144,7 @@
 			"startDate": "2024-10-06T05:23:57.467Z",
 			"endDate": "2024-10-20T05:23:57.467Z",
 			"checkoutTime": "2024-10-19T23:12:58.115Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1153,7 +1153,7 @@
 			"startDate": "2024-10-07T02:07:45.866Z",
 			"endDate": "2024-10-22T02:07:45.866Z",
 			"checkoutTime": "2024-10-21T10:32:16.837Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1162,7 +1162,7 @@
 			"startDate": "2024-10-12T01:28:59.699Z",
 			"endDate": "2024-10-22T01:28:59.699Z",
 			"checkoutTime": "2024-10-21T19:25:48.105Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1171,7 +1171,7 @@
 			"startDate": "2024-11-20T05:55:19.452Z",
 			"endDate": "2024-11-29T05:55:19.452Z",
 			"checkoutTime": "2024-11-29T04:31:06.703Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1180,7 +1180,7 @@
 			"startDate": "2024-12-06T15:09:47.269Z",
 			"endDate": "2024-12-18T15:09:47.269Z",
 			"checkoutTime": "2024-12-18T10:35:08.148Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		},
 		{
@@ -1189,7 +1189,7 @@
 			"startDate": "2025-02-27T15:44:45.130Z",
 			"endDate": "2025-03-06T15:44:45.130Z",
 			"checkoutTime": "2025-03-06T06:33:50.266Z",
-			"stayStatus": "BOOKED",
+			"stayStatus": "RESERVED",
 			"dailyRate": 50.0
 		}
 	]

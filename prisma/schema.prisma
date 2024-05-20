@@ -47,9 +47,9 @@ model Guest {
 }
 
 enum StayStatus {
-    BOOKED
-    INHOUSE
-    CHECKEDOUT
+    RESERVED
+    OCCUPIED
+    CHECKED_OUT
 }
 
 model Stay {

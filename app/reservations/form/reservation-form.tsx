@@ -140,7 +140,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			paymentMode: paymentDetails?.paymentMode ?? "cash",
 			numOfAdults: paymentDetails?.numOfAdults,
 			numOfChildren: paymentDetails?.numOfChildren,
-			stayStatus: compareAsc(new Date(), dateRange.from!) === -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
+			stayStatus: compareAsc(new Date(), dateRange.from!) === -1 ? StayStatus.RESERVED : StayStatus.OCCUPIED,
 			guest: guestData,
 			room: selectedRoom,
 			extensions: isRateTypeWeekly ? duration : 0,
@@ -176,13 +176,13 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		}
 	};
 
-	const fetchInHouseStays = async () => {
+	const fetchOccupiedStays = async () => {
 		setIsLoading(true);
 
 		try {
 			const response = await get<StayResponse[]>("/stays", {
 				queryParams: {
-					stayStatus: StayStatus.INHOUSE,
+					stayStatus: StayStatus.OCCUPIED,
 				},
 			});
 			const fetchedData = response.data;
@@ -254,7 +254,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 
 	useEffect(() => {
 		fetchAllRooms(pagination.currentPage, pagination.pageSize);
-		fetchInHouseStays();
+		fetchOccupiedStays();
 	}, [fetchAllRooms]);
 
 	const onRateTypeToggle = (rateType: string) => {
