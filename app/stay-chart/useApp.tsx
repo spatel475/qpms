@@ -1,39 +1,31 @@
-import React, { useCallback } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 
 import { areasMonth, areasWeek, fetchResources } from "./helpers";
 
 import { Channel, Program, useEpg } from "@nessprim/planby-pro";
-
-// Import theme
-import { theme } from "./helpers/theme";
-
-// Example of globalStyles
-// const globalStyles = `
-// @import url('https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600&display=swap');
-// .planby {
-//   font-family: "Antonio", system-ui, -apple-system,
-//     /* Firefox supports this but not yet system-ui */ "Segoe UI", Roboto,
-//     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"; /* 2 */
-// }
-// `;
+import { useTheme } from "next-themes";
+import { themeDark } from "./helpers/theme-dark";
+import { themeLight } from "./helpers/theme-light";
 
 const startDate = "2024-05-01T00:00:00";
 const endDate = "2024-05-30T00:00:00";
 const startMonthDate = "2024-01-01T00:00:00";
 const endMonthDate = "2024-12-31T00:00:00";
+
 export function useApp() {
-	const [channels, setChannels] = React.useState<Channel[]>([]);
-	const [epg, setEpg] = React.useState<Program[]>([]);
-	const [isLoading, setIsLoading] = React.useState<boolean>(false);
-	const [dayWidth, setDayWidth] = React.useState<number>(2800);
-	const [calendarMode, setCalendarMode] = React.useState<"week" | "month">("week");
-	const [dates, setDates] = React.useState<{ start: string; end: string }>({
+	const [channels, setChannels] = useState<Channel[]>([]);
+	const [epg, setEpg] = useState<Program[]>([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [dayWidth, setDayWidth] = useState<number>(2800);
+	const [calendarMode, setCalendarMode] = useState<"week" | "month">("week");
+	const [dates, setDates] = useState<{ start: string; end: string }>({
 		start: startDate,
 		end: endDate,
 	});
+	const { theme } = useTheme();
 
-	const channelsData = React.useMemo(() => channels, [channels]);
-	const epgData = React.useMemo(() => epg, [epg]);
+	const channelsData = useMemo(() => channels, [channels]);
+	const epgData = useMemo(() => epg, [epg]);
 
 	const areas = calendarMode === "week" ? areasWeek : areasMonth;
 
@@ -53,11 +45,18 @@ export function useApp() {
 		isCurrentTime: false,
 		areas,
 		mode: { type: calendarMode, style: "modern" },
-		theme,
+		theme: theme === "light" ? themeLight : themeDark,
+		overlap: {
+			enabled: true,
+			mode: "stack",
+		},
+		grid: {
+			enabled: true,
+		},
 	});
 
 	// Handlers
-	const handleChangeCalendarMode = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleChangeCalendarMode = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
 		setEpg([]);
 		setChannels([]);
 		if (e.target.value === "week") {
@@ -73,7 +72,7 @@ export function useApp() {
 		}
 	}, []);
 
-	const handleFetchResources = React.useCallback(
+	const handleFetchResources = useCallback(
 		async (start: string, end: string, type: "week" | "month") => {
 			setIsLoading(true);
 			const { epg, channels } = (await fetchResources(start, end, type)) as {

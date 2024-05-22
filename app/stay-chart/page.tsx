@@ -30,6 +30,7 @@
 
 "use client";
 import { Epg, Layout } from "@nessprim/planby-pro";
+import { ChannelItem, Program } from "./components";
 import { useApp } from "./useApp";
 
 // Import hooks
@@ -65,12 +66,12 @@ function App() {
 						// renderLine={(props) => <Line {...props} />}
 						// renderCurrentTime={(props) => <LiveTime {...props} />}
 						// renderTimeline={(props) => <CustomTimeline {...props} />}
-						// renderProgram={({ program, ...rest }) => (
-						//   <Program key={program.data.id} program={program} {...rest} />
-						// )}
-						// renderChannel={({ channel, ...rest }) => (
-						//   <ChannelItem key={channel.uuid} channel={channel} {...rest} />
-						// )}
+						renderProgram={({ program, ...rest }) => (
+						  <Program key={program.data.id} program={program} {...rest} />
+						)}
+						renderChannel={({ channel, ...rest }) => (
+						  <ChannelItem key={channel.uuid} channel={channel} {...rest} />
+						)}
 					/>
 				</Epg>
 			</div>
