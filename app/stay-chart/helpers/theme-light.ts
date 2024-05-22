@@ -2,8 +2,10 @@ import { Theme } from "@nessprim/planby-pro";
 
 export const themeLight: Theme = {
 	primary: {
-		600: '#E8ECEE99',
-		900: '#e2e8f0',
+		// 600: '#E8ECEE99',
+		// 900: '#e2e8f0',
+		600: 'hsl(var(--background))',
+		900: 'hsl(var(--background))',
 	},
 	grey: {
 		300: '#000000'

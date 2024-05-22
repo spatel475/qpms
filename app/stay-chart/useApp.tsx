@@ -1,28 +1,23 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
-
-import { areasMonth, areasWeek, fetchResources } from "./helpers";
-
 import { Channel, Program, useEpg } from "@nessprim/planby-pro";
 import { useTheme } from "next-themes";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { areasMonth, areasWeek, fetchResources } from "./helpers";
 import { themeDark } from "./helpers/theme-dark";
 import { themeLight } from "./helpers/theme-light";
 
-const startDate = "2024-05-01T00:00:00";
+const startDate = "2024-05-10T00:00:00";
 const endDate = "2024-05-30T00:00:00";
 const startMonthDate = "2024-01-01T00:00:00";
 const endMonthDate = "2024-12-31T00:00:00";
 
 export function useApp() {
+	const { resolvedTheme } = useTheme();
 	const [channels, setChannels] = useState<Channel[]>([]);
 	const [epg, setEpg] = useState<Program[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [dayWidth, setDayWidth] = useState<number>(2800);
 	const [calendarMode, setCalendarMode] = useState<"week" | "month">("week");
-	const [dates, setDates] = useState<{ start: string; end: string }>({
-		start: startDate,
-		end: endDate,
-	});
-	const { theme } = useTheme();
+	const [dates, setDates] = useState<{ start: string; end: string }>({ start: startDate, end: endDate });
 
 	const channelsData = useMemo(() => channels, [channels]);
 	const epgData = useMemo(() => epg, [epg]);
@@ -34,7 +29,7 @@ export function useApp() {
 		epg: epgData,
 		dayWidth: dayWidth,
 		sidebarWidth: 100,
-		itemHeight: 80,
+		itemHeight: 50,
 		isSidebar: true,
 		isTimeline: true,
 		isLine: true,
@@ -45,7 +40,7 @@ export function useApp() {
 		isCurrentTime: false,
 		areas,
 		mode: { type: calendarMode, style: "modern" },
-		theme: theme === "light" ? themeLight : themeDark,
+		theme: resolvedTheme === "light" ? themeLight : themeDark,
 		overlap: {
 			enabled: true,
 			mode: "stack",

@@ -13,11 +13,8 @@ export const Program = ({ isVerticalMode, program, ...rest }: ProgramItem) => {
 	// const sinceTime = formatTime(since, set12HoursTimeFormat()).toLowerCase();
 	// const tillTime = formatTime(till, set12HoursTimeFormat()).toLowerCase();
 
-	const sinceTime = new Date(since).toDateString()
-	const tillTime = new Date(till).toDateString()
-console.log('====================================');
-console.log({sinceTime} , {tillTime});
-console.log('====================================');
+	const sinceTime = new Date(since).toDateString();
+	const tillTime = new Date(till).toDateString();
 	return (
 		<ProgramBox width={styles.width} style={styles.position}>
 			<ProgramContent isVerticalMode={isVerticalMode} width={styles.width} isLive={isLive}>
