@@ -25,7 +25,7 @@ export default function ReservationsPage() {
 				<div className="flex items-center gap-4">
 					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Reservations</h1>
 					<div className="items-center gap-2 md:ml-auto md:flex">
-						<FilterComponent onApplyFilters={(filters) => console.log(filters)} />
+						<FilterComponent filters={filter} onApplyFilters={setFilter} />
 						<Button variant="outline" onClick={refreshData}>
 							<RefreshCw className="h-4 w-4" />
 						</Button>

@@ -1,3 +1,4 @@
+import { StaysFilter } from "@/app/hooks/useFetchStays";
 import { StayStatus } from "@/app/models/models";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,20 +10,21 @@ import { DatePicker } from "./ui/date-picker";
 import { MultiSelect } from "./ui/multi-select";
 
 type Props = {
-	onApplyFilters: (filter: any) => void;
+	filters: StaysFilter;
+	onApplyFilters: (filter: StaysFilter) => void;
 };
 
-export function FilterComponent({ onApplyFilters }: Props) {
-	const [startDate, setStartDate] = useState<Date | undefined>();
-	const [endDate, setEndDate] = useState<Date | undefined>();
-	const [stayStatus, setStayStatus] = useState<StayStatus[]>([]);
-	const [guestName, setGuestName] = useState("");
+export function FilterComponent({ filters, onApplyFilters }: Props) {
+	const [startDate, setStartDate] = useState<Date | undefined>(filters.startDate);
+	const [endDate, setEndDate] = useState<Date | undefined>(filters.endDate);
+	const [stayStatus, setStayStatus] = useState<StayStatus[] | undefined>(filters.stayStatus);
+	const [guestName, setGuestName] = useState(filters.guestName);
 
 	const handleApplyFilters = () => {
-		const filters = {
+		const filters: StaysFilter = {
 			...(startDate && { startDate }),
 			...(endDate && { endDate }),
-			...(stayStatus.length > 0 && { stayStatus: stayStatus }),
+			...(stayStatus && stayStatus.length > 0 && { stayStatus: stayStatus }),
 			...(guestName && { guestName }),
 		};
 		onApplyFilters(filters);
@@ -71,7 +73,7 @@ export function FilterComponent({ onApplyFilters }: Props) {
 						<Input id="guestName" value={guestName} onChange={(e) => setGuestName(e.target.value)} className="col-span-3" />
 					</div>
 				</div>
-				
+
 				<SheetFooter>
 					<SheetClose asChild>
 						<Button onClick={handleApplyFilters}>Apply Filters</Button>

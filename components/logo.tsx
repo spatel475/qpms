@@ -7,7 +7,7 @@ interface LogoProps {
 
 export const Logo = ({ height, width }: LogoProps) => {
 	const { resolvedTheme } = useTheme();
-	return resolvedTheme === "light" ? darkLogo(height, width) : lightLogo(height, width);
+	return resolvedTheme === "dark" ? lightLogo(height, width) : darkLogo(height, width);
 };
 
 const lightLogo = (width?: number, height?: number) => {
