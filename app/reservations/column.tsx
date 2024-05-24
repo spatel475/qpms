@@ -2,13 +2,12 @@
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DataTableRowActions } from "@/components/data-table/data-table-row-actions";
-import { Routes } from "@/components/nav-links";
+import { Routes } from "@/components/navbar/nav-links";
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { StayResponse } from "../api/stays/route";
-import { StayStatus } from "../models/models";
 
 export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 	const router = useRouter();
@@ -28,17 +27,8 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 				header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
 				cell: ({ row }) => {
 					const status: string = row.getValue("stayStatus");
-					let classBg = "";
-					let statusSpaced = status;
-					if (status === StayStatus.BOOKED) {
-						classBg = "status-booked";
-					} else if (status === StayStatus.INHOUSE) {
-						classBg = "status-in-house";
-						statusSpaced = "IN HOUSE";
-					} else {
-						classBg = "status-checked-out";
-						statusSpaced = "CHECKED OUT";
-					}
+					let classBg = `status-${status.toLowerCase().replace("_", "-")}`;
+					let statusSpaced = status.replace("_", " ");
 
 					return (
 						<Badge variant="outline" className={classBg}>

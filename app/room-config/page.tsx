@@ -17,9 +17,9 @@ const RoomConfig = () => {
 	const [data, setData] = useState<Room[]>([]);
 	const [pagination, setPagination] = useState({
 		totalCount: 0,
-		totalPages: 0,
+		totalPages: 1,
 		currentPage: 1,
-		pageSize: 20,
+		pageSize: 25,
 	});
 
 	const fetchRooms = useCallback(

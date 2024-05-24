@@ -1,0 +1,322 @@
+[
+	{
+		"id": "56df81c9-2fa3-4102-8956-ee8b0680ca0c",
+		"guestId": "0e2b4508-b34e-4468-a4b3-9651322abb47",
+		"roomId": "107",
+		"startDate": "2025-02-27T15:44:45.130Z",
+		"endDate": "2025-03-06T15:44:45.130Z",
+		"checkoutTime": "2025-03-06T06:33:50.266Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": {
+			"id": "0e2b4508-b34e-4468-a4b3-9651322abb47",
+			"firstName": "Amalia",
+			"lastName": "Beahan",
+			"address": "7215 Madalyn Glens",
+			"phoneNumber": "553-876-1024 x79724",
+			"dlNumber": "762e529b-a083-445d-b2cf-cd87fe526a38",
+			"comments": "Impedit virga communis utrum aliquam volaticus exercitationem virga."
+		},
+		"room": { "id": "107", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "63b88fe8-c299-4be1-a7d1-c9941b2cbf6d",
+		"guestId": "5089860d-5580-47f6-8d7d-bf354895fc93",
+		"roomId": "103",
+		"startDate": "2024-12-06T15:09:47.269Z",
+		"endDate": "2024-12-18T15:09:47.269Z",
+		"checkoutTime": "2024-12-18T10:35:08.148Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": { "id": "5089860d-5580-47f6-8d7d-bf354895fc93", "firstName": "Miller", "lastName": "Lowe", "address": "269 Swaniawski Drive", "phoneNumber": "(443) 399-8390", "dlNumber": "85585e1a-0174-4b57-af67-ccdf73ef5965", "comments": "Dolore eaque stipes campana denuo clementia." },
+		"room": { "id": "103", "roomType": "Q1NS", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "3c41469f-40c8-4b05-ac27-73b4a248dc49",
+		"guestId": "ac8f2bf8-ce59-47ad-a979-13ed46e508be",
+		"roomId": "111",
+		"startDate": "2024-11-20T05:55:19.452Z",
+		"endDate": "2024-11-29T05:55:19.452Z",
+		"checkoutTime": "2024-11-29T04:31:06.703Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": { "id": "ac8f2bf8-ce59-47ad-a979-13ed46e508be", "firstName": "Branson", "lastName": "Ferry", "address": "46565 Bruen Summit", "phoneNumber": "437.610.5148 x6762", "dlNumber": "ab26b0d7-3f8f-4bd8-a315-eb63d8345004", "comments": "Tutamen caterva patruus cattus vaco." },
+		"room": { "id": "111", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": false, "unavailablityReason": "AC not working" }
+	},
+	{
+		"id": "1b9fb1bf-cdb5-40fc-8872-618f34b81341",
+		"guestId": "62ecfd75-f16d-4d4b-b10c-74b66b1e405e",
+		"roomId": "112",
+		"startDate": "2024-10-12T01:28:59.699Z",
+		"endDate": "2024-10-22T01:28:59.699Z",
+		"checkoutTime": "2024-10-21T19:25:48.105Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": {
+			"id": "62ecfd75-f16d-4d4b-b10c-74b66b1e405e",
+			"firstName": "Melody",
+			"lastName": "Breitenberg",
+			"address": "137 Grimes Rapid",
+			"phoneNumber": "1-672-674-6043",
+			"dlNumber": "709798eb-f542-41d9-9eec-b1ba8c494bb7",
+			"comments": "Dicta constans voluntarius suppellex adficio creptio ademptio."
+		},
+		"room": { "id": "112", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "4f01787e-546a-43e3-b3b1-21e3b69bed23",
+		"guestId": "e04dddd4-3ed4-4893-adb7-8899ae182228",
+		"roomId": "109",
+		"startDate": "2024-10-07T02:07:45.866Z",
+		"endDate": "2024-10-22T02:07:45.866Z",
+		"checkoutTime": "2024-10-21T10:32:16.837Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": {
+			"id": "e04dddd4-3ed4-4893-adb7-8899ae182228",
+			"firstName": "Amalia",
+			"lastName": "Beahan",
+			"address": "7215 Madalyn Glens",
+			"phoneNumber": "553-876-1024 x79724",
+			"dlNumber": "762e529b-a083-445d-b2cf-cd87fe526a38",
+			"comments": "Impedit virga communis utrum aliquam volaticus exercitationem virga."
+		},
+		"room": { "id": "109", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "63fb3765-0e15-4409-b997-1b1416d41ec7",
+		"guestId": "4bf6af70-91db-431f-b655-41d3148a95c6",
+		"roomId": "121",
+		"startDate": "2024-10-06T05:23:57.467Z",
+		"endDate": "2024-10-20T05:23:57.467Z",
+		"checkoutTime": "2024-10-19T23:12:58.115Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": { "id": "4bf6af70-91db-431f-b655-41d3148a95c6", "firstName": "Madonna", "lastName": "Huel", "address": "2990 Raynor Center", "phoneNumber": "1-575-252-5518 x2194", "dlNumber": "3113d42b-d37a-48db-a6e2-44c7c3934a92", "comments": "Verto veniam labore suffoco amet uxor patria." },
+		"room": { "id": "121", "roomType": "Q2S", "propCode": "QINNS", "roomRate": "70", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "f4fa5276-95df-4234-88d0-32d7c96410fd",
+		"guestId": "6312e63f-8ad6-41b0-8764-6f4cdacbf39b",
+		"roomId": "111",
+		"startDate": "2024-09-17T00:25:34.730Z",
+		"endDate": "2024-09-20T00:25:34.730Z",
+		"checkoutTime": "2024-09-19T19:41:15.387Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": { "id": "6312e63f-8ad6-41b0-8764-6f4cdacbf39b", "firstName": "Joesph", "lastName": "Gerhold", "address": "45714 Nelle Curve", "phoneNumber": "(897) 921-5179 x082", "dlNumber": "efb3cf9c-4a50-4782-809f-d9f360a6efda", "comments": "Trucido facilis adipiscor." },
+		"room": { "id": "111", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": false, "unavailablityReason": "AC not working" }
+	},
+	{
+		"id": "88a018d8-5b2a-4ddc-9cd8-44b9c13434cd",
+		"guestId": "120a46bf-891a-4162-bed4-c7244a776611",
+		"roomId": "103",
+		"startDate": "2024-05-25T15:55:36.428Z",
+		"endDate": "2024-05-27T15:55:36.428Z",
+		"checkoutTime": "2024-05-26T21:24:24.298Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": {
+			"id": "120a46bf-891a-4162-bed4-c7244a776611",
+			"firstName": "Melvin",
+			"lastName": "Jast",
+			"address": "34829 Considine Trail",
+			"phoneNumber": "1-700-520-4642",
+			"dlNumber": "f6f80ece-d3d4-4445-9daa-8e98659e1209",
+			"comments": "Amita surgo paulatim pauci aperiam tactus candidus acies."
+		},
+		"room": { "id": "103", "roomType": "Q1NS", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "e6aa5915-c244-4274-b231-07503a420008",
+		"guestId": "cd743bff-760d-470a-879c-bc50c27e058a",
+		"roomId": "110",
+		"startDate": "2024-08-16T09:27:30.031Z",
+		"endDate": "2024-08-29T09:27:30.031Z",
+		"checkoutTime": "2024-08-28T13:18:03.155Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": { "id": "cd743bff-760d-470a-879c-bc50c27e058a", "firstName": "Lennie", "lastName": "Robel", "address": "135 Willow Grove", "phoneNumber": "807-850-1362 x788", "dlNumber": "046ba2f8-1cef-4d07-b82f-c1f42fd380fb", "comments": "Accusator usus bonus alter damnatio bonus." },
+		"room": { "id": "110", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "7c1c1271-dabe-414b-8467-cccac451c61a",
+		"guestId": "5f1b915a-a5cc-49c6-b7db-6429f69b2a2f",
+		"roomId": "104",
+		"startDate": "2024-05-24T10:53:05.409Z",
+		"endDate": "2024-06-04T10:53:05.409Z",
+		"checkoutTime": "2024-06-03T21:31:30.115Z",
+		"dailyRate": "50",
+		"stayStatus": "RESERVED",
+		"guest": { "id": "5f1b915a-a5cc-49c6-b7db-6429f69b2a2f", "firstName": "Ethelyn", "lastName": "Maggio", "address": "381 Konopelski Run", "phoneNumber": "384-913-2991 x992", "dlNumber": "5868c5b5-0caa-4cc4-8da9-96462c6eb338", "comments": "Claro cur utroque decimus." },
+		"room": { "id": "104", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "54ba5ac7-442a-417c-81d4-e7a28f013bc8",
+		"guestId": "ee0e023c-0e53-4fcc-a3a7-2d3131bfab55",
+		"roomId": "106",
+		"startDate": "2024-05-13T21:34:23.657Z",
+		"endDate": "2024-05-26T21:34:23.657Z",
+		"checkoutTime": "2024-05-26T00:14:51.185Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": {
+			"id": "ee0e023c-0e53-4fcc-a3a7-2d3131bfab55",
+			"firstName": "Therese",
+			"lastName": "Steuber",
+			"address": "1796 Clarence Street",
+			"phoneNumber": "1-437-293-8315 x7118",
+			"dlNumber": "a748732f-a874-4fe4-839a-401dfc102d68",
+			"comments": "Magni caveo cattus tandem auctus teneo tyrannus."
+		},
+		"room": { "id": "106", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "84f3d8fd-c25d-41eb-93ba-bf19814a87f1",
+		"guestId": "b39dad26-3be2-4834-bfae-7365255ba9e2",
+		"roomId": "107",
+		"startDate": "2024-05-12T05:25:06.043Z",
+		"endDate": "2024-05-22T05:25:06.043Z",
+		"checkoutTime": "2024-05-21T07:22:22.492Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": {
+			"id": "b39dad26-3be2-4834-bfae-7365255ba9e2",
+			"firstName": "Roma",
+			"lastName": "Kozey",
+			"address": "170 Kautzer Park",
+			"phoneNumber": "(837) 797-5938 x490",
+			"dlNumber": "5a0c8d58-71e9-4d98-bcbe-432b12c360d8",
+			"comments": "Trado tribuo maxime collum basium vehemens supplanto sponte."
+		},
+		"room": { "id": "107", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "4ebc741f-c423-4621-ac51-a9b4156f542d",
+		"guestId": "6ce16060-836c-42bf-8604-4dd7de22875e",
+		"roomId": "119",
+		"startDate": "2024-05-12T03:34:32.940Z",
+		"endDate": "2024-05-25T03:34:32.940Z",
+		"checkoutTime": "2024-05-24T03:39:59.260Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": { "id": "6ce16060-836c-42bf-8604-4dd7de22875e", "firstName": "Joesph", "lastName": "Gerhold", "address": "45714 Nelle Curve", "phoneNumber": "(897) 921-5179 x082", "dlNumber": "efb3cf9c-4a50-4782-809f-d9f360a6efda", "comments": "Trucido facilis adipiscor." },
+		"room": { "id": "119", "roomType": "Q2S", "propCode": "QINNS", "roomRate": "70", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "122411f9-d7c4-402b-8e50-10ea776e8273",
+		"guestId": "a43dd4e4-342b-41fd-a13b-cf99b5b1d3cc",
+		"roomId": "110",
+		"startDate": "2024-05-11T21:45:33.227Z",
+		"endDate": "2024-05-15T21:45:33.227Z",
+		"checkoutTime": "2024-05-15T19:28:25.726Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": {
+			"id": "a43dd4e4-342b-41fd-a13b-cf99b5b1d3cc",
+			"firstName": "Magnolia",
+			"lastName": "Boyle",
+			"address": "23376 Arlie Views",
+			"phoneNumber": "(835) 203-7608",
+			"dlNumber": "417ece85-4133-4bc5-829e-e0912a0824b1",
+			"comments": "Vulariter cavus demens accommodo magni corrigo ullam abundans timidus carpo."
+		},
+		"room": { "id": "110", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "aebf7d55-695a-4b0e-9be9-317e66f50016",
+		"guestId": "33c1ad9b-06b8-44d3-b191-ab53833c1895",
+		"roomId": "109",
+		"startDate": "2024-05-11T20:19:16.709Z",
+		"endDate": "2024-05-14T20:19:16.709Z",
+		"checkoutTime": "2024-05-14T00:40:08.911Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": {
+			"id": "33c1ad9b-06b8-44d3-b191-ab53833c1895",
+			"firstName": "Melvin",
+			"lastName": "Jast",
+			"address": "34829 Considine Trail",
+			"phoneNumber": "1-700-520-4642",
+			"dlNumber": "f6f80ece-d3d4-4445-9daa-8e98659e1209",
+			"comments": "Amita surgo paulatim pauci aperiam tactus candidus acies."
+		},
+		"room": { "id": "107", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "3a3f49d8-d0cc-40d7-b87c-f742690ca42f",
+		"guestId": "1f373525-8e51-4109-8335-ed12919c8dba",
+		"roomId": "108",
+		"startDate": "2024-05-11T18:54:13.251Z",
+		"endDate": "2024-05-13T18:54:13.251Z",
+		"checkoutTime": "2024-05-13T04:24:21.644Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": { "id": "1f373525-8e51-4109-8335-ed12919c8dba", "firstName": "Darron", "lastName": "Hoppe", "address": "5503 E South Street", "phoneNumber": "1-550-354-1983 x2223", "dlNumber": "abaea2d3-6320-46d7-b66c-a44fef3777c5", "comments": "Deputo corrupti suspendo." },
+		"room": { "id": "108", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "a1501625-327f-4f2c-8411-26a67afedc36",
+		"guestId": "4a594dc7-ec65-4b0e-89ab-53e126ff6f26",
+		"roomId": "115",
+		"startDate": "2024-05-11T10:16:08.015Z",
+		"endDate": "2024-05-20T10:16:08.015Z",
+		"checkoutTime": "2024-05-19T13:13:38.643Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": { "id": "4a594dc7-ec65-4b0e-89ab-53e126ff6f26", "firstName": "Cristal", "lastName": "White", "address": "37217 Torp Parkways", "phoneNumber": "470-606-6232", "dlNumber": "b3bc3d84-4f13-44da-b855-42f326fba204", "comments": "Brevis abutor vester." },
+		"room": { "id": "115", "roomType": "F2S", "propCode": "QINNS", "roomRate": "70", "roomAvailable": false, "unavailablityReason": "Broken Pipes" }
+	},
+	{
+		"id": "976b467b-9959-4204-ac30-e4d8697d5641",
+		"guestId": "a600f9be-319a-4c94-b828-e995d6b2d318",
+		"roomId": "111",
+		"startDate": "2024-05-10T04:44:51.182Z",
+		"endDate": "2024-05-14T04:44:51.182Z",
+		"checkoutTime": "2024-05-13T20:53:15.823Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": { "id": "a600f9be-319a-4c94-b828-e995d6b2d318", "firstName": "Neil", "lastName": "Orn", "address": "96607 Pacocha Port", "phoneNumber": "640-781-4408", "dlNumber": "d6fcd9c4-4cd2-4eab-9e6f-d03298f9c401", "comments": "Aperte uberrime eum hic coerceo custodia tener vulgaris sint." },
+		"room": { "id": "111", "roomType": "F1S", "propCode": "QINNS", "roomRate": "50", "roomAvailable": false, "unavailablityReason": "AC not working" }
+	},
+	{
+		"id": "29d7e052-1aa7-4924-9b70-102186d20eb0",
+		"guestId": "8ca7c598-374d-4d7d-a891-fddc47e8b3f4",
+		"roomId": "103",
+		"startDate": "2024-05-09T22:15:20.781Z",
+		"endDate": "2024-05-15T22:15:20.781Z",
+		"checkoutTime": "2024-05-15T10:07:41.128Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": {
+			"id": "8ca7c598-374d-4d7d-a891-fddc47e8b3f4",
+			"firstName": "Dovie",
+			"lastName": "Nienow",
+			"address": "1789 Hank Alley",
+			"phoneNumber": "1-819-977-4647 x325",
+			"dlNumber": "f8e3b356-23a3-4e07-aed0-2ceac2138688",
+			"comments": "Sodalitas bibo quisquam ocer ad occaecati tabgo stillicidium."
+		},
+		"room": { "id": "103", "roomType": "Q1NS", "propCode": "QINNS", "roomRate": "50", "roomAvailable": true, "unavailablityReason": "" }
+	},
+	{
+		"id": "59e2561a-b835-4e4e-b988-882442be0587",
+		"guestId": "bd0b92ef-fd57-4148-9b56-d52a30b90eec",
+		"roomId": "121",
+		"startDate": "2024-05-09T12:54:57.146Z",
+		"endDate": "2024-05-24T12:54:57.146Z",
+		"checkoutTime": "2024-05-23T14:07:26.105Z",
+		"dailyRate": "50",
+		"stayStatus": "OCCUPIED",
+		"guest": {
+			"id": "bd0b92ef-fd57-4148-9b56-d52a30b90eec",
+			"firstName": "Enrique",
+			"lastName": "Schneider",
+			"address": "81083 Sim Street",
+			"phoneNumber": "(419) 840-5147",
+			"dlNumber": "3b12de7a-22d3-4e14-bf9d-468ad4bed1e4",
+			"comments": "Acsi ciminatio ullam adipiscor desino molestiae vinculum vindico averto."
+		},
+		"room": { "id": "121", "roomType": "Q2S", "propCode": "QINNS", "roomRate": "70", "roomAvailable": true, "unavailablityReason": "" }
+	}
+]

@@ -6,7 +6,7 @@
 
 */
 -- CreateEnum
-CREATE TYPE "StayStatus" AS ENUM ('BOOKED', 'INHOUSE', 'CHECKEDOUT');
+CREATE TYPE "StayStatus" AS ENUM ('RESERVED', 'OCCUPIED', 'CHECKED_OUT');
 
 -- AlterTable
 ALTER TABLE "Stay" ADD COLUMN     "checkoutTime" TIMESTAMP(3) NOT NULL,

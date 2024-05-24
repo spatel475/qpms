@@ -1,8 +1,8 @@
 "use client";
 
-import { Routes } from "@/components/nav-links";
+import { Routes } from "@/components/navbar/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { DatePickerForm } from "@/components/ui/date-picker";
+import { DateRangePickerForm } from "@/components/ui/date-range-picker";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
@@ -140,7 +140,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			paymentMode: paymentDetails?.paymentMode ?? "cash",
 			numOfAdults: paymentDetails?.numOfAdults,
 			numOfChildren: paymentDetails?.numOfChildren,
-			stayStatus: compareAsc(new Date(), dateRange.from!) === -1 ? StayStatus.BOOKED : StayStatus.INHOUSE,
+			stayStatus: compareAsc(new Date(), dateRange.from!) === -1 ? StayStatus.RESERVED : StayStatus.OCCUPIED,
 			guest: guestData,
 			room: selectedRoom,
 			extensions: isRateTypeWeekly ? duration : 0,
@@ -176,13 +176,13 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		}
 	};
 
-	const fetchInHouseStays = async () => {
+	const fetchOccupiedStays = async () => {
 		setIsLoading(true);
 
 		try {
 			const response = await get<StayResponse[]>("/stays", {
 				queryParams: {
-					stayStatus: StayStatus.INHOUSE,
+					stayStatus: StayStatus.OCCUPIED,
 				},
 			});
 			const fetchedData = response.data;
@@ -254,7 +254,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 
 	useEffect(() => {
 		fetchAllRooms(pagination.currentPage, pagination.pageSize);
-		fetchInHouseStays();
+		fetchOccupiedStays();
 	}, [fetchAllRooms]);
 
 	const onRateTypeToggle = (rateType: string) => {
@@ -309,7 +309,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 									<CardTitle>Stay summary</CardTitle>
 								</CardHeader>
 								<CardContent>
-									<DatePickerForm onValueChange={handleDateChange} defaultDates={dateRange} />
+									<DateRangePickerForm onValueChange={handleDateChange} defaultDates={dateRange} />
 									<RateToggle onToggle={onRateTypeToggle} defaultRateType={isRateTypeWeekly ? "weeklyRate" : "dailyRate"} />
 									<RateOverrideForm defaultRate={unitRate} onValueChange={handleRateChange} />
 									<CardTitle className="mt-4 text-md">

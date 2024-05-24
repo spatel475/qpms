@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu } from "lucide-react";
+import { ModeToggle } from "../theme/theme-toggle";
 import NavLinks from "./nav-links";
-import { ModeToggle } from "./theme-toggle";
 
 export default function SideNav() {
 	return (

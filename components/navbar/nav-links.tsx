@@ -1,20 +1,22 @@
 "use client";
 
-import { Hotel, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "../logo";
 
 export const enum Routes {
 	Reservations = "/reservations",
+	Dashboard = "/dashboard",
 	ReservationForm = "/reservations/form",
-	// UpdateReservation = "/reservations/update",
 	RoomConfig = "/room-config",
+	Reports = "/reports",
 }
 
 const links = [
-	// { name: "Home", href: Routes.Home, icon: LayoutDashboard },
-	{ name: "Reservations", href: Routes.Reservations, icon: LayoutDashboard },
-	{ name: "Room Configuration", href: Routes.RoomConfig, icon: Hotel },
+	{ name: "Reservations", href: Routes.Reservations },
+	{ name: "Dashboard", href: Routes.Dashboard },
+	{ name: "Room Configuration", href: Routes.RoomConfig },
+	{ name: "Daily Report", href: Routes.Reports },
 ];
 
 export default function NavLinks() {
@@ -23,12 +25,15 @@ export default function NavLinks() {
 	return (
 		<>
 			<Link href={Routes.Reservations} className="flex items-center gap-2 text-lg font-semibold">
-				<LayoutDashboard />
+				<div className="h-10 w-10">
+					<Logo />
+				</div>
 			</Link>
 			{links.map((link) => {
 				const isActive = router === link.href;
 				return (
 					<Link key={link.href} href={link.href} className={`transition-colors hover:text-foreground whitespace-nowrap ${isActive ? "text-foreground font-semibold" : "text-muted-foreground"}`}>
+						{/* {link.icon && <link.icon />} */}
 						{link.name}
 					</Link>
 				);

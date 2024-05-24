@@ -12,14 +12,13 @@ export async function GET(request: NextRequest) {
 		startDate,
 		endDate,
 		checkoutDate,
-		stayStatus,
+		stayStatus: stayStatuses,
 		guestName,
 		page = '1',
-		limit = '20',
+		limit = '25',
 	} = params;
 
 	const where: any = {};
-
 
 	if (roomId) {
 		where.roomId = roomId;
@@ -43,8 +42,10 @@ export async function GET(request: NextRequest) {
 		};
 	}
 
-	if (stayStatus) {
-		where.stayStatus = stayStatus;
+	if (stayStatuses) {
+		where.stayStatus = {
+			in: stayStatuses.split(',')
+		};
 	}
 
 	if (guestName) {
@@ -75,9 +76,9 @@ export async function GET(request: NextRequest) {
 			room: true,
 		},
 		orderBy: {
-			startDate: 'desc', // or endDate: 'desc' 
+			endDate: 'desc', // or endDate: 'desc' 
 		},
-		distinct: ['roomId'],
+		// distinct: ['roomId'],
 		skip,
 		take,
 	});

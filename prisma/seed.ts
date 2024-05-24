@@ -28,21 +28,21 @@ async function seedRooms() {
 	await prisma.room.createMany({ data: seed, skipDuplicates: true })
 }
 
-async function seedGuests() {
-	const seed = data.guests;
-	await prisma.guest.createMany({ data: seed, skipDuplicates: true })
-}
+// async function seedGuests() {
+// 	const seed = data.guests;
+// 	await prisma.guest.createMany({ data: seed, skipDuplicates: true })
+// }
 
-async function seedStays() {
-	const seed = data.stays;
-	await prisma.stay.createMany({ data: seed, skipDuplicates: true })
-}
+// async function seedStays() {
+// 	const seed = data.stays;
+// 	await prisma.stay.createMany({ data: seed, skipDuplicates: true })
+// }
 
 const userPromise = seedUser();
 const propertyPromise = seedProperty();
 const roomsPromise = seedRooms();
 
-Promise.allSettled([userPromise, propertyPromise, roomsPromise, seedGuests(), seedStays()])
+Promise.allSettled([userPromise, propertyPromise, roomsPromise])
 	.then(async () => {
 		await prisma.$disconnect()
 	})

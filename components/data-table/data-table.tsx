@@ -19,12 +19,13 @@ interface DataTableProps<TData, TValue> {
 		currentPage: number;
 		pageSize: number;
 	};
+	hidePagination?: boolean;
 	setPagination: (pagination: any) => void;
 	enableExpand?: boolean; // Optional prop for expandable feature
 	ExpandComponent?: React.FC<{ row: TData }>; // Custom expandable component
 }
 
-export function DataTable<TData, TValue>({ isLoading, columns, data, pagination, setPagination, enableExpand = false, ExpandComponent }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ isLoading, columns, data, pagination, hidePagination, setPagination, enableExpand = false, ExpandComponent }: DataTableProps<TData, TValue>) {
 	const [rowSelection, setRowSelection] = useState({});
 	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -64,6 +65,7 @@ export function DataTable<TData, TValue>({ isLoading, columns, data, pagination,
 	}, [pagination.totalPages]);
 
 	const toggleExpandRow = (rowId: string) => {
+		// multi expand allowed
 		setExpandedRows((prev) => {
 			const newExpandedRows = new Set(prev);
 			if (newExpandedRows.has(rowId)) {
@@ -73,6 +75,9 @@ export function DataTable<TData, TValue>({ isLoading, columns, data, pagination,
 			}
 			return newExpandedRows;
 		});
+
+		// single
+		// setExpandedRows(new Set([rowId]));
 	};
 
 	return (
@@ -141,7 +146,7 @@ export function DataTable<TData, TValue>({ isLoading, columns, data, pagination,
 					</TableBody>
 				</Table>
 			</div>
-			<DataTablePagination table={table} pagination={pagination} setPagination={setPagination} />
+			{!hidePagination && <DataTablePagination table={table} pagination={pagination} setPagination={setPagination} />}
 		</div>
 	);
 }

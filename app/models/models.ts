@@ -67,7 +67,14 @@ export enum RoomType {
 }
 
 export enum StayStatus {
-	BOOKED = 'BOOKED',
-	INHOUSE = 'INHOUSE',
-	CHECKEDOUT = 'CHECKEDOUT'
+	RESERVED = 'RESERVED',
+	OCCUPIED = 'OCCUPIED',
+	CHECKED_OUT = 'CHECKED_OUT'
 }
+
+export type Pagination = {
+	totalCount: number;
+	totalPages: number;
+	pageSize: number;
+	currentPage: number;
+};
