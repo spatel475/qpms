@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function DatePicker(p: Props) {
-	const [date, setDate] = useState<Date>();
+	const [date, setDate] = useState<Date | undefined>(p.defaultDate);
 
 	const handleDateChange = (date: Date | undefined) => {
 		setDate(date);
