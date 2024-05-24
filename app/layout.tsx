@@ -1,5 +1,5 @@
-import SideNav from "@/components/sidenav";
-import { ThemeProvider } from "@/components/theme-provider";
+import SideNav from "@/components/navbar/sidenav";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";

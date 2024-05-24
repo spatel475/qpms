@@ -1,7 +1,8 @@
 "use client";
 
 import { DataTable } from "@/components/data-table/data-table";
-import { Routes } from "@/components/nav-links";
+import { Routes } from "@/components/navbar/nav-links";
+import { FilterComponent } from "@/components/stay-filter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { PlusCircle, RefreshCw } from "lucide-react";
@@ -11,7 +12,7 @@ import { useStayColumns } from "./column";
 import ReservationDetail from "./reservation-details";
 
 export default function ReservationsPage() {
-	const { data, isLoading, pagination, setPagination, fetchData } = useFetchData(1, 25);
+	const { data, isLoading, filter, setFilter, pagination, setPagination, fetchData } = useFetchData(1, 25);
 
 	const refreshData = async () => {
 		await fetchData(pagination.currentPage, pagination.pageSize, false);
@@ -24,7 +25,8 @@ export default function ReservationsPage() {
 				<div className="flex items-center gap-4">
 					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Reservations</h1>
 					<div className="items-center gap-2 md:ml-auto md:flex">
-						<Button className="gap-1" variant="outline" onClick={refreshData}>
+						<FilterComponent onApplyFilters={(filters) => console.log(filters)} />
+						<Button variant="outline" onClick={refreshData}>
 							<RefreshCw className="h-4 w-4" />
 						</Button>
 						<Link href={Routes.ReservationForm}>

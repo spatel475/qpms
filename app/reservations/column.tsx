@@ -2,7 +2,7 @@
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DataTableRowActions } from "@/components/data-table/data-table-row-actions";
-import { Routes } from "@/components/nav-links";
+import { Routes } from "@/components/navbar/nav-links";
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 import { useRouter } from "next/navigation";

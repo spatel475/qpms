@@ -129,11 +129,11 @@ const DailyReportPage = () => {
 				</CardContent>
 				<CardContent>
 					<CardTitle className="text-sm font-medium">Daily</CardTitle>
-					<div className="text-lg font-bold">{frequencyOfRateTypes(data)["Daily"]}</div>
+					<div className="text-lg font-bold">{frequencyOfRateTypes(data)["Daily"] ?? 0}</div>
 				</CardContent>
 				<CardContent>
 					<CardTitle className="text-sm font-medium">Weekly</CardTitle>
-					<div className="text-lg font-bold">{frequencyOfRateTypes(data)["Weekly"]}</div>
+					<div className="text-lg font-bold">{frequencyOfRateTypes(data)["Weekly"] ?? 0}</div>
 				</CardContent>
 			</div>
 		</Card>

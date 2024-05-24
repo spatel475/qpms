@@ -2,16 +2,12 @@ import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
-import { StayStatus } from "../models/models";
-
-export type Pagination = {
-	totalCount: number;
-	totalPages: number;
-	pageSize: number;
-	currentPage: number;
-};
+import { Pagination, StayStatus } from "../models/models";
 
 const useFetchData = (initialPage: number, initialPageSize: number) => {
+	const [filter, setFilter] = useState<StaysFilter>({
+		stayStatus: [StayStatus.OCCUPIED],
+	});
 	const [data, setData] = useState<StayResponse[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [pagination, setPagination] = useState<Pagination>({
@@ -48,7 +44,7 @@ const useFetchData = (initialPage: number, initialPageSize: number) => {
 				const stayStatuses = `${StayStatus.OCCUPIED},${StayStatus.RESERVED}`;
 				const response = await get<StayResponse[]>("/stays", {
 					queryParams: {
-						// stayStatus: stayStatuses,
+						stayStatus: stayStatuses,
 						page: page.toString(),
 						limit: pageSize.toString(),
 					},
@@ -80,9 +76,16 @@ const useFetchData = (initialPage: number, initialPageSize: number) => {
 
 	useEffect(() => {
 		fetchData(pagination.currentPage, pagination.pageSize);
-	}, [pagination.currentPage, pagination.pageSize]);
+	}, [pagination.currentPage, pagination.pageSize, filter]);
 
-	return { data, isLoading, pagination, setPagination, fetchData };
+	return { data, isLoading, filter, setFilter, pagination, setPagination, fetchData };
 };
 
 export default useFetchData;
+
+export type StaysFilter = {
+	startDate?: Date;
+	endDate?: Date;
+	stayStatus?: StayStatus[];
+	guestName?: string;
+};

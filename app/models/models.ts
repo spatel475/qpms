@@ -71,3 +71,10 @@ export enum StayStatus {
 	OCCUPIED = 'OCCUPIED',
 	CHECKED_OUT = 'CHECKED_OUT'
 }
+
+export type Pagination = {
+	totalCount: number;
+	totalPages: number;
+	pageSize: number;
+	currentPage: number;
+};
