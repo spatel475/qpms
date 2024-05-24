@@ -1,10 +1,10 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { Epg, Layout } from "@nessprim/planby-pro";
-import { ChannelItem, Program } from "./components";
+import { ChannelItem, Program } from "../../components/planby";
 import { useApp } from "./useApp";
 
-function StayChart() {
+function Dashboard() {
 	const { isLoading, getEpgProps, getLayoutProps, onChangeCalendarMode } = useApp();
 
 	return (
@@ -35,4 +35,4 @@ function StayChart() {
 	);
 }
 
-export default StayChart;
+export default Dashboard;

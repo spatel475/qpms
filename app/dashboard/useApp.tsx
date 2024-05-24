@@ -1,9 +1,9 @@
 import { Channel, Program, useEpg } from "@nessprim/planby-pro";
 import { useTheme } from "next-themes";
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
-import { areasMonth, areasWeek, fetchResources } from "./helpers";
-import { themeDark } from "./helpers/theme-dark";
-import { themeLight } from "./helpers/theme-light";
+import { areasMonth, areasWeek, fetchResources } from "./../../components/planby/helpers";
+import { themeDark } from "./../../components/planby/helpers/theme-dark";
+import { themeLight } from "./../../components/planby/helpers/theme-light";
 
 const startDate = "2024-05-10T00:00:00";
 const endDate = "2024-05-30T00:00:00";

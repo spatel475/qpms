@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 export const enum Routes {
 	Reservations = "/reservations",
+	Dashboard = "/dashboard",
 	ReservationForm = "/reservations/form",
 	RoomConfig = "/room-config",
 	Reports = "/reports",
@@ -14,6 +15,7 @@ export const enum Routes {
 const links = [
 	// { name: "Home", href: Routes.Home, icon: LayoutDashboard },
 	{ name: "Reservations", href: Routes.Reservations, icon: LayoutDashboard },
+	{ name: "Dashboard", href: Routes.Dashboard, icon: LayoutDashboard },
 	{ name: "Room Configuration", href: Routes.RoomConfig, icon: Hotel },
 	{ name: "Daily Report", href: Routes.Reports },
 ];
