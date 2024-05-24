@@ -4,86 +4,18 @@ import { DataTable } from "@/components/data-table/data-table";
 import { Routes } from "@/components/nav-links";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { get } from "@/lib/fetch";
-import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { StayResponse } from "../api/stays/route";
-import { StayStatus } from "../models/models";
+import useFetchData from "../hooks/useFetchStays";
 import { useStayColumns } from "./column";
 import ReservationDetail from "./reservation-details";
 
 export default function ReservationsPage() {
-	const [isLoading, setIsLoading] = useState(true);
-	const [data, setData] = useState<StayResponse[]>([]);
-	const [pagination, setPagination] = useState({
-		totalCount: 0,
-		totalPages: 1,
-		currentPage: 1,
-		pageSize: 25,
-	});
-
-	const fetchData = async (page: number, pageSize: number, fromCache = true) => {
-		setIsLoading(true);
-
-		const cacheKey = `stays-page-${page}-size-${pageSize}`;
-		const cachedData = getCachedData(cacheKey);
-
-		if (cachedData && fromCache) {
-			setData(cachedData.data);
-			setPagination((prev) => ({
-				...prev,
-				totalCount: cachedData.totalCount,
-				totalPages: cachedData.totalPages,
-				pageSize: cachedData.pageSize,
-				currentPage: page,
-			}));
-			setIsLoading(false);
-		} else {
-			try {
-				const stayStatuses = `${StayStatus.OCCUPIED},${StayStatus.RESERVED}`;
-				const response = await get<StayResponse[]>("/stays", {
-					queryParams: {
-						stayStatus: stayStatuses,
-						page: pagination.currentPage.toString(),
-						limit: pagination.pageSize.toString(),
-					},
-				});
-				const fetchedData = response.data;
-				const totalCount = parseInt(response.headers["x-total-count"], 10);
-				const totalPages = Math.ceil(totalCount / pageSize);
-
-				setData(fetchedData);
-				setPagination((prev) => ({
-					...prev,
-					totalCount,
-					totalPages,
-					pageSize,
-					currentPage: page,
-				}));
-
-				setCachedData(cacheKey, {
-					data: fetchedData,
-					totalCount,
-					totalPages,
-					pageSize,
-				});
-				setIsLoading(false);
-			} catch (error) {
-				console.error("Error fetching stays:", error);
-				setIsLoading(false);
-			}
-		}
-	};
+	const { data, isLoading, pagination, setPagination, fetchData } = useFetchData(1, 25);
 
 	const refreshData = async () => {
 		await fetchData(pagination.currentPage, pagination.pageSize, false);
 	};
-
-	useEffect(() => {
-		fetchData(pagination.currentPage, pagination.pageSize);
-	}, [pagination.currentPage, pagination.pageSize]);
 
 	const columns = useStayColumns();
 	return (
