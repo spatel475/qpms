@@ -5,6 +5,8 @@ import { DataTableRowActions } from "@/components/data-table/data-table-row-acti
 import { Routes } from "@/components/navbar/nav-links";
 import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
+import { compareAsc } from "date-fns";
+import { CircleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { StayResponse } from "../api/stays/route";
@@ -23,6 +25,12 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 				},
 			},
 			{
+				header: ({ column }) => <DataTableColumnHeader column={column} title="Room" />,
+				accessorKey: "room.id",
+				cell: ({ row }) => row.original.room.id,
+				enableSorting: false,
+			},
+			{
 				accessorKey: "stayStatus",
 				header: ({ column }) => <DataTableColumnHeader column={column} title="Status" />,
 				cell: ({ row }) => {
@@ -39,12 +47,6 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 				enableSorting: false,
 			},
 			{
-				header: ({ column }) => <DataTableColumnHeader column={column} title="Room" />,
-				accessorKey: "room.id",
-				cell: ({ row }) => row.original.room.id,
-				enableSorting: false,
-			},
-			{
 				header: ({ column }) => <DataTableColumnHeader column={column} title="Start Date" />,
 				accessorKey: "startDate",
 				cell: ({ row }) => new Date(row.getValue("startDate")).toLocaleDateString(),
@@ -52,7 +54,30 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 			{
 				header: ({ column }) => <DataTableColumnHeader column={column} title="End Date" />,
 				accessorKey: "endDate",
-				cell: ({ row }) => new Date(row.getValue("endDate")).toLocaleDateString(),
+				cell: ({ row }) => {
+					const mapBg: { [key: string]: string } = {
+						"-1": "hidden",
+						"0": "text-yellow-500",
+						"1": "text-red-500",
+					};
+
+					const endDateStr: string = row.getValue("endDate");
+					const endDate = new Date(endDateStr);
+					endDate.setHours(0, 0, 0, 0);
+
+					const curentDate = new Date();
+					curentDate.setHours(0, 0, 0, 0);
+					const diff = compareAsc(curentDate, endDate);
+
+					let classBg = `h-5 w-5 ${mapBg[diff.toString()]}`;
+
+					return (
+						<div className="flex items-center gap-2">
+							{new Date(row.getValue("endDate")).toLocaleDateString()}
+							<CircleAlert className={classBg} />
+						</div>
+					);
+				},
 			},
 			{
 				id: "actions",
