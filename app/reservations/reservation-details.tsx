@@ -79,7 +79,7 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 							<strong>Unit Rate Charged:</strong> {formatCurrency(row.weeklyRate ?? row.dailyRate ?? 0)}
 						</p>
 						<p className="text-sm text-muted-foreground">
-							<strong>Stay Status:</strong> {row.stayStatus}
+							<strong>Stay Status:</strong> {row.stayStatus.replace("_", " ")}
 						</p>
 						<p className="text-sm text-muted-foreground">
 							<strong>Adults:</strong> {row.numOfAdults}

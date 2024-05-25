@@ -1,8 +1,8 @@
 - Reservations page:
-	- Default: Occupied rooms only, with ability to filter (multi-select) other stay status
-	- Add optional date range filter
-	- Order by end date desc
-	- Warn when guest checkout is past due (red), today (orange), tomorrow (yellow)
+	- [ x ] Default: Occupied rooms only, with ability to filter (multi-select) other stay status
+	- [ x ] Add optional date range filter
+	- [ x ] Order by end date desc
+	- [ x ] Warn when guest checkout is past due (red), today (yellow)
 
 	- Res detail view:
 		- Indicate if amount is due
