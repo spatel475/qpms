@@ -1,4 +1,5 @@
-import { ProgramBox, ProgramContent, ProgramFlex, ProgramItem, ProgramStack, ProgramText, ProgramTitle, useProgram } from "@nessprim/planby-pro";
+// import { ProgramBox, ProgramContent, ProgramFlex, ProgramItem, ProgramStack, ProgramText, ProgramTitle, useProgram } from "@nessprim/planby-pro";
+import { ProgramBox, ProgramContent, ProgramFlex, ProgramItem, ProgramStack, ProgramText, ProgramTitle, useProgram } from "@/planby-lib/dist";
 
 export const Program = ({ isVerticalMode, program, ...rest }: ProgramItem) => {
 	const { styles, formatTime, set12HoursTimeFormat, isLive, isMinWidth } = useProgram({

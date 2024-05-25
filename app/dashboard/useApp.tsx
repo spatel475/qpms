@@ -1,4 +1,5 @@
-import { Channel, Program, useEpg } from "@nessprim/planby-pro";
+// import { Channel, Program, useEpg } from "@nessprim/planby-pro";
+import { Channel, Program, useEpg } from "@/planby-lib/dist";
 import { useTheme } from "next-themes";
 import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { areasMonth, areasWeek, fetchResources } from "./../../components/planby/helpers";

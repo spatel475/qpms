@@ -1,6 +1,7 @@
 "use client";
 import { Card } from "@/components/ui/card";
-import { Epg, Layout } from "@nessprim/planby-pro";
+// import { Epg, Layout } from "@nessprim/planby-pro";
+import { Epg, Layout } from "@/planby-lib/dist";
 import { ChannelItem, Program } from "../../components/planby";
 import { useApp } from "./useApp";
 
