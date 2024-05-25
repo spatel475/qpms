@@ -3,10 +3,10 @@ import { Card } from "@/components/ui/card";
 // import { Epg, Layout } from "@nessprim/planby-pro";
 import { Epg, Layout } from "@/planby-lib/dist";
 import { ChannelItem, Program } from "../../components/planby";
-import { useApp } from "./useApp";
+import { usePlanby } from "./usePlanby";
 
 function Dashboard() {
-	const { isLoading, getEpgProps, getLayoutProps, onChangeCalendarMode } = useApp();
+	const { isLoading, getEpgProps, getLayoutProps } = usePlanby();
 
 	return (
 		<div>
