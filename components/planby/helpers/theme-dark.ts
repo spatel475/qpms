@@ -1,4 +1,5 @@
-import { Theme } from "@nessprim/planby-pro";
+// import { Theme } from "@nessprim/planby-pro";
+import { Theme } from "@/planby-lib/dist";
 
 export const themeDark: Theme = {
 	primary: {
