@@ -1,11 +1,9 @@
 "use client";
 
 import { ColumnDef, ColumnFiltersState, SortingState, VisibilityState, flexRender, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
+import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { DataTablePagination } from "./data-table-pagination";
 
@@ -102,17 +100,16 @@ export function DataTable<TData, TValue>({ isLoading, columns, data, pagination,
 									{enableExpand ? (
 										<Collapsible asChild open={expandedRows.has(row.id)}>
 											<>
-												<TableRow data-state={row.getIsSelected() && "selected"}>
+												<TableRow
+													data-state={row.getIsSelected() && "selected"}
+													className="cursor-pointer"
+													onClick={() => {
+														toggleExpandRow(row.id);
+													}}
+												>
 													{row.getVisibleCells().map((cell) => (
 														<TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
 													))}
-													<TableCell>
-														<CollapsibleTrigger asChild>
-															<Button variant="outline" size="icon" onClick={() => toggleExpandRow(row.id)}>
-																{expandedRows.has(row.id) ? <ChevronUp /> : <ChevronDown />}
-															</Button>
-														</CollapsibleTrigger>
-													</TableCell>
 												</TableRow>
 												<CollapsibleContent asChild>
 													<TableRow>
