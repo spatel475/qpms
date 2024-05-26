@@ -62,6 +62,7 @@ export function usePlanby(rooms: Room[], stays: StayResponse[]) {
 			till: stay.endDate,
 			description: "",
 			image: "",
+			stayStatus: stay.stayStatus
 		}));
 		return staysAsPrograms;
 	};

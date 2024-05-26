@@ -10,14 +10,13 @@ export const Program = ({ isVerticalMode, program, ...rest }: ProgramItem) => {
 
 	const { data } = program;
 	const { image, title, since, till } = data;
-
-	// const sinceTime = formatTime(since, set12HoursTimeFormat()).toLowerCase();
-	// const tillTime = formatTime(till, set12HoursTimeFormat()).toLowerCase();
-
+	const classBg = `rounded-lg status-${data.stayStatus.toLowerCase().replace("_", "-")}-bg`;
 	const sinceTime = new Date(since).toDateString();
 	const tillTime = new Date(till).toDateString();
+
+	// @todo: fix classBg or update theme to look better in dark theme
 	return (
-		<ProgramBox width={styles.width} style={styles.position}>
+		<ProgramBox width={styles.width} style={styles.position} className={classBg}>
 			<ProgramContent isVerticalMode={isVerticalMode} width={styles.width} isLive={isLive}>
 				<ProgramFlex isVerticalMode={isVerticalMode}>
 					{/* {isLive && isMinWidth && <ProgramImage isVerticalMode={isVerticalMode} src={image} alt="Preview" />} */}
