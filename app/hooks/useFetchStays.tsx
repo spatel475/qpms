@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { StayResponse } from "../api/stays/route";
 import { Pagination, StayStatus } from "../models/models";
 
-const useFetchData = (initialPage: number, initialPageSize: number) => {
+const useFetchStays = (initialPage: number, initialPageSize: number) => {
 	const [filter, setFilter] = useState<StaysFilter>({
 		stayStatus: [StayStatus.OCCUPIED],
 	});
-	const [data, setData] = useState<StayResponse[]>([]);
+	const [stays, setStays] = useState<StayResponse[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [pagination, setPagination] = useState<Pagination>({
 		totalCount: 0,
@@ -56,7 +56,7 @@ const useFetchData = (initialPage: number, initialPageSize: number) => {
 			const totalCount = parseInt(response.headers["x-total-count"], 10);
 			const totalPages = Math.ceil(totalCount / pageSize);
 
-			setData(fetchedData);
+			setStays(fetchedData);
 			setPagination({
 				totalCount,
 				totalPages,
@@ -80,10 +80,10 @@ const useFetchData = (initialPage: number, initialPageSize: number) => {
 		fetchData(pagination.currentPage, pagination.pageSize);
 	}, [pagination.currentPage, pagination.pageSize, filter]);
 
-	return { data, isLoading, filter, setFilter, pagination, setPagination, fetchData };
+	return { stays, isLoading, filter, setFilter, pagination, setPagination, fetchData };
 };
 
-export default useFetchData;
+export default useFetchStays;
 
 export type StaysFilter = {
 	startDate?: Date;

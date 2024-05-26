@@ -54,11 +54,13 @@ export async function GET(request: NextRequest) {
 				{
 					firstName: {
 						contains: guestName,
+						mode: 'insensitive',
 					},
 				},
 				{
 					lastName: {
 						contains: guestName,
+						mode: 'insensitive',
 					},
 				},
 			],

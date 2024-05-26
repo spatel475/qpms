@@ -4,82 +4,17 @@ import { DataTable } from "@/components/data-table/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
-import { get, put } from "@/lib/fetch";
+import { put } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { Edit, Save, Undo } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
+import useFetchRooms from "../hooks/useFetchRooms";
 import { Room } from "../models/models";
 import { CACHE_KEY, roomConfigColumns } from "./columns";
 
 const RoomConfig = () => {
-	const [isLoading, setIsLoading] = useState(true);
 	const [isEditModeOn, setIsEditModeOn] = useState(false);
-	const [data, setData] = useState<Room[]>([]);
-	const [pagination, setPagination] = useState({
-		totalCount: 0,
-		totalPages: 1,
-		currentPage: 1,
-		pageSize: 25,
-	});
-
-	const fetchRooms = useCallback(
-		async (page: number, pageSize: number) => {
-			setIsLoading(true);
-
-			const cacheKey = `rooms-page-${page}-size-${pageSize}`;
-			const cachedData = getCachedData(cacheKey);
-
-			if (cachedData) {
-				setData(cachedData.data);
-				setPagination((prev) => ({
-					...prev,
-					totalCount: cachedData.totalCount,
-					totalPages: cachedData.totalPages,
-					pageSize: cachedData.pageSize,
-					currentPage: page,
-				}));
-				setIsLoading(false);
-			} else {
-				try {
-					const response = await get<Room[]>("/rooms", {
-						queryParams: {
-							page: pagination.currentPage.toString(),
-							limit: pagination.pageSize.toString(),
-						},
-					});
-					const fetchedData = response.data;
-					const totalCount = parseInt(response.headers["x-total-count"], 10);
-					const totalPages = Math.ceil(totalCount / pageSize);
-
-					setData(fetchedData);
-					setPagination((prev) => ({
-						...prev,
-						totalCount,
-						totalPages,
-						pageSize,
-						currentPage: page,
-					}));
-
-					setCachedData(cacheKey, {
-						data: fetchedData,
-						totalCount,
-						totalPages,
-						pageSize,
-					});
-
-					setIsLoading(false);
-				} catch (error) {
-					console.error("Error fetching rooms:", error);
-					setIsLoading(false);
-				}
-			}
-		},
-		[pagination.currentPage, pagination.pageSize]
-	);
-
-	useEffect(() => {
-		fetchRooms(pagination.currentPage, pagination.pageSize);
-	}, [fetchRooms, pagination.currentPage, pagination.pageSize]);
+	const { rooms, setRooms, isLoading, pagination, setPagination, fetchAllRooms } = useFetchRooms(1, 25);
 
 	const clearCache = () => {
 		setCachedData(CACHE_KEY, []);
@@ -102,7 +37,7 @@ const RoomConfig = () => {
 			const response = await put<Room[]>("/rooms", editedRooms);
 			const updatedRooms = response.data;
 
-			setData((prev) => {
+			setRooms((prev) => {
 				const updatedData = [...prev];
 				updatedRooms.forEach((updatedRoom) => {
 					const index = updatedData.findIndex((room) => room.id === updatedRoom.id);
@@ -158,7 +93,7 @@ const RoomConfig = () => {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable isLoading={isLoading} columns={roomConfigColumns(isEditModeOn)} data={data} pagination={pagination} setPagination={setPagination} />
+				<DataTable isLoading={isLoading} columns={roomConfigColumns(isEditModeOn)} data={rooms} pagination={pagination} setPagination={setPagination} />
 			</CardContent>
 		</Card>
 	);

@@ -14,7 +14,6 @@ export const enum Routes {
 
 const links = [
 	{ name: "Reservations", href: Routes.Reservations },
-	{ name: "Dashboard", href: Routes.Dashboard },
 	{ name: "Room Configuration", href: Routes.RoomConfig },
 	{ name: "Daily Report", href: Routes.Reports },
 ];

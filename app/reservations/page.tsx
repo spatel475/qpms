@@ -4,15 +4,19 @@ import { DataTable } from "@/components/data-table/data-table";
 import { Routes } from "@/components/navbar/nav-links";
 import { FilterComponent } from "@/components/stay-filter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
-import useFetchData from "../hooks/useFetchStays";
+import useFetchRooms from "../hooks/useFetchRooms";
+import useFetchStays from "../hooks/useFetchStays";
 import { useStayColumns } from "./column";
+import Dashboard from "./dashboard";
 import ReservationDetail from "./reservation-details";
 
 export default function ReservationsPage() {
-	const { data, isLoading, filter, setFilter, pagination, setPagination, fetchData } = useFetchData(1, 25);
+	const { rooms, isLoading: isRoomsLoading } = useFetchRooms(1, 25);
+	const { stays, isLoading, filter, setFilter, pagination, setPagination, fetchData } = useFetchStays(1, 25);
 
 	const refreshData = async () => {
 		await fetchData(pagination.currentPage, pagination.pageSize, false);
@@ -21,12 +25,15 @@ export default function ReservationsPage() {
 	const columns = useStayColumns();
 	return (
 		<Card>
-			<CardHeader>
-				<div className="flex items-center gap-4">
-					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Reservations</h1>
+			<Tabs defaultValue="reservation">
+				<div className="flex items-center gap-4 px-6 pt-6">
+					<TabsList>
+						<TabsTrigger value="reservation">Reservations Overview</TabsTrigger>
+						<TabsTrigger value="dashboard">Occupancy Timeline</TabsTrigger>
+					</TabsList>
 					<div className="items-center gap-2 md:ml-auto md:flex">
 						<FilterComponent filters={filter} onApplyFilters={setFilter} />
-						<Button variant="outline" onClick={refreshData}>
+						<Button variant="outline" size="icon" onClick={refreshData}>
 							<RefreshCw className="h-4 w-4" />
 						</Button>
 						<Link href={Routes.ReservationForm}>
@@ -37,10 +44,19 @@ export default function ReservationsPage() {
 						</Link>
 					</div>
 				</div>
-			</CardHeader>
-			<CardContent>
-				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} enableExpand={true} ExpandComponent={ReservationDetail} />
-			</CardContent>
+				<TabsContent value="reservation">
+					<CardContent>
+						<CardDescription className="mb-4">List of reservations with detailed view</CardDescription>
+						<DataTable isLoading={isLoading} columns={columns} data={stays} pagination={pagination} setPagination={setPagination} enableExpand={true} ExpandComponent={ReservationDetail} />
+					</CardContent>
+				</TabsContent>
+				<TabsContent value="dashboard">
+					<CardContent>
+						<CardDescription className="mb-4">Weekly room availability and occupancy at a glance</CardDescription>
+						<Dashboard rooms={rooms} stays={stays} />
+					</CardContent>
+				</TabsContent>
+			</Tabs>
 		</Card>
 	);
 }

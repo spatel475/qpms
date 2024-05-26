@@ -80,7 +80,7 @@ function generateWeekModeData(
 	}))
 	const start = new Date(startDate);
 	const end = new Date(endDate);
-	console.log(x)
+	// console.log(x)
 
 	// while (start < end) {
 		// const numDays = faker.datatype.number({ min: 1, max: 10 });
