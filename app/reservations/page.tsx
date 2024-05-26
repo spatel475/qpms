@@ -9,10 +9,11 @@ import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import useFetchStays from "../hooks/useFetchStays";
 import { useStayColumns } from "./column";
+import Dashboard from "./dashboard";
 import ReservationDetail from "./reservation-details";
 
 export default function ReservationsPage() {
-	const { data, isLoading, filter, setFilter, pagination, setPagination, fetchData } = useFetchStays(1, 25);
+	const { stays, isLoading, filter, setFilter, pagination, setPagination, fetchData } = useFetchStays(1, 25);
 
 	const refreshData = async () => {
 		await fetchData(pagination.currentPage, pagination.pageSize, false);
@@ -39,8 +40,9 @@ export default function ReservationsPage() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<DataTable isLoading={isLoading} columns={columns} data={data} pagination={pagination} setPagination={setPagination} enableExpand={true} ExpandComponent={ReservationDetail} />
+				<DataTable isLoading={isLoading} columns={columns} data={stays} pagination={pagination} setPagination={setPagination} enableExpand={true} ExpandComponent={ReservationDetail} />
 			</CardContent>
+			<Dashboard></Dashboard>
 		</Card>
 	);
 }

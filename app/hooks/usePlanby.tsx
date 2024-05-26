@@ -6,8 +6,8 @@ import { useEffect, useMemo, useState } from "react";
 import { areasMonth, areasWeek } from "../../components/planby/helpers";
 import { themeDark } from "../../components/planby/helpers/theme-dark";
 import { themeLight } from "../../components/planby/helpers/theme-light";
-import useFetchRooms from "../hooks/useFetchRooms";
-import useFetchStays from "../hooks/useFetchStays";
+import useFetchRooms from "./useFetchRooms";
+import useFetchStays from "./useFetchStays";
 
 const startDate = "2024-05-10T00:00:00";
 const endDate = "2024-05-30T00:00:00";
