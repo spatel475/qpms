@@ -1,43 +1,39 @@
 // import { Channel, Program, useEpg } from "@nessprim/planby-pro";
 import { Channel, useEpg } from "@/planby-lib/dist";
+import { addDays } from "date-fns";
 import { useTheme } from "next-themes";
 import { Program } from "planby";
 import { useEffect, useMemo, useState } from "react";
 import { areasMonth, areasWeek } from "../../components/planby/helpers";
 import { themeDark } from "../../components/planby/helpers/theme-dark";
 import { themeLight } from "../../components/planby/helpers/theme-light";
-import useFetchRooms from "./useFetchRooms";
-import useFetchStays from "./useFetchStays";
+import { StayResponse } from "../api/stays/route";
+import { Room } from "../models/models";
 
-const startDate = "2024-05-10T00:00:00";
-const endDate = "2024-05-30T00:00:00";
+const currentDate = new Date();
+currentDate.setHours(0, 0, 0, 0);
+const startDate = addDays(currentDate, -1).toISOString();
+const endDate = addDays(currentDate, 13).toISOString();
+
 const startMonthDate = "2024-01-01T00:00:00";
 const endMonthDate = "2024-12-31T00:00:00";
 
-export function usePlanby() {
+export function usePlanby(rooms: Room[], stays: StayResponse[]) {
 	const { resolvedTheme } = useTheme();
 	const [channels, setChannels] = useState<Channel[]>([]);
 	const [epg, setEpg] = useState<Program[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [dayWidth, setDayWidth] = useState<number>(2800);
+	const [dayWidth, setDayWidth] = useState<number>(2000);
 	const [dates, setDates] = useState<{ start: string; end: string }>({ start: startDate, end: endDate });
 	const [calendarMode, setCalendarMode] = useState<"week" | "month">("week");
 	const areas = calendarMode === "week" ? areasWeek : areasMonth;
 
-	const { rooms } = useFetchRooms(1, 25);
-	const { stays } = useFetchStays(1, 50);
-
 	useEffect(() => {
 		const processEpgData = async () => {
 			const roomsAsChannels = getRoomsAsChannels();
-			const weekData = await Promise.all(
-				roomsAsChannels.map(async ({ uuid }) => {
-					return getStaysAsPrograms(uuid);
-				})
-			);
-
+			const staysAsPrograms = roomsAsChannels.map(({ uuid }) => getStaysAsPrograms(uuid));
 			setChannels(roomsAsChannels);
-			setEpg(weekData.flat());
+			setEpg(staysAsPrograms.flat());
 			setIsLoading(false);
 		};
 
