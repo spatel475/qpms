@@ -33,7 +33,7 @@ export default function ReservationsPage() {
 					</TabsList>
 					<div className="items-center gap-2 md:ml-auto md:flex">
 						<FilterComponent filters={filter} onApplyFilters={setFilter} />
-						<Button variant="outline" onClick={refreshData}>
+						<Button variant="outline" size="icon" onClick={refreshData}>
 							<RefreshCw className="h-4 w-4" />
 						</Button>
 						<Link href={Routes.ReservationForm}>
