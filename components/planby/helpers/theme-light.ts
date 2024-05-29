@@ -3,50 +3,50 @@ import { Theme } from "@/planby-lib/dist";
 
 export const themeLight: Theme = {
 	primary: {
-		// 600: '#E8ECEE99',
-		// 900: '#e2e8f0',
-		600: 'hsl(var(--background))',
-		900: 'hsl(var(--background))',
+		// 600: "#E8ECEE99",
+		// 900: "#e2e8f0",
+		600: "hsl(var(--muted-foreground))",
+		900: "hsl(var(--background))",
 	},
 	grey: {
-		300: '#000000'
+		300: "hsl(var(--primary-foreground))"
 	},
-	white: '#ffffff',
+	white: "hsl(var(--border))",
 	teal: {
-		100: "#5DDADB",
+		100: "hsl(var(--muted-foreground))",
 	},
 	green: {
 		200: "#ebd18a",
-		300: '#2C7A7B',
+		300: "#2C7A7B",
 	},
 	loader: {
-		teal: '#5DDADB',
-		purple: '#3437A2',
-		pink: '#F78EB6',
-		bg: '#E8ECEE99',
+		teal: "#5DDADB",
+		purple: "#3437A2",
+		pink: "#F78EB6",
+		bg: "#E8ECEE99",
 	},
 	scrollbar: {
-		border: "#1a202c",
+		border: "hsl(var(--border))",
 		thumb: {
-			bg: "#cbd5e0",
+			bg: "hsl(var(--border))",
 		},
 	},
 	gradient: {
 		blue: {
-			300: '#E8ECEE99',
-			600: '#E8ECEE',
-			900: '#E8ECEEBB',
+			300: "hsl(var(--primary-foreground))",
+			600: "hsl(var(--muted-foreground))",
+			900: "hsl(var(--primary))",
 		},
 	},
 	text: {
 		grey: {
-			300: '#000000',
-			500: '#6F7782',
+			300: "#000000",
+			500: "#6F7782",
 		},
 	},
 	timeline: {
 		divider: {
-			bg: '#BDC0C7',
+			bg: "#BDC0C7",
 		},
 	},
 	grid: {

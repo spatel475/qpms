@@ -14,7 +14,7 @@ function Dashboard({ rooms, stays }: Props) {
 	const { isLoading, getEpgProps, getLayoutProps } = usePlanby(rooms, stays);
 
 	return (
-		<div className="h-[80vh] w-[100%]">
+		<div className="h-[72vh] w-[100%]">
 			{/* <div style={{ margin: 10 }}>
 				<h4 style={{ marginBottom: 5 }}>Options</h4>
 				<span>Mode:</span>{" "}

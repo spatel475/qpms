@@ -3,25 +3,26 @@ import { Theme } from "@/planby-lib/dist";
 
 export const themeDark: Theme = {
 	primary: {
-		// 600: "#1a202c",
-		// 900: "#171923",
-		600: "rgb(69, 69, 69)",
-		900: "hsl(var(--card))",
-
+		// 600: "#E8ECEE99",
+		// 900: "#e2e8f0",
+		600: "hsl(var(--muted-foreground))",
+		900: "hsl(var(--background))",
 	},
-	grey: { 300: "#d1d1d1" },
-	white: "#fff",
+	grey: {
+		300: "hsl(var(--primary-foreground))"
+	},
+	white: "hsl(var(--border))",
 	teal: {
-		100: "#5DDADB",
+		100: "hsl(var(--muted-foreground))",
 	},
 	green: {
 		200: "#389493",
 		300: "#2C7A7B",
 	},
 	scrollbar: {
-		border: "#ffffff",
+		border: "hsl(var(--border))",
 		thumb: {
-			bg: "#e1e1e1",
+			bg: "hsl(var(--border))",
 		},
 	},
 	loader: {
@@ -32,19 +33,17 @@ export const themeDark: Theme = {
 	},
 	gradient: {
 		blue: {
-			300: "#002eb3",
-			600: "#002360",
-			900: "#051937",
+			300: "hsl(var(--primary-foreground))",
+			600: "hsl(var(--muted-foreground))",
+			900: "hsl(var(--primary))",
 		},
 	},
-
 	text: {
 		grey: {
-			300: "#a0aec0",
-			500: "#718096",
+			300: "hsl(var(--primary))",
+			500: "orange",
 		},
 	},
-
 	timeline: {
 		divider: {
 			bg: "#718096",
