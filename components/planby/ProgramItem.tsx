@@ -1,13 +1,20 @@
 // import { ProgramBox, ProgramContent, ProgramFlex, ProgramItem, ProgramStack, ProgramText, ProgramTitle, useProgram } from "@nessprim/planby-pro";
-import { ProgramBox, ProgramContent, ProgramFlex, ProgramItem, ProgramStack, ProgramText, ProgramTitle, useProgram } from "@/planby-lib/dist";
+import { ProgramBox, ProgramContent, ProgramFlex, ProgramItem, ProgramStack, ProgramTitle, useProgram } from "@/planby-lib/dist";
 import { CircleDot } from "lucide-react";
 
-export const Program = ({ isVerticalMode, program, ...rest }: ProgramItem) => {
+type Props = {
+	onClick: (stayId: string) => void;
+};
+export const Program = ({ isVerticalMode, program, onClick, ...rest }: ProgramItem & Props) => {
 	const { styles, formatTime, set12HoursTimeFormat, isLive, isMinWidth } = useProgram({
 		isVerticalMode,
 		program,
 		...rest,
 	});
+
+	const stayClicked = (stayId: string) => {
+		onClick(stayId);
+	};
 
 	const { data } = program;
 	const { image, title, since, till } = data;
@@ -17,7 +24,7 @@ export const Program = ({ isVerticalMode, program, ...rest }: ProgramItem) => {
 
 	// @todo: fix classBg or update theme to look better in dark theme
 	return (
-		<ProgramBox width={styles.width} style={styles.position}>
+		<ProgramBox width={styles.width} style={styles.position} onClick={() => stayClicked(data.id)}>
 			<ProgramContent isVerticalMode={isVerticalMode} width={styles.width} isLive={isLive}>
 				<ProgramFlex isVerticalMode={isVerticalMode}>
 					{/* {isLive && isMinWidth && <ProgramImage isVerticalMode={isVerticalMode} src={image} alt="Preview" />} */}
@@ -26,9 +33,9 @@ export const Program = ({ isVerticalMode, program, ...rest }: ProgramItem) => {
 							<CircleDot size={20} className={classBg} />
 							{title}
 						</ProgramTitle>
-						<ProgramText>
+						{/* <ProgramText>
 							{sinceTime} - {tillTime}
-						</ProgramText>
+						</ProgramText> */}
 					</ProgramStack>
 				</ProgramFlex>
 			</ProgramContent>

@@ -1,4 +1,3 @@
-import { epg } from "./epg";
 import { getResources } from "./epg-data";
 
 export const fetchResources = async (
@@ -12,8 +11,8 @@ export const fetchResources = async (
 
 export const areasWeek = [
   {
-    startDate: "2023-05-05T00:00:00",
-    endDate: "2023-05-08T00:00:00",
+    startDate: "2024-05-29T00:00:00",
+    endDate: "2024-05-30T00:00:00",
     styles: {
       background: "#00800012",
       borderLeft: "2px dotted #38A169",
@@ -25,8 +24,8 @@ export const areasWeek = [
         background: "#38A169",
         color: "white",
       },
-      textStart: "Testing Start",
-      textEnd: "Testing End",
+    //   textStart: "Testing Start",
+    //   textEnd: "Testing End",
     },
   },
   {
