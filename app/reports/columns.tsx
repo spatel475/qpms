@@ -11,11 +11,11 @@ export const dailyReportColumns = () => {
 			header: "Room",
 		},
 		{
-			accessorFn: (x) => x.startDate && new Date(x.startDate).toDateString(),
+			accessorFn: (x) => x.startDate && new Date(x.startDate).toLocaleDateString(undefined, { dateStyle: "medium" }),
 			header: "Check In",
 		},
 		{
-			accessorFn: (x) => x.endDate && new Date(x.endDate).toDateString(),
+			accessorFn: (x) => x.endDate && new Date(x.endDate).toLocaleDateString(undefined, { dateStyle: "medium" }),
 			header: "Check Out",
 		},
 		{
