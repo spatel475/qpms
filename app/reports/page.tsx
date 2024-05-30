@@ -1,16 +1,21 @@
 "use client";
 
 import { DataTable } from "@/components/data-table/data-table";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DatePicker } from "@/components/ui/date-picker";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
+import { Printer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { DailyReportRecord } from "../api/reports/route";
 import { dailyReportColumns } from "./columns";
+
 const DailyReportPage = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [data, setData] = useState<DailyReportRecord[]>([]);
+	const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 	const [pagination, setPagination] = useState({
 		totalCount: 0,
 		totalPages: 1,
@@ -18,11 +23,16 @@ const DailyReportPage = () => {
 		pageSize: 25,
 	});
 
+	const updateReportDate = (date: Date) => {
+		setSelectedDate(date);
+		fetchRooms(pagination.currentPage, pagination.pageSize, date);
+	};
+
 	const fetchRooms = useCallback(
-		async (page: number, pageSize: number) => {
+		async (page: number, pageSize: number, date: Date) => {
 			setIsLoading(true);
 
-			const cacheKey = `reports-page-${page}-size-${pageSize}`;
+			const cacheKey = `reports-page-${page}-size-${pageSize}-date-${date.toDateString()}`;
 			const cachedData = getCachedData(cacheKey);
 
 			if (cachedData) {
@@ -41,6 +51,7 @@ const DailyReportPage = () => {
 						queryParams: {
 							page: pagination.currentPage.toString(),
 							limit: pagination.pageSize.toString(),
+							date: date.toDateString(),
 						},
 					});
 					const fetchedData = response.data;
@@ -74,7 +85,7 @@ const DailyReportPage = () => {
 	);
 
 	useEffect(() => {
-		fetchRooms(pagination.currentPage, pagination.pageSize);
+		fetchRooms(pagination.currentPage, pagination.pageSize, selectedDate);
 	}, [fetchRooms, pagination.currentPage, pagination.pageSize]);
 
 	// Function to compute the sum of all cash amounts
@@ -105,11 +116,14 @@ const DailyReportPage = () => {
 		<Card id="report-to-print">
 			<CardHeader className="flex flex-row items-center justify-between">
 				<div>
-					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Daily Report - {new Date().toDateString()}</h1>
+					<h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">Daily Report - {selectedDate?.toDateString()}</h1>
 				</div>
-				{/* <Button className="gap-1" variant="outline" onClick={(e) => window.print()}>
-					<RefreshCw className="h-4 w-4" />
-				</Button> */}
+				<div className="flex items-center gap-2" id="report-page-tools">
+					<DatePicker defaultDate={selectedDate} onValueChange={(d) => updateReportDate(d ?? new Date())} className="col-span-3" />
+					<Button size="icon" variant="outline" onClick={(e) => window.print()}>
+						<Printer className="h-4 w-4" />
+					</Button>
+				</div>
 			</CardHeader>
 			<CardContent>
 				<DataTable isLoading={isLoading} columns={dailyReportColumns()} data={data} pagination={pagination} setPagination={setPagination} hidePagination={true} />

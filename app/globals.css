@@ -77,10 +77,11 @@
 }
 
 @media print {
-	body {
+	body, #report-page-tools {
 		visibility: hidden;
 	}
 	#report-to-print {
+		width: 100%;
 		visibility: visible;
 		position: absolute;
 		left: 0;

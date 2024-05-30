@@ -2,7 +2,8 @@ import { getPaginationInfo, getPaginationResponseHeaders } from "@/lib/api-utils
 import prisma from "@/prisma/db";
 import { NextResponse } from "next/server";
 
-export const dynamic = 'force-dynamic' // defaults to auto
+export const dynamic = 'force-dynamic'; // defaults to auto
+
 export async function GET(request: Request) {
 	const url = new URL(request.url);
 	const params = Object.fromEntries(url.searchParams.entries());
@@ -10,7 +11,13 @@ export async function GET(request: Request) {
 	const {
 		page = '1',
 		limit = '50',
+		date,
 	} = params;
+
+	let queryDate = new Date();
+	if (date) {
+		queryDate = new Date(date);
+	}
 
 	const data = await prisma.$queryRaw<DailyReportRecord[]>`
     SELECT 
@@ -35,17 +42,15 @@ export async function GET(request: Request) {
 	LEFT JOIN 
 		"Stay" s ON r."id" = s."roomId" AND
 		s."startDate" BETWEEN 
-		date_trunc('day', current_date - interval '1 day') + interval '12 hours' AND
-        date_trunc('day', current_date - interval '0 day') + interval '12 hours'   
+		date_trunc('day', ${queryDate.toISOString()}::timestamp - interval '1 day') + interval '12 hours' AND
+        date_trunc('day', ${queryDate.toISOString()}::timestamp) + interval '12 hours'   
     ORDER BY 
       r."id", s."startDate";
   `;
 
-
-
 	const totalRecords = data.length;
-	const { pageInt, limitInt, skip, take, totalPages } = getPaginationInfo({ page, limit, totalRecords })
-	const headers = getPaginationResponseHeaders(totalRecords, totalPages, pageInt, limitInt)
+	const { pageInt, limitInt, skip, take, totalPages } = getPaginationInfo({ page, limit, totalRecords });
+	const headers = getPaginationResponseHeaders(totalRecords, totalPages, pageInt, limitInt);
 
 	return NextResponse.json(data, { headers });
 }
@@ -57,4 +62,4 @@ export type DailyReportRecord = {
 	credit: number,
 	cash: number,
 	rateType: string
-}
+};
