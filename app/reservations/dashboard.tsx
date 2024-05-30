@@ -19,7 +19,7 @@ function Dashboard({ rooms, stays }: Props) {
 	const [selectedStay, setSelectedStay] = useState<StayResponse | null>(null);
 
 	const stayClicked = (stayId: string) => {
-		const stay = stays.find((s) => (s.id = stayId));
+		const stay = stays.find((s) => s.id == stayId);
 		if (!!stay) {
 			setSelectedStay(stay);
 			setDialogOpen(true);
