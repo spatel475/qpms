@@ -97,7 +97,7 @@ export const getAreas = (showToday: true, showWeekends: true, startDate: string,
 			startDate: formatDate(new Date(today.getTime() - 24 * 60 * 60 * 1000)), // add one day
 			endDate: formatDate(today),
 			styles: {
-				background: "#00800012",
+				background: "rgba(50, 150, 255, 0.15)",
 				// borderLeft: "2px dotted #38A169",
 				// borderRight: "2px dotted #38A169",
 			},
