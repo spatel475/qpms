@@ -4,7 +4,7 @@ import { addDays } from "date-fns";
 import { useTheme } from "next-themes";
 import { Program } from "planby";
 import { useEffect, useMemo, useState } from "react";
-import { areasMonth, areasWeek } from "../../components/planby/helpers";
+import { getAreas } from "../../components/planby/helpers";
 import { themeDark } from "../../components/planby/helpers/theme-dark";
 import { themeLight } from "../../components/planby/helpers/theme-light";
 import { StayResponse } from "../api/stays/route";
@@ -26,7 +26,7 @@ export function usePlanby(rooms: Room[], stays: StayResponse[]) {
 	const [dayWidth, setDayWidth] = useState<number>(2000);
 	const [dates, setDates] = useState<{ start: string; end: string }>({ start: startDate, end: endDate });
 	const [calendarMode, setCalendarMode] = useState<"week" | "month">("week");
-	const areas = calendarMode === "week" ? areasWeek : areasMonth;
+	const areas = getAreas(true, true, startDate, endDate);
 
 	useEffect(() => {
 		const processEpgData = async () => {
@@ -62,7 +62,7 @@ export function usePlanby(rooms: Room[], stays: StayResponse[]) {
 			till: stay.endDate,
 			description: "",
 			image: "",
-			stayStatus: stay.stayStatus
+			stayStatus: stay.stayStatus,
 		}));
 		return staysAsPrograms;
 	};
