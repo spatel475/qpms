@@ -7,16 +7,13 @@ import { useEffect, useMemo, useState } from "react";
 import { getAreas } from "../../components/planby/helpers";
 import { themeDark } from "../../components/planby/helpers/theme-dark";
 import { themeLight } from "../../components/planby/helpers/theme-light";
-import { StayResponse } from "../api/stays/route";
+import { StayResponse } from "../api/models";
 import { Room } from "../models/models";
 
 const currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);
 const startDate = addDays(currentDate, -1).toISOString();
 const endDate = addDays(currentDate, 9).toISOString();
-
-const startMonthDate = "2024-01-01T00:00:00";
-const endMonthDate = "2024-12-31T00:00:00";
 
 export function usePlanby(rooms: Room[], stays: StayResponse[]) {
 	const { resolvedTheme } = useTheme();

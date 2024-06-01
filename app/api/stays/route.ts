@@ -1,7 +1,8 @@
-import { Guest, Room } from '@/app/models/models';
+import { Guest } from '@/app/models/models';
 import { getPaginationInfo, getPaginationResponseHeaders } from '@/lib/api-utils.ts/pagination';
 import prisma from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
+import { CreateStayRequest } from '../models';
 
 export async function GET(request: NextRequest) {
 	const url = new URL(request.url);
@@ -170,40 +171,3 @@ async function upsertGuest(data: Guest) {
 	return guest
 }
 
-export type StayResponse = {
-	id: string
-	guestId: string
-	roomId: string
-	startDate: Date
-	endDate: Date
-	checkoutTime?: Date
-	dailyRate?: number
-	weeklyRate?: number
-	amountDue?: number
-	amountPaid?: number
-	totalCharge?: number
-	paymentMode: string
-	numOfAdults: number
-	numOfChildren: number
-	stayStatus: string
-	extensions: number
-	guest: Guest
-	room: Room
-}
-
-export type CreateStayRequest = {
-	guest: Guest
-	room: Room
-	startDate: string
-	endDate: string
-	stayStatus: string
-	dailyRate?: number
-	weeklyRate?: number
-	extensions?: number
-	paymentMode: string
-	amountDue?: number
-	amountPaid?: number
-	totalCharge?: number
-	numOfAdults?: number
-	numOfChildren?: number
-}

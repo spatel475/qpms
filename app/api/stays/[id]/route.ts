@@ -1,6 +1,6 @@
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateStayRequest } from "../route";
+import { CreateStayRequest } from "../../models";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	const { id } = params;

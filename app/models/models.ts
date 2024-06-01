@@ -78,3 +78,10 @@ export type Pagination = {
 	pageSize: number;
 	currentPage: number;
 };
+
+export type StaysFilter = {
+	startDate?: Date;
+	endDate?: Date;
+	stayStatus?: StayStatus[];
+	guestName?: string;
+};

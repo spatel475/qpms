@@ -7,7 +7,7 @@ import { put } from "@/lib/fetch";
 import { differenceInDays } from "date-fns";
 import { Calendar, ChevronDown, CreditCard, User2 } from "lucide-react";
 import React, { useState } from "react";
-import { StayResponse } from "../api/stays/route";
+import { StayResponse } from "../api/models";
 import { StayStatus } from "../models/models";
 
 interface ReservationDetailProps {

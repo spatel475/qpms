@@ -2,7 +2,7 @@
 
 import { formatCurrency } from "@/lib/currency-utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { DailyReportRecord } from "../api/reports/route";
+import { DailyReportRecord } from "../api/models";
 
 export const dailyReportColumns = () => {
 	const colDefs: ColumnDef<DailyReportRecord, unknown>[] = [

@@ -9,7 +9,7 @@ import { compareAsc } from "date-fns";
 import { CircleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import { StayResponse } from "../api/stays/route";
+import { StayResponse } from "../api/models";
 import { StayStatus } from "../models/models";
 
 export const useStayColumns = (): ColumnDef<StayResponse>[] => {

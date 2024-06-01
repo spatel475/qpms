@@ -1,5 +1,6 @@
 "use client";
 
+import { CreateStayRequest, StayResponse } from "@/app/api/models";
 import { Routes } from "@/components/navbar/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePickerForm } from "@/components/ui/date-range-picker";
@@ -12,7 +13,6 @@ import { compareAsc, differenceInDays } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { CreateStayRequest, StayResponse } from "../../api/stays/route";
 import { Room, Stay, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import { PaymentDetails } from "./payement-details-form";
@@ -130,8 +130,8 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		}
 
 		const request: CreateStayRequest = {
-			startDate: dateRange.from!.toDateString(),
-			endDate: dateRange.to!.toDateString(),
+			startDate: dateRange.from!,
+			endDate: dateRange.to!,
 			dailyRate: isRateTypeWeekly ? undefined : unitRate,
 			weeklyRate: isRateTypeWeekly ? unitRate : undefined,
 			totalCharge: totalAmount,
