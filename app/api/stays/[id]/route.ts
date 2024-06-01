@@ -38,7 +38,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 				data: stay.guest,
 			});
 		}
-
+		
 		await prisma.stay.update({
 			where: {
 				id: id

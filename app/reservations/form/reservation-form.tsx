@@ -56,10 +56,10 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 
 	useEffect(() => {
 		if (existingData) {
-			setUnitRate(existingData.dailyRate || existingData.weeklyRate || 0);
+			const isWeekly = !!existingData.weeklyRate;
+			setUnitRate(isWeekly ? existingData.room?.weeklyRoomRate ?? 0 : existingData.room?.roomRate ?? 0);
 			setIsRateTypeWeekly(!!existingData.weeklyRate);
 			setDateRange(existingData.startDate && existingData.endDate ? { from: new Date(existingData.startDate), to: new Date(existingData.endDate) } : undefined);
-			const isWeekly = !!existingData.weeklyRate;
 			const diffInDays = Math.abs(differenceInDays(existingData.startDate, existingData.endDate));
 			setDuration(isWeekly ? Math.ceil(diffInDays / 7) : diffInDays);
 			setSelectedRoom(existingData.room);
@@ -132,8 +132,8 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		const request: CreateStayRequest = {
 			startDate: dateRange.from!,
 			endDate: dateRange.to!,
-			dailyRate: isRateTypeWeekly ? undefined : unitRate,
-			weeklyRate: isRateTypeWeekly ? unitRate : undefined,
+			dailyRate: isRateTypeWeekly ? null : unitRate,
+			weeklyRate: isRateTypeWeekly ? unitRate : null,
 			totalCharge: totalAmount,
 			amountDue: paymentDetails?.amountDue,
 			amountPaid: paymentDetails?.amountPaid,
@@ -147,7 +147,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		};
 
 		try {
-			console.log(request);
+			console.log("is_edit:", existingData && !isCopy, request);
 			if (existingData && !isCopy) {
 				// Editing an existing reservation
 				await put(`/stays/${existingData.id}`, request);
@@ -261,6 +261,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		const isWeekly = rateType === "weeklyRate";
 		setIsRateTypeWeekly(isWeekly);
 		isWeekly ? setUnitRate(selectedRoom?.weeklyRoomRate ?? 0) : setUnitRate(selectedRoom?.roomRate ?? 0);
+
 		if (dateRange?.from && dateRange?.to) {
 			const days = Math.abs(differenceInDays(dateRange.from, dateRange.to));
 			const weeks = Math.ceil(days / 7);

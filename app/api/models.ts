@@ -21,8 +21,8 @@ export type StayBase = {
 	startDate: Date
 	endDate: Date
 	checkoutTime?: Date
-	dailyRate?: number
-	weeklyRate?: number
+	dailyRate?: number | null
+	weeklyRate?: number | null
 	amountDue?: number
 	amountPaid?: number
 	totalCharge?: number
