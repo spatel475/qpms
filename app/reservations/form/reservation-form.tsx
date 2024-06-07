@@ -84,6 +84,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 				numOfAdults: existingData.numOfAdults,
 				numOfChildren: existingData.numOfChildren,
 			});
+			setMaintainLink(!!existingData.relatedStayId);
 		}
 	}, [existingData]);
 

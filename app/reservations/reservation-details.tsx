@@ -1,11 +1,17 @@
+"use client";
+
+import { Routes } from "@/components/navbar/nav-links";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
-import { put } from "@/lib/fetch";
+import { get, put } from "@/lib/fetch";
 import { differenceInDays } from "date-fns";
 import { Calendar, ChevronDown, CreditCard, User2 } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { StayResponse } from "../api/models";
 import { StayStatus } from "../models/models";
@@ -15,7 +21,27 @@ interface ReservationDetailProps {
 }
 
 const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
+	const router = useRouter();
 	const [newStayStatus, setNewStayStatus] = useState(row.stayStatus);
+	const [relatedStays, setRelatedStays] = useState<StayResponse[]>([]);
+	const [dialogOpen, setDialogOpen] = useState(false);
+
+	const stayClicked = async () => {
+		await fetchRelatedStays();
+		setDialogOpen(true);
+	};
+
+	const handleDialogChange = (isOpen: boolean) => {
+		setDialogOpen(isOpen);
+		if (!isOpen) {
+			setRelatedStays([]);
+		}
+	};
+
+	const fetchRelatedStays = async () => {
+		const response = await get<StayResponse[]>(`/stays/${row.relatedStayId}/related`);
+		setRelatedStays(response.data);
+	};
 
 	const save = async () => {
 		try {
@@ -61,7 +87,14 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 				</Card>
 				<Card>
 					<CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-						<CardTitle className="text-sm font-medium">Stay Details</CardTitle>
+						<CardTitle className="text-sm font-medium">
+							Stay Details
+							{row.relatedStayId && (
+								<Button variant="link" className="text-blue-500" onClick={stayClicked}>
+									View Related Stays
+								</Button>
+							)}
+						</CardTitle>
 						<Calendar className="h-4 w-4 text-muted-foreground" />
 					</CardHeader>
 					<CardContent>
@@ -128,6 +161,30 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 					Save
 				</Button>
 			</div>
+
+			{
+				<Dialog open={dialogOpen} onOpenChange={handleDialogChange}>
+					<DialogContent className="min-w-[50vw]">
+						<DialogHeader>
+							<DialogTitle>Related Stays</DialogTitle>
+						</DialogHeader>
+						<div className="flex flex-col items-center justify-center w-[100%]">
+							{relatedStays?.length > 0
+								? relatedStays.map((stay) => (
+										<div key={stay.id} className="flex items-center gap-2">
+											<div>{stay.guest.firstName + " " + stay.guest.lastName}</div>
+											<div>| {stay.roomId}</div>
+											<div>| {new Date(row.startDate).toDateString() + " to " + new Date(row.endDate).toDateString()}</div>
+											<Link href={`${Routes.ReservationForm}?id=${stay.id}`} target="_blank">
+												|<Button variant="link">View</Button>
+											</Link>
+										</div>
+								  ))
+								: "No related stays found"}
+						</div>
+					</DialogContent>
+				</Dialog>
+			}
 		</div>
 	);
 };

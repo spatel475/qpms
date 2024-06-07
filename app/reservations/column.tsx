@@ -84,7 +84,7 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 			},
 			{
 				header: ({ column }) => <DataTableColumnHeader column={column} title="Total Amount" />,
-				accessorKey: "room.id",
+				accessorKey: "totalAmount",
 				cell: ({ row }) => {
 					const amountDue = row.original.amountDue;
 					const classBg = amountDue && amountDue > 0 ? "text-red-400 font-semibold" : "";
@@ -94,7 +94,7 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 			},
 			{
 				header: ({ column }) => <DataTableColumnHeader column={column} title="Payment" />,
-				accessorKey: "room.id",
+				accessorKey: "paymentMode",
 				cell: ({ row }) => row.original.paymentMode.toUpperCase(),
 				enableSorting: false,
 			},

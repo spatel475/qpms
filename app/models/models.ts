@@ -42,6 +42,7 @@ export type Stay = {
 	extensions?: number,
 	guest?: Guest
 	room?: Room
+	relatedStayId?: string;
 }
 
 export type User = {
