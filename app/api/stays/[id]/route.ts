@@ -1,6 +1,6 @@
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateStayRequest } from "../route";
+import { CreateStayRequest } from "../../models";
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	const { id } = params;
@@ -38,7 +38,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 				data: stay.guest,
 			});
 		}
-
+		
 		await prisma.stay.update({
 			where: {
 				id: id
@@ -59,6 +59,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 				numOfAdults: stay.numOfAdults,
 				numOfChildren: stay.numOfChildren,
 				paymentMode: stay.paymentMode,
+				// relatedStayId: stay.relatedStayId // relatedStay shouldn't be changed when editting stay
 			},
 		});
 

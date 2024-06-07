@@ -83,6 +83,7 @@ export const areasMonth = [
 export const getAreas = (showToday: true, showWeekends: true, startDate: string, endDate: string): Area[] => {
 	const areas: Area[] = [];
 	const today = new Date();
+	today.setHours(0, 0, 0, 0);
 	const start = new Date(startDate);
 	const end = new Date(endDate);
 
@@ -94,8 +95,8 @@ export const getAreas = (showToday: true, showWeekends: true, startDate: string,
 	// Check if today falls between startDate and endDate
 	if (showToday && today >= start && today <= end) {
 		areas.push({
-			startDate: formatDate(new Date(today.getTime() - 24 * 60 * 60 * 1000)), // add one day
-			endDate: formatDate(today),
+			startDate: formatDate(today), // add one day
+			endDate: formatDate(new Date(today.getTime() + 24 * 60 * 60 * 1000)),
 			styles: {
 				background: "rgba(50, 150, 255, 0.15)",
 				// borderLeft: "2px dotted #38A169",

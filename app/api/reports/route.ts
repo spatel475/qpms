@@ -1,6 +1,7 @@
 import { getPaginationInfo, getPaginationResponseHeaders } from "@/lib/api-utils.ts/pagination";
 import prisma from "@/prisma/db";
 import { NextResponse } from "next/server";
+import { DailyReportRecord } from "../models";
 
 export const dynamic = 'force-dynamic'; // defaults to auto
 
@@ -54,12 +55,3 @@ export async function GET(request: Request) {
 
 	return NextResponse.json(data, { headers });
 }
-
-export type DailyReportRecord = {
-	roomId: string,
-	startDate: Date,
-	endDate: Date,
-	credit: number,
-	cash: number,
-	rateType: string
-};

@@ -4,12 +4,14 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { DataTableRowActions } from "@/components/data-table/data-table-row-actions";
 import { Routes } from "@/components/navbar/nav-links";
 import { Badge } from "@/components/ui/badge";
+import { formatCurrency } from "@/lib/currency-utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { compareAsc } from "date-fns";
 import { CircleAlert } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
-import { StayResponse } from "../api/stays/route";
+import { StayResponse } from "../api/models";
+import { StayStatus } from "../models/models";
 
 export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 	const router = useRouter();
@@ -65,11 +67,12 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 					const endDate = new Date(endDateStr);
 					endDate.setHours(0, 0, 0, 0);
 
-					const curentDate = new Date();
-					curentDate.setHours(0, 0, 0, 0);
-					const diff = compareAsc(curentDate, endDate);
+					const currentDate = new Date();
+					currentDate.setHours(0, 0, 0, 0);
+					const diff = compareAsc(currentDate, endDate);
 
-					let classBg = `h-5 w-5 ${mapBg[diff.toString()]}`;
+					const status: string = row.getValue("stayStatus");
+					const classBg = status != StayStatus.CHECKED_OUT ? `h-5 w-5 ${mapBg[diff.toString()]}` : "hidden";
 
 					return (
 						<div className="flex items-center gap-2">
@@ -78,6 +81,22 @@ export const useStayColumns = (): ColumnDef<StayResponse>[] => {
 						</div>
 					);
 				},
+			},
+			{
+				header: ({ column }) => <DataTableColumnHeader column={column} title="Total Amount" />,
+				accessorKey: "totalAmount",
+				cell: ({ row }) => {
+					const amountDue = row.original.amountDue;
+					const classBg = amountDue && amountDue > 0 ? "text-red-400 font-semibold" : "";
+					return <div className={classBg}>{formatCurrency(row.original.totalCharge ?? 0)}</div>;
+				},
+				enableSorting: false,
+			},
+			{
+				header: ({ column }) => <DataTableColumnHeader column={column} title="Payment" />,
+				accessorKey: "paymentMode",
+				cell: ({ row }) => row.original.paymentMode.toUpperCase(),
+				enableSorting: false,
 			},
 			{
 				id: "actions",

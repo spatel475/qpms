@@ -1,7 +1,7 @@
 import { get } from "@/lib/fetch";
 import { useEffect, useState } from "react";
-import { StayResponse } from "../api/stays/route";
-import { Pagination, StayStatus } from "../models/models";
+import { StayResponse } from "../api/models";
+import { Pagination, StayStatus, StaysFilter } from "../models/models";
 
 const useFetchStays = (initialPage: number, initialPageSize: number) => {
 	const [filter, setFilter] = useState<StaysFilter>({
@@ -84,10 +84,3 @@ const useFetchStays = (initialPage: number, initialPageSize: number) => {
 };
 
 export default useFetchStays;
-
-export type StaysFilter = {
-	startDate?: Date;
-	endDate?: Date;
-	stayStatus?: StayStatus[];
-	guestName?: string;
-};

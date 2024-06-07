@@ -42,6 +42,7 @@ export type Stay = {
 	extensions?: number,
 	guest?: Guest
 	room?: Room
+	relatedStayId?: string;
 }
 
 export type User = {
@@ -77,4 +78,11 @@ export type Pagination = {
 	totalPages: number;
 	pageSize: number;
 	currentPage: number;
+};
+
+export type StaysFilter = {
+	startDate?: Date;
+	endDate?: Date;
+	stayStatus?: StayStatus[];
+	guestName?: string;
 };

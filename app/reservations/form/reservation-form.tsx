@@ -1,8 +1,11 @@
 "use client";
 
+import { CreateStayRequest, StayResponse } from "@/app/api/models";
 import { Routes } from "@/components/navbar/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePickerForm } from "@/components/ui/date-range-picker";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
@@ -12,7 +15,6 @@ import { compareAsc, differenceInDays } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { CreateStayRequest, StayResponse } from "../../api/stays/route";
 import { Room, Stay, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import { PaymentDetails } from "./payement-details-form";
@@ -30,6 +32,8 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 	const { toast } = useToast();
 	const router = useRouter();
 
+	// used when link should be maintained between new copied stay and original stay
+	const [maintainLink, setMaintainLink] = useState(false);
 	const [unitRate, setUnitRate] = useState(0);
 	const [isRateTypeWeekly, setIsRateTypeWeekly] = useState(false);
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -56,10 +60,10 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 
 	useEffect(() => {
 		if (existingData) {
-			setUnitRate(existingData.dailyRate || existingData.weeklyRate || 0);
+			const isWeekly = !!existingData.weeklyRate;
+			setUnitRate(isWeekly ? existingData.room?.weeklyRoomRate ?? 0 : existingData.room?.roomRate ?? 0);
 			setIsRateTypeWeekly(!!existingData.weeklyRate);
 			setDateRange(existingData.startDate && existingData.endDate ? { from: new Date(existingData.startDate), to: new Date(existingData.endDate) } : undefined);
-			const isWeekly = !!existingData.weeklyRate;
 			const diffInDays = Math.abs(differenceInDays(existingData.startDate, existingData.endDate));
 			setDuration(isWeekly ? Math.ceil(diffInDays / 7) : diffInDays);
 			setSelectedRoom(existingData.room);
@@ -80,6 +84,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 				numOfAdults: existingData.numOfAdults,
 				numOfChildren: existingData.numOfChildren,
 			});
+			setMaintainLink(!!existingData.relatedStayId);
 		}
 	}, [existingData]);
 
@@ -130,10 +135,10 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		}
 
 		const request: CreateStayRequest = {
-			startDate: dateRange.from!.toDateString(),
-			endDate: dateRange.to!.toDateString(),
-			dailyRate: isRateTypeWeekly ? undefined : unitRate,
-			weeklyRate: isRateTypeWeekly ? unitRate : undefined,
+			startDate: dateRange.from!,
+			endDate: dateRange.to!,
+			dailyRate: isRateTypeWeekly ? null : unitRate,
+			weeklyRate: isRateTypeWeekly ? unitRate : null,
 			totalCharge: totalAmount,
 			amountDue: paymentDetails?.amountDue,
 			amountPaid: paymentDetails?.amountPaid,
@@ -144,10 +149,11 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			guest: guestData,
 			room: selectedRoom,
 			extensions: isRateTypeWeekly ? duration : 0,
+			relatedStayId: maintainLink ? existingData?.id ?? undefined : undefined,
 		};
 
 		try {
-			console.log(request);
+			console.log("is_edit:", existingData && !isCopy, request);
 			if (existingData && !isCopy) {
 				// Editing an existing reservation
 				await put(`/stays/${existingData.id}`, request);
@@ -261,6 +267,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 		const isWeekly = rateType === "weeklyRate";
 		setIsRateTypeWeekly(isWeekly);
 		isWeekly ? setUnitRate(selectedRoom?.weeklyRoomRate ?? 0) : setUnitRate(selectedRoom?.roomRate ?? 0);
+
 		if (dateRange?.from && dateRange?.to) {
 			const days = Math.abs(differenceInDays(dateRange.from, dateRange.to));
 			const weeks = Math.ceil(days / 7);
@@ -318,6 +325,11 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 									<CardTitle className="mt-0 text-lg">Amount Due: {formatCurrency(totalAmount)}</CardTitle>
 
 									<PaymentDetails amountDue={existingData?.amountDue} amountPaid={existingData?.amountPaid} numOfAdults={existingData?.numOfAdults} numOfChildren={existingData?.numOfChildren} paymentMode={existingData?.paymentMode} onChange={handlePaymentDetailChanges} />
+
+									<Label className="flex items-center gap-1 mt-8">
+										<Input type="checkbox" className="h-4 w-4" checked={maintainLink} onChange={() => setMaintainLink((prev) => !prev)} disabled={existingData && !isCopy} />
+										Maintain link to related stay
+									</Label>
 								</CardContent>
 							</Card>
 						</TabsContent>

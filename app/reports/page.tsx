@@ -9,7 +9,7 @@ import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { Printer } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { DailyReportRecord } from "../api/reports/route";
+import { DailyReportRecord } from "../api/models";
 import { dailyReportColumns } from "./columns";
 
 const DailyReportPage = () => {
