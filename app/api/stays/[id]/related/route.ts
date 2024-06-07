@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
 	const { id } = params;
 	if (!id)
-		return [];
+		return NextResponse.json([]);
 
 	try {
 		const relatedStays = await prisma.stay.findMany({
