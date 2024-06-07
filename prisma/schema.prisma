@@ -1,74 +1,75 @@
-datasource db {
-    provider = "postgresql"
-    url      = env("POSTGRES_URL")
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["metrics"]
 }
 
-generator client {
-    provider = "prisma-client-js"
-	previewFeatures = ["metrics"]
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_URL")
 }
 
 model User {
-    id    String @id @default(uuid())
-    email String @unique
-    name  String
-    role  String @default("User")
+  id    String @id @default(uuid())
+  email String @unique
+  name  String
+  role  String @default("User")
 }
 
 model Property {
-    propCode String @id
-    name     String
-    rooms    Room[]
+  propCode String @id
+  name     String
+  rooms    Room[]
 }
 
 model Room {
-    id                  String   @id @default(uuid())
-    roomType            String
-    propCode            String
-    roomRate            Decimal  @db.Decimal(18, 2)
-    weeklyRoomRate      Decimal  @db.Decimal(18, 2) @default(300)
-    roomAvailable       Boolean
-    unavailablityReason String?
-    property            Property @relation(fields: [propCode], references: [propCode])
-    stays               Stay[]
+  id                  String   @id @default(uuid())
+  roomType            String
+  propCode            String
+  roomRate            Decimal  @db.Decimal(18, 2)
+  roomAvailable       Boolean
+  unavailablityReason String?
+  weeklyRoomRate      Decimal  @default(300) @db.Decimal(18, 2)
+  property            Property @relation(fields: [propCode], references: [propCode])
+  stays               Stay[]
 }
 
 model Guest {
-    id          String  @id @default(uuid())
-    firstName   String
-    lastName    String
-    dlNumber    String
-    address     String?
-    phoneNumber String?
-    comments    String?
-    stays       Stay[]
+  id          String  @id @default(uuid())
+  firstName   String
+  lastName    String
+  address     String?
+  phoneNumber String?
+  dlNumber    String
+  comments    String?
+  stays       Stay[]
 
-    @@unique([firstName, lastName, dlNumber])
-}
-
-enum StayStatus {
-    RESERVED
-    OCCUPIED
-    CHECKED_OUT
+  @@unique([firstName, lastName, dlNumber])
 }
 
 model Stay {
-    id            String    @id @default(uuid())
-    guestId       String
-    roomId        String
-    startDate     DateTime
-    endDate       DateTime
-    checkoutTime  DateTime?
-    dailyRate     Decimal?  @db.Decimal(18, 2)
-    weeklyRate    Decimal?  @db.Decimal(18, 2)
-    amountDue     Decimal?  @db.Decimal(18, 2)
-    amountPaid    Decimal?  @db.Decimal(18, 2)
-    totalCharge   Decimal?  @db.Decimal(18, 2)
-    paymentMode   String    @default("cash")
-    numOfAdults   Int?
-    numOfChildren Int?
-    stayStatus    String
-    extensions    Int       @default(1)
-    guest         Guest     @relation(fields: [guestId], references: [id])
-    room          Room      @relation(fields: [roomId], references: [id])
+  id            String    @id @default(uuid())
+  guestId       String
+  roomId        String
+  startDate     DateTime
+  endDate       DateTime
+  checkoutTime  DateTime?
+  dailyRate     Decimal?  @db.Decimal(18, 2)
+  stayStatus    String
+  amountDue     Decimal?  @db.Decimal(18, 2)
+  amountPaid    Decimal?  @db.Decimal(18, 2)
+  numOfAdults   Int?
+  numOfChildren Int?
+  totalCharge   Decimal?  @db.Decimal(18, 2)
+  extensions    Int       @default(1)
+  paymentMode   String    @default("cash")
+  weeklyRate    Decimal?  @db.Decimal(18, 2)
+  relatedStayId String?
+  guest         Guest     @relation(fields: [guestId], references: [id])
+  room          Room      @relation(fields: [roomId], references: [id])
+}
+
+enum StayStatus {
+  RESERVED
+  OCCUPIED
+  CHECKED_OUT
 }

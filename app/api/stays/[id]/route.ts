@@ -59,6 +59,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 				numOfAdults: stay.numOfAdults,
 				numOfChildren: stay.numOfChildren,
 				paymentMode: stay.paymentMode,
+				// relatedStayId: stay.relatedStayId // relatedStay shouldn't be changed when editting stay
 			},
 		});
 

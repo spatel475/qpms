@@ -119,6 +119,7 @@ export async function POST(request: NextRequest) {
 				numOfAdults: data.numOfAdults,
 				numOfChildren: data.numOfChildren,
 				paymentMode: data.paymentMode,
+				relatedStayId: data.relatedStayId
 			},
 		});
 

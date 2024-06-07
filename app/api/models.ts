@@ -31,6 +31,7 @@ export type StayBase = {
 	numOfChildren?: number
 	stayStatus: string
 	extensions: number
+	relatedStayId?: string
 }
 
 export type CreateStayRequest = StayBase & {

@@ -4,6 +4,8 @@ import { CreateStayRequest, StayResponse } from "@/app/api/models";
 import { Routes } from "@/components/navbar/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePickerForm } from "@/components/ui/date-range-picker";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
 import { formatCurrency } from "@/lib/currency-utils";
@@ -30,6 +32,8 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 	const { toast } = useToast();
 	const router = useRouter();
 
+	// used when link should be maintained between new copied stay and original stay
+	const [maintainLink, setMaintainLink] = useState(false);
 	const [unitRate, setUnitRate] = useState(0);
 	const [isRateTypeWeekly, setIsRateTypeWeekly] = useState(false);
 	const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -144,6 +148,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 			guest: guestData,
 			room: selectedRoom,
 			extensions: isRateTypeWeekly ? duration : 0,
+			relatedStayId: maintainLink ? existingData?.id ?? undefined : undefined,
 		};
 
 		try {
@@ -319,6 +324,11 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 									<CardTitle className="mt-0 text-lg">Amount Due: {formatCurrency(totalAmount)}</CardTitle>
 
 									<PaymentDetails amountDue={existingData?.amountDue} amountPaid={existingData?.amountPaid} numOfAdults={existingData?.numOfAdults} numOfChildren={existingData?.numOfChildren} paymentMode={existingData?.paymentMode} onChange={handlePaymentDetailChanges} />
+
+									<Label className="flex items-center gap-1 mt-8">
+										<Input type="checkbox" className="h-4 w-4" checked={maintainLink} onChange={() => setMaintainLink((prev) => !prev)} disabled={existingData && !isCopy} />
+										Maintain link to related stay
+									</Label>
 								</CardContent>
 							</Card>
 						</TabsContent>
