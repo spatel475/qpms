@@ -15,8 +15,9 @@ import { compareAsc, differenceInDays } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { Room, Stay, StayStatus } from "../../models/models";
+import { Guest, Room, Stay, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
+import GuestSearch from "./guest-search";
 import { PaymentDetails } from "./payement-details-form";
 import RateOverrideForm from "./rate-override";
 import RateToggle from "./rate-toggle";
@@ -113,6 +114,18 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 
 	const handleGuestChange = (value: GuestFormValues) => {
 		setGuestData(value);
+	};
+
+	const handleSelectedGuest = (value: Guest) => {
+		setGuestData({
+			id: value.id || "",
+			firstName: value.firstName || "",
+			lastName: value.lastName || "",
+			address: value.address || "",
+			phoneNumber: value.phoneNumber || "",
+			dlNumber: value.dlNumber || "",
+			comments: value.comments || "",
+		});
 	};
 
 	const handlePaymentDetailChanges = (details: { amountDue: number; amountPaid: number; paymentMode: string; numOfAdults: number; numOfChildren: number }) => {
@@ -297,7 +310,9 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 								<CardHeader>
 									<CardTitle>Guest Search</CardTitle>
 								</CardHeader>
-								<CardContent>Feature In Progress. Coming Soon...</CardContent>
+								<CardContent>
+									<GuestSearch onGuestSelected={handleSelectedGuest} />
+								</CardContent>
 							</Card>
 							<Card>
 								<CardHeader>
