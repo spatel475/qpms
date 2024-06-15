@@ -1,10 +1,11 @@
 import { Room } from "@/app/models/models";
 import { getPaginationInfo, getPaginationResponseHeaders } from "@/lib/api-utils.ts/pagination";
 import prisma from "@/prisma/db";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { ApiResponse } from "../models";
 
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse<ApiResponse>> {
 	const url = new URL(request.url);
 	const params = Object.fromEntries(url.searchParams.entries());
 
@@ -19,10 +20,13 @@ export async function GET(request: NextRequest) {
 
 	const data = await prisma.room.findMany({ skip, take });
 
-	return Response.json(data, { headers });
+	return NextResponse.json(
+		{ response: data, error: false },
+		{ headers, status: 200 }
+	);
 }
 
-export async function PUT(request: NextRequest) {
+export async function PUT(request: NextRequest): Promise<NextResponse<ApiResponse>> {
 	const url = new URL(request.url);
 	const rooms: Room[] = await request.json();
 	console.log("Room Update API:", rooms.length)
@@ -45,9 +49,15 @@ export async function PUT(request: NextRequest) {
 			where: { id: { in: rooms.map(room => room.id) } }
 		});
 
-		return Response.json(updatedRooms);
+		return NextResponse.json(
+			{ response: updatedRooms, error: false },
+			{ status: 200 }
+		);
 	} catch (error) {
 		console.error("Error updating rooms:", error);
-		return Response.json({ error: 'Failed to update rooms' }, { status: 500 });
+		return NextResponse.json(
+			{ error: true, message: 'Failed to update rooms' },
+			{ status: 500 }
+		);
 	}
 }

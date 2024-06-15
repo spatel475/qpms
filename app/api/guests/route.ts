@@ -1,15 +1,18 @@
-import { Guest } from '@/app/models/models';
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { ApiResponse } from '../models';
 
 const prisma = new PrismaClient();
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<NextResponse<ApiResponse>> {
 	const { searchParams } = new URL(request.url);
 	const search = searchParams.get('search');
 
 	if (!search) {
-		return NextResponse.json<Guest[]>([], { status: 400 });
+		return NextResponse.json(
+			{ response: [], error: true, errorMessage: 'Search param missing' },
+			{ status: 400 }
+		);
 	}
 
 	try {
@@ -50,12 +53,11 @@ export async function GET(request: Request) {
 			},
 		});
 
-		if (guests.length === 0) {
-			return NextResponse.json({ message: 'No Guest Found' }, { status: 404 });
-		}
-
-		return NextResponse.json(guests, { status: 200 });
+		return NextResponse.json(
+			{ response: guests, error: false },
+			{ status: 200 }
+		);
 	} catch (error) {
-		return NextResponse.json({ message: 'Server error' }, { status: 500 });
+		return NextResponse.json({ error: true, message: 'Server error' }, { status: 500 });
 	}
 }

@@ -43,3 +43,9 @@ export type Credentials = {
 	email: string;
 	password: string;
 }
+
+export type ApiResponse<T = any> = {
+	response?: T,
+	error: boolean,
+	message?: string
+}

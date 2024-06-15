@@ -1,7 +1,8 @@
+import { ApiResponse } from "@/app/api/models";
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse<ApiResponse>> {
 	const { id } = params;
 
 	try {
@@ -15,9 +16,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 			},
 		});
 
-		return NextResponse.json(stay);
+		return NextResponse.json(
+			{ response: stay, error: false },
+			{ status: 200 });
 	} catch (error) {
-		console.warn(error)
-		return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+		console.warn('Error while updating room status:', error)
+		return NextResponse.json(
+			{ error: true, message: "Internal server error" },
+			{ status: 500 }
+		);
 	}
 }

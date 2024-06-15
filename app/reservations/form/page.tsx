@@ -17,7 +17,7 @@ const ReservationFormPage = () => {
 			// Fetch existing reservation data
 			get<Stay>(`/stays/${reservationId}`)
 				.then((response) => {
-					setExistingData(response.data);
+					setExistingData(response.responseBody.response);
 				})
 				.catch((error) => {
 					console.error("Error fetching reservation data:", error);

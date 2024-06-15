@@ -27,7 +27,7 @@ const GuestSearch = ({ onGuestSelected }: Props) => {
 			const response = await get<Guest[]>(`/guests`, {
 				queryParams: { search: searchQuery },
 			});
-			setGuests(response.data);
+			setGuests(response.responseBody.response || []);
 			setLoading(false);
 		} catch (error: any) {
 			console.log(error);

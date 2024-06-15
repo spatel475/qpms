@@ -1,11 +1,11 @@
 import { getPaginationInfo, getPaginationResponseHeaders } from "@/lib/api-utils.ts/pagination";
 import prisma from "@/prisma/db";
 import { NextResponse } from "next/server";
-import { DailyReportRecord } from "../models";
+import { ApiResponse, DailyReportRecord } from "../models";
 
 export const dynamic = 'force-dynamic'; // defaults to auto
 
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<NextResponse<ApiResponse>> {
 	const url = new URL(request.url);
 	const params = Object.fromEntries(url.searchParams.entries());
 
@@ -53,5 +53,8 @@ export async function GET(request: Request) {
 	const { pageInt, limitInt, skip, take, totalPages } = getPaginationInfo({ page, limit, totalRecords });
 	const headers = getPaginationResponseHeaders(totalRecords, totalPages, pageInt, limitInt);
 
-	return NextResponse.json(data, { headers });
+	return NextResponse.json(
+		{ response: data, error: false },
+		{ headers, status: 200 }
+	);
 }

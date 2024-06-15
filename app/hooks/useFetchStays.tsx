@@ -52,7 +52,7 @@ const useFetchStays = (initialPage: number, initialPageSize: number) => {
 					limit: pageSize.toString(),
 				},
 			});
-			const fetchedData = response.data;
+			const fetchedData = response.responseBody.response || [];
 			const totalCount = parseInt(response.headers["x-total-count"], 10);
 			const totalPages = Math.ceil(totalCount / pageSize);
 

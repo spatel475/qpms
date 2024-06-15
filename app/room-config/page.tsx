@@ -36,7 +36,7 @@ const RoomConfig = () => {
 
 		try {
 			const response = await put<Room[]>("/rooms", editedRooms);
-			const updatedRooms = response.data;
+			const updatedRooms = response.responseBody.response || [];
 
 			setRooms((prev) => {
 				const updatedData = [...prev];

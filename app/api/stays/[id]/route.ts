@@ -1,8 +1,8 @@
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-import { CreateStayRequest } from "../../models";
+import { ApiResponse, CreateStayRequest } from "../../models";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse<ApiResponse>> {
 	const { id } = params;
 
 	try {
@@ -15,16 +15,25 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 		});
 
 		if (!stay) {
-			return NextResponse.json({ error: "Stay not found" }, { status: 404 });
+			return NextResponse.json(
+				{ error: true, message: "Stay not found" },
+				{ status: 404 }
+			);
 		}
 
-		return NextResponse.json(stay);
+		return NextResponse.json(
+			{ response: stay, error: false },
+			{ status: 200 }
+		);
 	} catch (error) {
-		return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+		return NextResponse.json(
+			{ error: true, message: "Internal server error" },
+			{ status: 500 }
+		);
 	}
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: { id: string } }): Promise<NextResponse<ApiResponse>> {
 	const { id } = params;
 
 	try {
@@ -38,7 +47,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 				data: stay.guest,
 			});
 		}
-		
+
 		await prisma.stay.update({
 			where: {
 				id: id
@@ -63,8 +72,14 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 			},
 		});
 
-		return NextResponse.json(stay);
+		return NextResponse.json(
+			{ response: stay, error: false },
+			{ status: 200 }
+		);
 	} catch (error) {
-		return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+		return NextResponse.json(
+			{ error: true, message: "Internal server error" },
+			{ status: 500 }
+		);
 	}
 }

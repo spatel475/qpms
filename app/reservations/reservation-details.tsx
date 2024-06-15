@@ -40,7 +40,7 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 
 	const fetchRelatedStays = async () => {
 		const response = await get<StayResponse[]>(`/stays/${row.relatedStayId}/related`);
-		setRelatedStays(response.data);
+		setRelatedStays(response.responseBody.response || []);
 	};
 
 	const save = async () => {
@@ -49,7 +49,7 @@ const ReservationDetail: React.FC<ReservationDetailProps> = ({ row }) => {
 			toast({
 				variant: "success",
 				title: "Reservation updated successfully",
-				description: `Reservation Status: ${response.data.stayStatus.replace("_", " ")}`,
+				description: `Reservation Status: ${response.responseBody.response?.stayStatus.replace("_", " ")}`,
 			});
 		} catch (err) {
 			console.warn(err);

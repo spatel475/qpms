@@ -1,3 +1,5 @@
+import { ApiResponse } from "@/app/api/models";
+
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 interface FetchOptions extends RequestInit {
@@ -7,7 +9,7 @@ interface FetchOptions extends RequestInit {
 
 interface FetchResponse<ResponseType> {
 	headers: Record<string, string>;
-	data: ResponseType;
+	responseBody: ApiResponse<ResponseType>;
 }
 
 const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api';
@@ -18,7 +20,7 @@ const handleResponse = async <ResponseType>(response: Response): Promise<FetchRe
 	if (!response.ok) {
 		throw new Error(data.message || 'Something went wrong');
 	}
-	return { headers, data };
+	return { headers, responseBody: data };
 };
 
 const makeRequest = async <ResponseType>(

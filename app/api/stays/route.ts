@@ -2,9 +2,9 @@ import { Guest } from '@/app/models/models';
 import { getPaginationInfo, getPaginationResponseHeaders } from '@/lib/api-utils.ts/pagination';
 import prisma from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { CreateStayRequest } from '../models';
+import { ApiResponse, CreateStayRequest } from '../models';
 
-export async function GET(request: NextRequest) {
+export async function GET(request: NextRequest): Promise<NextResponse<ApiResponse>> {
 	const url = new URL(request.url);
 	const params = Object.fromEntries(url.searchParams.entries());
 
@@ -86,10 +86,10 @@ export async function GET(request: NextRequest) {
 		take,
 	});
 
-	return NextResponse.json(data, { headers });
+	return NextResponse.json({ response: data, error: false }, { headers, status: 200 });
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse<ApiResponse>> {
 	try {
 		const data: CreateStayRequest = await request.json();
 		const guest = await upsertGuest(data.guest);
@@ -123,10 +123,10 @@ export async function POST(request: NextRequest) {
 			},
 		});
 
-		return NextResponse.json({ status: 201, stay: stayRequest });
+		return NextResponse.json({ response: stayRequest, error: false }, { status: 201 });
 	} catch (error) {
 		console.error(error);
-		return NextResponse.json({ error: 'Error creating stay request' }, { status: 500 });
+		return NextResponse.json({ error: true, message: 'Error creating stay request' }, { status: 500 });
 	}
 }
 

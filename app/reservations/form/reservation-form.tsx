@@ -204,7 +204,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 					stayStatus: StayStatus.OCCUPIED,
 				},
 			});
-			const fetchedData = response.data;
+			const fetchedData = response.responseBody.response || [];
 			setCurrentStays(fetchedData);
 			setIsLoading(false);
 		} catch (error) {
@@ -241,7 +241,7 @@ const ReservationForm: React.FC<CreateReservationProps> = ({ existingData, isCop
 							limit: pagination.pageSize.toString(),
 						},
 					});
-					const fetchedData = response.data;
+					const fetchedData = response.responseBody.response || [];
 					const totalCount = parseInt(response.headers["x-total-count"], 10);
 					const totalPages = Math.ceil(totalCount / pageSize);
 

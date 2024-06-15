@@ -19,7 +19,7 @@ const useFetchRooms = (initialPage: number, initialPageSize: number) => {
 
 			const cacheKey = `rooms-page-${page}-size-${pageSize}`;
 			const cachedData = getCachedData(cacheKey);
-			
+
 			if (cachedData) {
 				setRooms(cachedData.data);
 				setPagination((prev) => ({
@@ -38,7 +38,7 @@ const useFetchRooms = (initialPage: number, initialPageSize: number) => {
 							limit: pagination.pageSize.toString(),
 						},
 					});
-					const fetchedData = response.data;
+					const fetchedData = response.responseBody.response || [];
 					const totalCount = parseInt(response.headers["x-total-count"], 10);
 					const totalPages = Math.ceil(totalCount / pageSize);
 
