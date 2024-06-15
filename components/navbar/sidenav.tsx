@@ -14,6 +14,8 @@ export default function SideNav() {
 		return "";
 	}
 
+	const name = session.user?.name || session.user?.email || "User";
+
 	return (
 		<div className="flex w-full flex-col">
 			<header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 justify-between">
@@ -48,12 +50,12 @@ export default function SideNav() {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>My Account</DropdownMenuLabel>
+							<DropdownMenuLabel>{name}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Settings</DropdownMenuItem>
-							<DropdownMenuItem>Support</DropdownMenuItem>
+							{/* <DropdownMenuItem>Settings</DropdownMenuItem>
+							<DropdownMenuItem>Support</DropdownMenuItem> */}
 							<ModeToggle></ModeToggle>
-							<DropdownMenuSeparator />
+							{/* <DropdownMenuSeparator /> */}
 							<DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
