@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu } from "lucide-react";
+import { signOut } from "next-auth/react";
 import { ModeToggle } from "../theme/theme-toggle";
 import NavLinks from "./nav-links";
 
@@ -46,7 +49,7 @@ export default function SideNav() {
 							<DropdownMenuItem>Support</DropdownMenuItem>
 							<ModeToggle></ModeToggle>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Logout</DropdownMenuItem>
+							<DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
