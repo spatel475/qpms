@@ -1,5 +1,10 @@
+"use client";
+
+import withAuth from "@/components/withAuth";
 import { notFound } from "next/navigation";
 
-export default function NotFoundCatchAll() {
-	notFound();
-}
+const NotFoundCatchAll = () => {
+	return notFound();
+};
+
+export default withAuth(NotFoundCatchAll);

@@ -38,3 +38,8 @@ export type CreateStayRequest = StayBase & {
 	guest: Guest
 	room: Room
 }
+
+export type Credentials = {
+	email: string;
+	password: string;
+}

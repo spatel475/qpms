@@ -1,5 +1,6 @@
 "use client";
 import { Stay } from "@/app/models/models";
+import withAuth from "@/components/withAuth";
 import { get } from "@/lib/fetch";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -31,4 +32,4 @@ const ReservationFormPage = () => {
 	);
 };
 
-export default ReservationFormPage;
+export default withAuth(ReservationFormPage);

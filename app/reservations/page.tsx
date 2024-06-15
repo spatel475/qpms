@@ -6,6 +6,7 @@ import { FilterComponent } from "@/components/stay-filter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import withAuth from "@/components/withAuth";
 import { PlusCircle, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import useFetchRooms from "../hooks/useFetchRooms";
@@ -14,7 +15,7 @@ import { useStayColumns } from "./column";
 import Dashboard from "./dashboard";
 import ReservationDetail from "./reservation-details";
 
-export default function ReservationsPage() {
+const ReservationsPage = () => {
 	const { rooms, isLoading: isRoomsLoading } = useFetchRooms(1, 25);
 	const { stays, isLoading, filter, setFilter, pagination, setPagination, fetchData } = useFetchStays(1, 25);
 
@@ -22,6 +23,10 @@ export default function ReservationsPage() {
 		await fetchData(pagination.currentPage, pagination.pageSize, false);
 	};
 
+	// const { data: session, status } = useSession();
+	// console.log("====================================");
+	// console.log(session, status);
+	// console.log("====================================");
 	const columns = useStayColumns();
 	return (
 		<Card>
@@ -59,4 +64,6 @@ export default function ReservationsPage() {
 			</Tabs>
 		</Card>
 	);
-}
+};
+
+export default withAuth(ReservationsPage);

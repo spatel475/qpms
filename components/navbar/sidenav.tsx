@@ -1,11 +1,21 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { CircleUser, Menu } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
 import { ModeToggle } from "../theme/theme-toggle";
 import NavLinks from "./nav-links";
 
 export default function SideNav() {
+	const { data: session } = useSession();
+	if (!session) {
+		return "";
+	}
+
+	const name = session.user?.name || session.user?.email || "User";
+
 	return (
 		<div className="flex w-full flex-col">
 			<header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 justify-between">
@@ -40,13 +50,13 @@ export default function SideNav() {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>My Account</DropdownMenuLabel>
+							<DropdownMenuLabel>{name}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Settings</DropdownMenuItem>
-							<DropdownMenuItem>Support</DropdownMenuItem>
+							{/* <DropdownMenuItem>Settings</DropdownMenuItem>
+							<DropdownMenuItem>Support</DropdownMenuItem> */}
 							<ModeToggle></ModeToggle>
-							<DropdownMenuSeparator />
-							<DropdownMenuItem>Logout</DropdownMenuItem>
+							{/* <DropdownMenuSeparator /> */}
+							<DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>

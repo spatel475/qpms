@@ -4,6 +4,7 @@ import { DataTable } from "@/components/data-table/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { toast } from "@/components/ui/use-toast";
+import withAuth from "@/components/withAuth";
 import { put } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { Edit, Save, Undo } from "lucide-react";
@@ -99,4 +100,4 @@ const RoomConfig = () => {
 	);
 };
 
-export default RoomConfig;
+export default withAuth(RoomConfig);

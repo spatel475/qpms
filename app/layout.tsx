@@ -3,11 +3,11 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import "./globals.css";
-
+import { Providers } from "./providers";
 
 const fontSans = Inter({
 	subsets: ["latin"],
@@ -27,18 +27,20 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<head />
 			<body className={cn("bg-background font-sans antialiased", fontSans.variable)}>
-				<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-					<div className="flex h-screen flex-col md:flex-row">
-						<div className="w-full flex-none">
-							<SideNav />
-							<Suspense>
-								<div className="p-6">{children}</div>
-							</Suspense>
-							<SpeedInsights />
+				<Providers>
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+						<div className="flex h-screen flex-col md:flex-row">
+							<div className="w-full flex-none">
+								<SideNav />
+								<Suspense>
+									<div className="p-6">{children}</div>
+								</Suspense>
+								<SpeedInsights />
+							</div>
 						</div>
-					</div>
-				</ThemeProvider>
-				<Toaster />
+					</ThemeProvider>
+					<Toaster />
+				</Providers>
 			</body>
 		</html>
 	);

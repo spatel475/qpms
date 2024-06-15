@@ -4,6 +4,7 @@ import { DataTable } from "@/components/data-table/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DatePicker } from "@/components/ui/date-picker";
+import withAuth from "@/components/withAuth";
 import { formatCurrency } from "@/lib/currency-utils";
 import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
@@ -154,4 +155,4 @@ const DailyReportPage = () => {
 	);
 };
 
-export default DailyReportPage;
+export default withAuth(DailyReportPage);
