@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { formatCurrency } from "@/lib/currency-utils";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { ColumnDef, flexRender } from "@tanstack/react-table";
-import { Room } from "../models/models";
+import { Room } from "../api/models";
 
 export const CACHE_KEY = "room_config_edit";
 export const roomConfigColumns = (isEditModeOn: boolean) => {

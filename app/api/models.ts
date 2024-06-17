@@ -1,4 +1,34 @@
-import { Guest, Room } from "../models/models";
+export type Property = {
+	propCode: string;
+	name: string;
+}
+
+export type User = {
+	id: string;
+	email: string;
+	name: string;
+	role: string;
+}
+
+export type Guest = {
+	id?: string;
+	firstName: string;
+	lastName: string;
+	dlNumber: string;
+	address?: string;
+	phoneNumber?: string;
+	comments?: string;
+}
+
+export type Room = {
+	id: string;
+	roomType: string; // @todo: change to RoomType enum
+	roomRate: number;
+	weeklyRoomRate: number;
+	propCode: string;
+	roomAvailable: boolean;
+	unavailablityReason?: string;
+}
 
 export type DailyReportRecord = {
 	roomId: string,
@@ -8,14 +38,6 @@ export type DailyReportRecord = {
 	cash: number,
 	rateType: string
 };
-
-export type StayResponse = StayBase & {
-	id: string
-	guestId: string
-	roomId: string
-	guest: Guest
-	room: Room
-}
 
 export type StayBase = {
 	startDate: Date
@@ -39,6 +61,14 @@ export type CreateStayRequest = StayBase & {
 	room: Room
 }
 
+export type StayResponse = StayBase & {
+	id: string
+	guestId: string
+	roomId: string
+	guest: Guest
+	room: Room
+}
+
 export type Credentials = {
 	email: string;
 	password: string;
@@ -49,3 +79,23 @@ export type ApiResponse<T = any> = {
 	error: boolean,
 	message?: string
 }
+
+export enum StayStatus {
+	RESERVED = 'RESERVED',
+	OCCUPIED = 'OCCUPIED',
+	CHECKED_OUT = 'CHECKED_OUT'
+}
+
+export type StaysFilter = {
+	startDate?: Date;
+	endDate?: Date;
+	stayStatus?: StayStatus[];
+	guestName?: string;
+};
+
+export type Pagination = {
+	totalCount: number;
+	totalPages: number;
+	pageSize: number;
+	currentPage: number;
+};

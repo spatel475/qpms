@@ -9,8 +9,8 @@ import { put } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { Edit, Save, Undo } from "lucide-react";
 import { useState } from "react";
+import { Room } from "../api/models";
 import useFetchRooms from "../hooks/useFetchRooms";
-import { Room } from "../models/models";
 import { CACHE_KEY, roomConfigColumns } from "./columns";
 
 const RoomConfig = () => {

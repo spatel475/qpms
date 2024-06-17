@@ -1,5 +1,5 @@
 "use client";
-import { Stay } from "@/app/models/models";
+import { StayResponse } from "@/app/api/models";
 import withAuth from "@/components/withAuth";
 import { get } from "@/lib/fetch";
 import { useSearchParams } from "next/navigation";
@@ -10,12 +10,12 @@ const ReservationFormPage = () => {
 	const searchParams = useSearchParams();
 	const reservationId = searchParams.get("id");
 	const isCopy = searchParams.get("copy") === "1" ?? false;
-	const [existingData, setExistingData] = useState<Stay | undefined>();
+	const [existingData, setExistingData] = useState<StayResponse | undefined>();
 
 	useEffect(() => {
 		if (reservationId) {
 			// Fetch existing reservation data
-			get<Stay>(`/stays/${reservationId}`)
+			get<StayResponse>(`/stays/${reservationId}`)
 				.then((response) => {
 					setExistingData(response.responseBody.response);
 				})

@@ -1,6 +1,6 @@
 "use client";
 
-import { CreateStayRequest, StayResponse } from "@/app/api/models";
+import { CreateStayRequest, Guest, Room, StayResponse, StayStatus } from "@/app/api/models";
 import { Routes } from "@/components/navbar/nav-links";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePickerForm } from "@/components/ui/date-range-picker";
@@ -15,7 +15,6 @@ import { compareAsc, differenceInDays } from "date-fns";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
-import { Guest, Room, Stay, StayStatus } from "../../models/models";
 import { formSchema as FormSchema, GuestForm, GuestFormValues } from "./guest-form";
 import GuestSearch from "./guest-search";
 import { PaymentDetails } from "./payement-details-form";
@@ -25,7 +24,7 @@ import RoomSelector from "./room-selection";
 import SaveToolbar from "./save-button";
 
 interface CreateReservationProps {
-	existingData?: Stay;
+	existingData?: StayResponse;
 	isCopy: boolean;
 }
 

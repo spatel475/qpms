@@ -1,4 +1,4 @@
-import { StayStatus, StaysFilter } from "@/app/models/models";
+import { StayStatus, StaysFilter } from "@/app/api/models";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

@@ -4,9 +4,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Epg, Layout } from "@/planby-lib/dist";
 import { useState } from "react";
 import { ChannelItem, Program } from "../../components/planby";
-import { StayResponse } from "../api/models";
+import { Room, StayResponse } from "../api/models";
 import { usePlanby } from "../hooks/usePlanby";
-import { Room } from "../models/models";
 import ReservationDetail from "./reservation-details";
 
 type Props = {

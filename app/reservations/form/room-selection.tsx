@@ -1,4 +1,5 @@
 "use client";
+import { Room } from "@/app/api/models";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,7 +8,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Cigarette, CigaretteOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Room } from "../../models/models";
 
 type Props = {
 	allRooms: Array<Room>;

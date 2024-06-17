@@ -1,8 +1,7 @@
-import { Room } from "@/app/models/models";
 import { getPaginationInfo, getPaginationResponseHeaders } from "@/lib/api-utils.ts/pagination";
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-import { ApiResponse } from "../models";
+import { ApiResponse, Room } from "../models";
 
 
 export async function GET(request: NextRequest): Promise<NextResponse<ApiResponse>> {

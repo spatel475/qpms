@@ -13,8 +13,7 @@ import { Calendar, ChevronDown, CreditCard, User2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { StayResponse } from "../api/models";
-import { StayStatus } from "../models/models";
+import { StayResponse, StayStatus } from "../api/models";
 
 interface ReservationDetailProps {
 	row: StayResponse;

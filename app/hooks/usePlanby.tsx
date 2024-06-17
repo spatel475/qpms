@@ -7,8 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getAreas } from "../../components/planby/helpers";
 import { themeDark } from "../../components/planby/helpers/theme-dark";
 import { themeLight } from "../../components/planby/helpers/theme-light";
-import { StayResponse } from "../api/models";
-import { Room } from "../models/models";
+import { Room, StayResponse } from "../api/models";
 
 const currentDate = new Date();
 currentDate.setHours(0, 0, 0, 0);

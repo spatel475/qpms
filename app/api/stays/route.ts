@@ -1,8 +1,7 @@
-import { Guest } from '@/app/models/models';
 import { getPaginationInfo, getPaginationResponseHeaders } from '@/lib/api-utils.ts/pagination';
 import prisma from '@/prisma/db';
 import { NextRequest, NextResponse } from 'next/server';
-import { ApiResponse, CreateStayRequest } from '../models';
+import { ApiResponse, CreateStayRequest, Guest } from '../models';
 
 export async function GET(request: NextRequest): Promise<NextResponse<ApiResponse>> {
 	const url = new URL(request.url);

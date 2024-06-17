@@ -1,7 +1,7 @@
 import { get } from "@/lib/fetch";
 import { getCachedData, setCachedData } from "@/lib/memory-cache";
 import { useCallback, useEffect, useState } from "react";
-import { Pagination, Room } from "../models/models";
+import { Pagination, Room } from "../api/models";
 
 const useFetchRooms = (initialPage: number, initialPageSize: number) => {
 	const [rooms, setRooms] = useState<Room[]>([]);

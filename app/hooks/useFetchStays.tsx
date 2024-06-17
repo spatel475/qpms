@@ -1,7 +1,6 @@
 import { get } from "@/lib/fetch";
 import { useEffect, useState } from "react";
-import { StayResponse } from "../api/models";
-import { Pagination, StayStatus, StaysFilter } from "../models/models";
+import { Pagination, StayResponse, StayStatus, StaysFilter } from "../api/models";
 
 const useFetchStays = (initialPage: number, initialPageSize: number) => {
 	const [filter, setFilter] = useState<StaysFilter>({
